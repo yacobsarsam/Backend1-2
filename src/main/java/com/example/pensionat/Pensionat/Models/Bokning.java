@@ -1,4 +1,4 @@
-package com.example.pensionat.models;
+package com.example.pensionat.Pensionat.Models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

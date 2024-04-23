@@ -1,7 +1,7 @@
-package com.example.pensionat.Controllers;
+package com.example.pensionat.Pensionat.Controllers;
 
-import com.example.pensionat.Models.Bokning;
-import com.example.pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Pensionat.Models.Bokning;
+import com.example.pensionat.Pensionat.Repositories.BokningRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

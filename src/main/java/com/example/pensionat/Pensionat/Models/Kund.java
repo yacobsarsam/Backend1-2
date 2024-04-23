@@ -1,4 +1,4 @@
-package com.example.pensionat.models;
+package com.example.pensionat.Pensionat.Models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,16 +11,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Rum {
+public class Kund {
 
     @Id
     @GeneratedValue
     protected long id;
-    protected boolean dubbelrum;
-    protected int storlek;
+    protected String namn;
+    protected String tel;
 
-    public Rum(boolean dubbelrum, int storlek) {
-        this.dubbelrum = dubbelrum;
-        this.storlek = storlek;
+    public Kund(String namn, String tel){
+        this.namn = namn;
+        this.tel = tel;
     }
 }
