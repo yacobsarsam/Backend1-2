@@ -18,9 +18,11 @@ public class Rum {
     protected long id;
     protected boolean dubbelrum;
     protected int storlek;
+    protected int numOfBeds;
 
-    public Rum(boolean dubbelrum, int storlek) {
+    public Rum(boolean dubbelrum, int storlek, int numOfBeds) {
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
+        this.numOfBeds=numOfBeds;
     }
 }
