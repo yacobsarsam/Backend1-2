@@ -14,4 +14,5 @@ public class KundDto {
     private long id;
     private String namn;
     private String tel;
+    private String email;
 }

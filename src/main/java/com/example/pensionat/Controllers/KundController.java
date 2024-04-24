@@ -14,19 +14,19 @@ public class KundController {
         this.kundRepo = kundRepo;
     }
 
-    @RequestMapping("kunder")
+    @RequestMapping(path = "kunder")
     public List<Kund> getAllKunder(){
         //TODO inväntar service-klassens funktion
         return null;
     }
 
-    @PostMapping("kunder/add")
+    @PostMapping("/add")
     public String addKund(@RequestBody Kund kund){
         //TODO inväntar service-klassens funktion
         return null;
     }
 
-    @DeleteMapping("kunder/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteKund(@PathVariable Long id){
         //TODO inväntar service-klassens funktion
         return null;
