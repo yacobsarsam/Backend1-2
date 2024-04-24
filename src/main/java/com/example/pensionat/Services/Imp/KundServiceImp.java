@@ -7,6 +7,8 @@ import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class KundServiceImp implements KundService {
@@ -21,6 +23,11 @@ public class KundServiceImp implements KundService {
     @Override
     public Kund kundDtoToKund(KundDto k) {
         return Kund.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).build();
+    }
+
+    @Override
+    public List<KundDto> getAllKunder() {
+        return kr.findAll().stream().map(k -> kundToKundDto(k)).toList();
     }
 
     @Override
