@@ -5,6 +5,7 @@
     <title>Alla kunder</title>
 </head>
 <body>
+<!-- Form skapa ny kund -->
 <h2>Registrera ny kund</h2>
 
 <form action="#" th:action="@{/kunder/create}" method="post">
@@ -19,14 +20,16 @@
 
     <br><br>
     <input type="submit" value="Lägg till kund">
-
-
 </form>
-<p></p>
+
+<p>--------------------------------------------------</p>
+<!-- Visa alla kunder-->
 <h2>Alla registrerade kunder</h2>
+<!-- Visa denna div om det inte finns kunder-->
 <div class="all_customers" th:if="${#lists.isEmpty(allakunder)}">
     <p>Det finns inga registrerade kunder</p>
 </div>
+<!-- Visa denna div om det finns kunder-->
 <div class="all_customers" th:unless=" ${#lists.isEmpty(allakunder)}">
 <table>
     <tr >
