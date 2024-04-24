@@ -1,12 +1,13 @@
-package com.example.pensionat.Pensionat.Controllers;
+package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Pensionat.Models.Bokning;
-import com.example.pensionat.Pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Repositories.BokningRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/bokningar")
 public class BokningController {
 
     BokningRepo bokningRepo;
@@ -14,19 +15,19 @@ public class BokningController {
         this.bokningRepo = bokningRepo;
     }
 
-    @RequestMapping("bokningar")
+    @RequestMapping("/")
     public List<Bokning> getAllBokningar(){
         //TODO inväntar service-klassens funktion
         return null;
     }
 
-    @PostMapping("bokningar/add")
+    @PostMapping("/add")
     public String addBokning(@RequestBody Bokning bokning){
         //TODO inväntar service-klassens funktion
         return null;
     }
 
-    @DeleteMapping("bokningar/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteBokning(@PathVariable Long id){
         //TODO inväntar service-klassens funktion
         return null;
