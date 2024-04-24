@@ -14,7 +14,10 @@ public class Bokning {
     @Id
     @GeneratedValue
     protected long id;
-    protected String datum;
+    protected String startdatum;
+    protected String slutdatum;
+    protected int numOfBeds;
+
     @ManyToOne
     @JoinColumn
     protected Kund kund;
@@ -22,8 +25,9 @@ public class Bokning {
     @JoinColumn
     protected Rum rum;
 
-    public Bokning(String datum, Kund kund, Rum rum){
-        this.datum = datum;
+    public Bokning(Kund kund, Rum rum, String startdatum, String slutdatum){
+        this.startdatum = startdatum;
+        this.slutdatum = slutdatum;
         this.kund = kund;
         this.rum = rum;
     }

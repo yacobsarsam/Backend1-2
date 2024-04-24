@@ -16,13 +16,15 @@ public class Rum {
     @Id
     @GeneratedValue
     protected long id;
+    protected int rumsnr;
     protected boolean dubbelrum;
+    // storlek 1 - enkelrum, 2 - Dubbelrum med möjlighet till en extrasäng, 3 - Dubbelrum  med möjlighet till två extrasängar.
     protected int storlek;
-    protected int numOfBeds;
 
-    public Rum(boolean dubbelrum, int storlek, int numOfBeds) {
+    public Rum(boolean dubbelrum, int storlek, int rumsnr) {
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
-        this.numOfBeds=numOfBeds;
+        this.rumsnr = rumsnr;
     }
+
 }
