@@ -1,6 +1,6 @@
-package com.example.pensionat.Pensionat.Repositories;
+package com.example.pensionat.Repositories;
 
-import com.example.pensionat.Pensionat.Models.Kund;
+import com.example.pensionat.Models.Kund;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface KundRepo extends JpaRepository<Kund,Long> {

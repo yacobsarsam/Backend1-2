@@ -1,7 +1,7 @@
 package com.example.pensionat;
 
-import com.example.pensionat.Pensionat.Models.Rum;
-import com.example.pensionat.Pensionat.Repositories.RumRepo;
+import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Repositories.RumRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

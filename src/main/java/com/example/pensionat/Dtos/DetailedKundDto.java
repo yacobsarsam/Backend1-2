@@ -1,4 +1,4 @@
-package com.example.pensionat.Pensionat.Dtos;
+package com.example.pensionat.Dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BokingDto {
+public class DetailedKundDto {
     private long id;
-    private String datum;
+    private String namn;
+    private String tel;
 }

@@ -1,7 +1,7 @@
-package com.example.pensionat.Pensionat.Controllers;
+package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Pensionat.Models.Kund;
-import com.example.pensionat.Pensionat.Repositories.KundRepo;
+import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Repositories.KundRepo;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
