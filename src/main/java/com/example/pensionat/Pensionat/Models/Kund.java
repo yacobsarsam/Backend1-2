@@ -3,9 +3,12 @@ package com.example.pensionat.Pensionat.Models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +21,14 @@ public class Kund {
     protected long id;
     protected String namn;
     protected String tel;
+    protected String email;
 
-    public Kund(String namn, String tel){
+    @OneToMany
+    protected List<Bokning> bokning;
+
+    public Kund(String namn, String tel, String email){
         this.namn = namn;
         this.tel = tel;
+        this.email = email;
     }
 }
