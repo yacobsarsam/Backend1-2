@@ -64,3 +64,42 @@ body{
     display: flex;
     flex-direction: row;
 }
+
+.small-container{
+    overflow: scroll;
+}
+
+.room-container{
+    padding: 0 2px;
+}
+
+.room-inner-container{
+    border-top: 1px solid dimgrey;
+    border-bottom: 1px solid dimgrey;
+    display: flex;
+    padding: 2px;
+    text-align: center;
+    align-items: center;
+    justify-content: left;
+}
+
+.room-inner-container p{
+    margin-right: 120px;
+}
+
+.room-inner-container label{
+    margin-right: 5px;
+}
+
+.room-inner-container button{
+    margin-left: 3px;
+}
+
+.book-button{
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.book-button:hover{
+    background-color: slategrey;
+}

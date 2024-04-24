@@ -13,9 +13,9 @@
 <body>
 <div class="container">
     <nav class="navbar">
-    <button class="navButton"><a th:href="@{index}" >Home</a> </button>
+    <button class="navButton"><a th:href="@{/index}" >Home</a> </button>
     </nav>
-    <form action="getRooms" method="get" class="form-container">
+    <form action="/book/viewRooms" method="get" class="form-container">
         <label for="namn">Namn:</label>
         <input type="text" id="namn" name="namn">
         <label for="telNr">Telefonnummer:</label>
@@ -24,25 +24,28 @@
         <input type="email" id="email" name="email">
         <hr>
         <div class="date-container">
-            <label for="startDatum">Från:</label>
-            <input type="date" id="startDatum" name="startDatum">
+            <label for="startDate">Från:</label>
+            <input type="date" id="startDate" name="startDate">
             <hr>
-            <label for="tillDatum">Till och med:</label>
-            <input type="date" id="tillDatum" name="tillDatum">
+            <label for="endDate">Till och med:</label>
+            <input type="date" id="endDate" name="endDate">
         </div>
         <label for="antalPersoner">Antal personer:</label>
-        <input type="number" id="antalPersoner" name="antalPersoner" max="4" min="1">
-        <input type="submit" value="Sök lediga rum">
+        <input type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
+        <input class="book-button" type="submit" value="Sök lediga rum">
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
-        <table>
-            <thead th:text="${rubrik}"></thead>
-                <tbody>
-                    <tr th:each="room : ${allRooms}">
-                        <td th:text="${room.number}"></td>
-                    </tr>
-                </tbody>
-        </table>
+            <h3 th:text="${rubrik}" ></h3>
+                <div class="room-container" th:each="room : ${allRooms}">
+                    <div class="room-inner-container">
+                        <p th:text="'Rum ' + ${room.rumsnr} +' ' + ${roomType}"></p>
+                        <div th:if="${room.dubbelrum}">
+                            <label for="roomType">Extrasäng</label>
+                            <input type="number" id="roomType" name="roomType" th:max="${room.storlek - 1}" min="0" value="0">
+                        </div>
+                        <button class="book-button" type="submit" th:href="bekräftelseControllern">Boka</button>
+                    </div>
+                </div>
     </div>
 </div>
 </body>

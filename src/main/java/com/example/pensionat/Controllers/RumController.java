@@ -2,16 +2,21 @@ package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Services.RumService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
 public class RumController {
 
     RumRepo rumRepo;
-    RumController(RumRepo rumRepo){
+    private final RumService rumService;
+    RumController(RumRepo rumRepo, RumService rumService){
         this.rumRepo = rumRepo;
+        this.rumService = rumService;
     }
 
     @RequestMapping("rum")
