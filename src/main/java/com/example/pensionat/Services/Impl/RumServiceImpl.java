@@ -19,12 +19,9 @@ public class RumServiceImpl implements RumService {
 
     @Override
     public String getAllAvailableRooms(String startDate, String endDate, String antalPersoner, Model model) {
-        //Log
-        System.out.println(startDate);
-        System.out.println(endDate);
-        System.out.println(antalPersoner);
         //convert antalPersoner
         int antalPersonerInt = Integer.parseInt(antalPersoner);
+
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersonerInt > 1;
         String roomType;
@@ -34,12 +31,11 @@ public class RumServiceImpl implements RumService {
             roomType = "Enkelrum";
         }
 
+        //TODO sortera på storlek kanske kan ske med storleks attributet?
+        //TODO sortera på bokning måste stämma med rums-id samt datumen. Localdate parse?
 
         //Hämta ut en lista på rum som är tillräckligt stora
         List<Rum> sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble).toList();
-
-        //Hämta ut alla bokningar, och sortera ut bokningarnas rum.id och filtrera bort dom from sortedRooms
-
 
         model.addAttribute("allRooms", sortedRooms);
         model.addAttribute("rubrik", "Lediga rum");

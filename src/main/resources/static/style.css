@@ -55,9 +55,29 @@ body{
     background-color: slategrey;
 }
 
+.button a{
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.button a:visited{
+    color: black;
+}
+
 .form-container{
     display: flex;
     flex-direction: column;
+}
+
+.text-input{
+    width: 200px;
+    margin: 3px auto;
+}
+
+.num-input{
+    width: 50px;
+    margin: 3px auto;
 }
 
 .date-container{

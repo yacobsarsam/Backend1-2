@@ -17,11 +17,11 @@
     </nav>
     <form action="/book/viewRooms" method="get" class="form-container">
         <label for="namn">Namn:</label>
-        <input type="text" id="namn" name="namn">
+        <input class="text-input" type="text" id="namn" name="namn">
         <label for="telNr">Telefonnummer:</label>
-        <input type="tel" id="telNr" name="telNr">
+        <input class="text-input" type="tel" id="telNr" name="telNr">
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
+        <input class="text-input" type="email" id="email" name="email">
         <hr>
         <div class="date-container">
             <label for="startDate">Från:</label>
@@ -31,7 +31,7 @@
             <input type="date" id="endDate" name="endDate">
         </div>
         <label for="antalPersoner">Antal personer:</label>
-        <input type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
+        <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
         <input class="book-button" type="submit" value="Sök lediga rum">
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
