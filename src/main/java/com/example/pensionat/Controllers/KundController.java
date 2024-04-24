@@ -1,35 +1,35 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
+import com.example.pensionat.Services.KundService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping(path = "kunder")
 public class KundController {
 
-    KundRepo kundRepo;
-    KundController(KundRepo kundRepo){
-        this.kundRepo = kundRepo;
-    }
+    private final KundService kundService;
 
-    @RequestMapping(path = "kunder")
-    public List<Kund> getAllKunder(){
-        //TODO inväntar service-klassens funktion
-        return null;
+    @RequestMapping("")
+    public List<KundDto> getAllKunder(){
+        return kundService.getAllKunder();
     }
 
     @PostMapping("/add")
     public String addKund(@RequestBody Kund kund){
-        //TODO inväntar service-klassens funktion
-        return null;
+        return kundService.addKund(kund);
     }
 
-    @DeleteMapping("/delete/{id}")
+    //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
+    @RequestMapping("/delete/{id}")
     public String deleteKund(@PathVariable Long id){
-        //TODO inväntar service-klassens funktion
-        return null;
+        return kundService.deleteKund(id);
     }
 
     //TODO saknas kommande metoder från Service klasserna

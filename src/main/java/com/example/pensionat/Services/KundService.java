@@ -11,7 +11,7 @@ public interface KundService {
     public KundDto kundToKundDto(Kund k);
     public Kund kundDtoToKund(KundDto k);
     public List<KundDto> getAllKunder();
-    public String addKund(KundDto k);
+    public String addKund(Kund k);
     public String updateKund(KundDto k);
     public String deleteKund(long id);
 }

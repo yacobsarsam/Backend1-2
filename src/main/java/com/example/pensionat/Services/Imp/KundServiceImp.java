@@ -17,7 +17,7 @@ public class KundServiceImp implements KundService {
 
     @Override
     public KundDto kundToKundDto(Kund k) {
-        return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).build();
+        return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
     }
 
     @Override
@@ -31,8 +31,8 @@ public class KundServiceImp implements KundService {
     }
 
     @Override
-    public String addKund(KundDto k) {
-        kr.save(kundDtoToKund(k));
+    public String addKund(Kund k) {
+        kr.save(k);
         return "Kunden " + k.getNamn() + " har sparats.";
     }
 
