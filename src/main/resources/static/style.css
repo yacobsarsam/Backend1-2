@@ -1,0 +1,66 @@
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    background-color: dimgrey;
+}
+
+.navButton{
+    margin-left: 4px;
+}
+
+.navButton a{
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.navButton a:visited{
+    color: black;
+}
+
+.navButton:hover{
+    background-color: slategrey;
+}
+
+.container{
+    text-align: center;
+    margin: auto;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid dimgrey;
+    border-radius: 5px;
+}
+
+.container h1{
+    margin-bottom: 50px;
+}
+
+.button{
+    text-align: center;
+    width: 200px;
+    height: 80px;
+    margin: 5px auto;
+    font-family: "Poppins", sans-serif;
+}
+
+.button:hover{
+    background-color: slategrey;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.date-container{
+    display: flex;
+    flex-direction: row;
+}

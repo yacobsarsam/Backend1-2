@@ -2,17 +2,22 @@ package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Services.BokningService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/bokningar")
+@RequiredArgsConstructor
 public class BokningController {
 
     BokningRepo bokningRepo;
-    BokningController(BokningRepo bokningRepo){
+    BokningService bokningService;
+    BokningController(BokningRepo bokningRepo, BokningService bokningService){
         this.bokningRepo = bokningRepo;
+        this.bokningService = bokningService;
     }
 
     @RequestMapping("/")
@@ -20,6 +25,8 @@ public class BokningController {
         //TODO inväntar service-klassens funktion
         return null;
     }
+
+
 
     @PostMapping("/add")
     public String addBokning(@RequestBody Bokning bokning){
