@@ -24,6 +24,7 @@ public class RumServiceImp implements RumService {
     private final RumRepo rumRepo;
 
 
+    /*
     @Override
     public RumDto rumToRumDto(Rum r) {
         return RumDto.builder().id(r.getId()).rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
@@ -39,6 +40,26 @@ public class RumServiceImp implements RumService {
         return DetailedRumDto.builder().id(r.getId()).rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
     }
 
+     */
+
+    @Override
+    public RumDto rumToRumDto(Rum r) {
+        return null;
+    }
+
+    @Override
+    public Rum rumDtoToRum(RumDto r) {
+        return null;
+    }
+
+    @Override
+    public DetailedRumDto rumToDetailedRumDto(Rum r) {
+        return null;
+    }
+
+
+
+
     @Override
     public List<DetailedRumDto> getAllRum() {
         return rr.findAll().stream().map(rum -> rumToDetailedRumDto(rum)).toList();
@@ -52,6 +73,12 @@ public class RumServiceImp implements RumService {
 
     @Override
     public String updateRum(RumDto r) {
+        return null;
+    }
+
+    /*
+    @Override
+    public String updateRum(RumDto r) {
         Rum rum = rr.findById(r.getId()).get();
         if (r.getRumsnr() != 0)
             rum.setRumsnr(r.getRumsnr());
@@ -62,6 +89,8 @@ public class RumServiceImp implements RumService {
         rr.save(rum);
         return "Rummet har uppdaterats.";
     }
+
+     */
 
     @Override
     public String deleteRum(long id) {
