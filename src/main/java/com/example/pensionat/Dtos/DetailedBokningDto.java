@@ -17,6 +17,6 @@ public class DetailedBokningDto {
     protected String startdatum;
     protected String slutdatum;
     protected int numOfBeds;
-    protected DetailedKundDto kund;
-    protected DetailedRumDto rum;
+    protected KundDto kund;
+    protected RumDto rum;
 }

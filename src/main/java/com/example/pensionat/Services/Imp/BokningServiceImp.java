@@ -28,23 +28,22 @@ public class BokningServiceImp implements BokningService {
     @Override
     public BokningDto BokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(b.getStartdatum()).
-                slutdatum(b.getSlutdatum()).numOfBeds(b.getNumOfBeds()).kund(new KundDto(b.getKund().getId(), b.getKund().getNamn()))
-                .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
+                slutdatum(b.getSlutdatum()).numOfBeds(b.getNumOfBeds()).build();
     }
 
     @Override
-    public Bokning detailedBokningDtoToBokning(DetailedBokningDto b) {
+    public Bokning detailedBokningDtoToBokning(DetailedBokningDto b, Kund kund, Rum rum) {
         return Bokning.builder().id(b.getId()).startdatum(b.getStartdatum()).
                 slutdatum(b.getSlutdatum()).numOfBeds(b.getNumOfBeds())
-                .kund(new Kund(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail()))
-                .rum(new Rum(b.getRum().getRumsnr(), b.getRum().isDubbelrum(), b.getRum().getStorlek())).build();
+                .kund(kund).rum(rum).build();
     }
 
     @Override
     public DetailedBokningDto bokningToDetailedBokningDto(Bokning b) {
         return DetailedBokningDto.builder().id(b.getId()).startdatum(b.getStartdatum()).
-                slutdatum(b.getSlutdatum()).numOfBeds(b.getNumOfBeds()).kund(kundService.kundToKundDto(b.getKund()))
-                .rum(rumService.rumToRumDto(b.getRum())).build();
+                slutdatum(b.getSlutdatum()).numOfBeds(b.getNumOfBeds())
+                .kund(new KundDto(b.getKund().getId(), b.getKund().getNamn()))
+                .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
     }
 
     @Override
@@ -67,4 +66,3 @@ public class BokningServiceImp implements BokningService {
         return null;
     }
 }
-bokningServiceImp
