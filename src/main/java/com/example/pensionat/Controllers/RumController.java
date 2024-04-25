@@ -5,8 +5,11 @@ import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
+import com.example.pensionat.Services.RumService;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -15,8 +18,12 @@ import java.util.List;
 public class RumController {
 
 
-    private final RumService rumService;
-
+    RumService rumService;
+    RumRepo rumRepo;
+    RumController(RumRepo rumRepo, RumService rumService){
+        this.rumRepo = rumRepo;
+        this.rumService = rumService;
+    }
 
     @RequestMapping("")
     public List<DetailedRumDto> getAllRum(){

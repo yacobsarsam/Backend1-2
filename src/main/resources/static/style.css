@@ -1,0 +1,125 @@
+body{
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    background-color: dimgrey;
+}
+
+.navButton{
+    margin-left: 4px;
+}
+
+.navButton a{
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.navButton a:visited{
+    color: black;
+}
+
+.navButton:hover{
+    background-color: slategrey;
+}
+
+.container{
+    text-align: center;
+    margin: auto;
+    width: 500px;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid dimgrey;
+    border-radius: 5px;
+}
+
+.container h1{
+    margin-bottom: 50px;
+}
+
+.button{
+    text-align: center;
+    width: 200px;
+    height: 80px;
+    margin: 5px auto;
+    font-family: "Poppins", sans-serif;
+}
+
+.button:hover{
+    background-color: slategrey;
+}
+
+.button a{
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    color: black;
+}
+
+.button a:visited{
+    color: black;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.text-input{
+    width: 200px;
+    margin: 3px auto;
+}
+
+.num-input{
+    width: 50px;
+    margin: 3px auto;
+}
+
+.date-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.small-container{
+    overflow: scroll;
+}
+
+.room-container{
+    padding: 0 2px;
+}
+
+.room-inner-container{
+    border-top: 1px solid dimgrey;
+    border-bottom: 1px solid dimgrey;
+    display: flex;
+    padding: 2px;
+    text-align: center;
+    align-items: center;
+    justify-content: left;
+}
+
+.room-inner-container p{
+    margin-right: 120px;
+}
+
+.room-inner-container label{
+    margin-right: 5px;
+}
+
+.room-inner-container button{
+    margin-left: 3px;
+}
+
+.book-button{
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+}
+
+.book-button:hover{
+    background-color: slategrey;
+}

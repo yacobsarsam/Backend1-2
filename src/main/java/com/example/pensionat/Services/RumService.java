@@ -9,6 +9,9 @@ import com.example.pensionat.Models.Rum;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+
 public interface RumService {
 
     public RumDto rumToRumDto(Rum r);
@@ -18,4 +21,5 @@ public interface RumService {
     public String addRum(Rum r);
     public String updateRum(RumDto r);
     public String deleteRum(long id);
+    String getAllAvailableRooms(@RequestParam String startDate, @RequestParam String endDate, @RequestParam String antalPersoner, Model model);
 }
