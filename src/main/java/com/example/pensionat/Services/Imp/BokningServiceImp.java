@@ -48,7 +48,7 @@ public class BokningServiceImp implements BokningService {
     public DetailedBokningDto bokningToDetailedBokningDto(Bokning b) {
         return DetailedBokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds())
-                .kund(new KundDto(b.getKund().getId(), b.getKund().getNamn()))
+                .kund(new KundDto(b.getKund().getId(), b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail()))
                 .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
     }
 
@@ -56,6 +56,7 @@ public class BokningServiceImp implements BokningService {
     public List<DetailedBokningDto> getAllBokningar() {
         return br.findAll().stream().map(bok -> bokningToDetailedBokningDto(bok)).toList();
     }
+
 
     /* Kommenterar ut denna för tillfället då jag har samma länkad till thymeleaf
     @Override
@@ -65,6 +66,31 @@ public class BokningServiceImp implements BokningService {
 
      */
 
+
+    /*
+            Kund kund = kr.findById(k.getId()).get();
+        if (k.getNamn() != null && !k.getNamn().isEmpty())
+            kund.setNamn(k.getNamn());
+        if (k.getTel() != null && !k.getTel().isEmpty())
+            kund.setTel(k.getTel());
+        if (k.getEmail() != null && !k.getEmail().isEmpty())
+            kund.setEmail(k.getEmail());
+        kr.save(kund);
+        return "Kunden har uppdaterats.";
+
+
+                Rum rum = rr.findById(r.getId()).get();
+        if (r.getRumsnr() != 0)
+            rum.setRumsnr(r.getRumsnr());
+        //Vet inte hur man ska testa denna, får återkomma senare
+        rum.setDubbelrum(r.isDubbelrum());
+        if (r.getStorlek() != 0)
+            rum.setStorlek(r.getStorlek());
+        rr.save(rum);
+        return "Rummet har uppdaterats.";
+     */
+
+
     @Override
     public String updateBokning(BokningDto b) {
         return null;
@@ -72,6 +98,21 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public String deleteBokning(long id) {
-        return null;
+        Bokning b = br.findById(id).get();
+        if (b != null){
+            br.deleteById(id);
+            return "Bokningen borttagen";
+        }
+        return "Bokningen hittas inte";
+    }
+
+    @Override
+    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, DetailedRumDto rum) {
+        KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
+        Kund kund = kundService.kundDtoToKund(kundDto);
+        Rum r = rumService.DetailedRumDtoToRum(rum);
+        Bokning b = new Bokning(kund, r, startdatum, slutdatum);
+        br.save(b);
+        return "Bokning gjord";
     }
 }
