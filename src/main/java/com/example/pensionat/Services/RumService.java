@@ -17,6 +17,7 @@ public interface RumService {
     public RumDto rumToRumDto(Rum r);
     public Rum rumDtoToRum(RumDto r);
     public DetailedRumDto rumToDetailedRumDto(Rum r);
+    public Rum DetailedRumDtoToRum(DetailedRumDto r);
     public List<DetailedRumDto> getAllRum();
     public String addRum(Rum r);
     public String updateRum(RumDto r);

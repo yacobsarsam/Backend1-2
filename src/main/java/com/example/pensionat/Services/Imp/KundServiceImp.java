@@ -7,13 +7,17 @@ import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class KundServiceImp implements KundService {
+
+    private final KundRepo kr;
     @Override
     public List<KundDto> getAllKunder() {
         return null;
@@ -34,19 +38,33 @@ public class KundServiceImp implements KundService {
         return null;
     }
 
-    /*
-    private final KundRepo kr;
-        private final BokningService bokningService;
+    @Override
+    public KundDto checkIfKundExistByName(String name, String email, String telefon){
+        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
+        if(kundDto == null){
+            Kund k = new Kund(name, telefon, email);
+            kr.save(k);
+            return kundToKundDto(k);
+        }
+        else{
+            return kundDto;
+        }
+    }
 
+    @Override
+    public Kund kundDtoToKund(KundDto k) {
+        return Kund.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
+    }
     @Override
     public KundDto kundToKundDto(Kund k) {
         return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
     }
 
-    @Override
-    public Kund kundDtoToKund(KundDto k) {
-        return Kund.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).build();
-    }
+    /*
+    private final KundRepo kr;
+        private final BokningService bokningService;
+
+
 
     @Override
     public List<KundDto> getAllKunder() {
