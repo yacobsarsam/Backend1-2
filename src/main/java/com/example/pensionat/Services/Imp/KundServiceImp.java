@@ -14,7 +14,27 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class KundServiceImp implements KundService {
+    @Override
+    public List<KundDto> getAllKunder() {
+        return null;
+    }
 
+    @Override
+    public String addKund(Kund k) {
+        return null;
+    }
+
+    @Override
+    public String updateKund(KundDto k) {
+        return null;
+    }
+
+    @Override
+    public String deleteKund(long id) {
+        return null;
+    }
+
+    /*
     private final KundRepo kr;
         private final BokningService bokningService;
 
@@ -70,4 +90,6 @@ public class KundServiceImp implements KundService {
                 email(k.getEmail()).bokningDtos(k.getBokning().stream().
                         map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
     }
+
+     */
 }

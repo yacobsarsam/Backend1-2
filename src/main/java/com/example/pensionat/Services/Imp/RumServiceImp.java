@@ -146,8 +146,8 @@ public class RumServiceImp implements RumService {
         for (Bokning bokning:bokningar
         ) {
             if (bokning.getStartdatum().isBefore(endDate) && bokning.getSlutdatum().isAfter(startDate)){
-                System.out.println("Added to rooms: " + bokning.getId());
-                availableRooms.add(bokning.getId());
+                System.out.println("Added to rooms: " + bokning.getRum().getId());
+                availableRooms.add(bokning.getRum().getId());
             } else {
                 System.out.println("Broke out of if");
                 break;
