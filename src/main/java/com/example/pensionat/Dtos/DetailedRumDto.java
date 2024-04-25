@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DetailedRumDto {
     private long id;
+    protected int rumsnr;
     private boolean dubbelrum;
     private int storlek;
-    private int numOfBeds;
 }
