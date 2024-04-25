@@ -25,6 +25,10 @@ public class BokningServiceImp implements BokningService {
     private final KundService kundService;
     private final RumService rumService;
 
+    public String addBokning() {
+        return "addBokning";
+    }
+
     @Override
     public BokningDto BokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(b.getStartdatum()).
@@ -51,10 +55,13 @@ public class BokningServiceImp implements BokningService {
         return br.findAll().stream().map(bok -> bokningToDetailedBokningDto(bok)).toList();
     }
 
+    /* Kommenterar ut denna för tillfället då jag har samma länkad till thymeleaf
     @Override
     public String addBokning(Bokning b) {
         return null;
     }
+
+     */
 
     @Override
     public String updateBokning(BokningDto b) {
