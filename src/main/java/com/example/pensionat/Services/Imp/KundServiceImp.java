@@ -4,7 +4,7 @@ import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
-import com.example.pensionat.Services.BokingService;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
 public class KundServiceImp implements KundService {
 
     private final KundRepo kr;
-    private final BokingService bokingService;
+        private final BokningService bokningService;
 
     @Override
     public KundDto kundToKundDto(Kund k) {
@@ -61,13 +61,13 @@ public class KundServiceImp implements KundService {
 
     @Override
     public List<DetailedKundDto> getAllCustomers() {
-        return kr.findAll().stream().map(k -> KundToDetailedKundDto(k)).toList();
+        return kr.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
 
     @Override
-    public DetailedKundDto KundToDetailedKundDto(Kund k) {
+    public DetailedKundDto kundToDetailedKundDto(Kund k) {
         return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).
-                email(k.getEmail()).bokingDtos(k.getBokning().stream().
-                        map(bokning -> bokingService.BokningToBokningDto(bokning)).toList()).build();
+                email(k.getEmail()).bokningDtos(k.getBokning().stream().
+                        map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
     }
 }
