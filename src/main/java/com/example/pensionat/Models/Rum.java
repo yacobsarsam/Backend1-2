@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Rum {
 
     @Id
@@ -22,9 +24,9 @@ public class Rum {
     protected int storlek;
 
     public Rum(boolean dubbelrum, int storlek, int rumsnr) {
+        this.rumsnr = rumsnr;
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
-        this.rumsnr = rumsnr;
     }
 
 }

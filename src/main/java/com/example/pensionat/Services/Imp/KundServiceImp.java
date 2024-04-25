@@ -15,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class KundServiceImp implements KundService {
 
-    final private KundRepo kr;
+    private final KundRepo kr;
     private final BokingService bokingService;
 
     @Override
@@ -42,11 +42,11 @@ public class KundServiceImp implements KundService {
     @Override
     public String updateKund(KundDto k) {
         Kund kund = kr.findById(k.getId()).get();
-        if (k.getNamn() != null)
+        if (k.getNamn() != null && !k.getNamn().isEmpty())
             kund.setNamn(k.getNamn());
-        if (k.getTel() != null)
+        if (k.getTel() != null && !k.getTel().isEmpty())
             kund.setTel(k.getTel());
-        if (k.getEmail() != null)
+        if (k.getEmail() != null && !k.getEmail().isEmpty())
             kund.setEmail(k.getEmail());
         kr.save(kund);
         return "Kunden har uppdaterats.";

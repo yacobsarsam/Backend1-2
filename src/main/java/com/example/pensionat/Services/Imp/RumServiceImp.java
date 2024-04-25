@@ -1,9 +1,7 @@
 package com.example.pensionat.Services.Imp;
 
 import com.example.pensionat.Dtos.DetailedRumDto;
-import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Dtos.RumDto;
-import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.RumService;
@@ -14,23 +12,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class RumServicceImp implements RumService {
+public class RumServiceImp implements RumService {
 
     private final RumRepo rr;
 
     @Override
     public RumDto rumToRumDto(Rum r) {
-        return RumDto.builder().rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
+        return RumDto.builder().id(r.getId()).rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
     }
 
     @Override
     public Rum rumDtoToRum(RumDto r) {
-        return Rum.builder().rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
+        return Rum.builder().id(r.getId()).rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
     }
 
     @Override
     public DetailedRumDto rumToDetailedRumDto(Rum r) {
-        return DetailedRumDto.builder().rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
+        return DetailedRumDto.builder().id(r.getId()).rumsnr(r.getRumsnr()).dubbelrum(r.isDubbelrum()).storlek(r.getStorlek()).build();
     }
 
     @Override

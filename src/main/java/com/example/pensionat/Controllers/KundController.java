@@ -20,13 +20,18 @@ public class KundController {
 
     private final KundService kundService;
 
+//    @RequestMapping("")
+//    public String getAllKunder(Model model){
+//        //TODO inväntar service-klassens funktion
+//        List<DetailedKundDto> allaKunder=kundService.getAllCustomers();
+//        model.addAttribute("allakunder", allaKunder);
+//        return "kunder.html";
+//    }
+
     @RequestMapping("")
-    public String getAllKunder(Model model){
-        //TODO inväntar service-klassens funktion
-        List<DetailedKundDto> allaKunder=kundService.getAllCustomers();
-        model.addAttribute("allakunder", allaKunder);
-        return "kunder.html";
-    }
+        public List<KundDto> getAllKunder(){
+        return kundService.getAllKunder();
+        }
 
     @PostMapping("/add")
     public String addKund(@RequestBody Kund kund){
