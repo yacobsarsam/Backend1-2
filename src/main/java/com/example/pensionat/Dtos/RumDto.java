@@ -14,6 +14,4 @@ import lombok.NoArgsConstructor;
 public class RumDto {
     private long id;
     protected int rumsnr;
-    private boolean dubbelrum;
-    private int storlek;
 }

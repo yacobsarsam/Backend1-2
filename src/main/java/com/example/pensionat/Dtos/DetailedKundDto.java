@@ -18,5 +18,5 @@ public class DetailedKundDto {
     private String namn;
     private String tel;
     private String email;
-    List<BokingDto> bokingDtos;
+    List<BokningDto> bokningDtos;
 }

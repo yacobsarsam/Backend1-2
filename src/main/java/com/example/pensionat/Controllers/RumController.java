@@ -20,7 +20,6 @@ public class RumController {
 
     @RequestMapping("")
     public List<DetailedRumDto> getAllRum(){
-        //TODO inväntar service-klassens funktion
         return rumService.getAllRum();
     }
 

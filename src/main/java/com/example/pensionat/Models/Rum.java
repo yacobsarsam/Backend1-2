@@ -23,7 +23,7 @@ public class Rum {
     // storlek 1 - enkelrum, 2 - Dubbelrum med möjlighet till en extrasäng, 3 - Dubbelrum  med möjlighet till två extrasängar.
     protected int storlek;
 
-    public Rum(boolean dubbelrum, int storlek, int rumsnr) {
+    public Rum(int rumsnr, boolean dubbelrum, int storlek) {
         this.rumsnr = rumsnr;
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
