@@ -19,7 +19,6 @@ import java.util.List;
 public class KundController {
 
     private final KundService kundService;
-    private final KundRepo kundRepo;
 
     @RequestMapping("")
     public String getAllKunder(Model model){

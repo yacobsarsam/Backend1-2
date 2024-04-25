@@ -10,10 +10,11 @@ public interface KundService {
 
     public KundDto kundToKundDto(Kund k);
     public Kund kundDtoToKund(KundDto k);
+    public DetailedKundDto KundToDetailedKundDto(Kund k);
+    public List<DetailedKundDto> getAllCustomers();
     public List<KundDto> getAllKunder();
     public String addKund(Kund k);
     public String updateKund(KundDto k);
     public String deleteKund(long id);
-    public List<DetailedKundDto> getAllCustomers();
-    public DetailedKundDto KundToDetailedKundDto(Kund k);
+
 }
