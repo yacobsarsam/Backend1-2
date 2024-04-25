@@ -1,11 +1,18 @@
 package com.example.pensionat;
 
+import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cglib.core.Local;
 import org.springframework.context.annotation.Bean;
+
+import java.time.LocalDate;
 
 @SpringBootApplication
 public class PensionatApplication {
@@ -14,7 +21,7 @@ public class PensionatApplication {
         SpringApplication.run(PensionatApplication.class, args);
     }
     @Bean
-    public CommandLineRunner enter(RumRepo rr){
+    public CommandLineRunner enter(RumRepo rr, BokningRepo bokningRepo, KundRepo kundRepo){
         return args -> {
             Rum r1 = new Rum(false, 1, 10);
             Rum r2 = new Rum(false, 1, 11);
@@ -41,6 +48,15 @@ public class PensionatApplication {
             rr.save(r11);
             rr.save(r12);
 
+            Kund k1 = new Kund("Test", "0701234567", "test@mail.com");
+            Kund k2 = new Kund("Test2", "0701234567", "test2@mail.com");
+            kundRepo.save(k1);
+            kundRepo.save(k2);
+
+            Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3));
+            Bokning b2 = new Bokning(k2, r9, LocalDate.now(), LocalDate.now().plusDays(3));
+            bokningRepo.save(b1);
+            bokningRepo.save(b2);
         };
     }
 
