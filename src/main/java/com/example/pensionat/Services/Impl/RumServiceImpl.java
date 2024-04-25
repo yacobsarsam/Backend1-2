@@ -24,6 +24,7 @@ public class RumServiceImpl implements RumService {
 
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersonerInt > 1;
+        int neededSize = antalPersonerInt - 1;
         String roomType;
         if (needsDouble){
             roomType = "Dubbelrum";
@@ -31,11 +32,12 @@ public class RumServiceImpl implements RumService {
             roomType = "Enkelrum";
         }
 
-        //TODO sortera på storlek kanske kan ske med storleks attributet?
+        //TODO sortera på storlek kanske kanske med storleks attributet?
         //TODO sortera på bokning måste stämma med rums-id samt datumen. Localdate parse?
 
         //Hämta ut en lista på rum som är tillräckligt stora
-        List<Rum> sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble).toList();
+        List<Rum> sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble).
+                filter(rum -> rum.getStorlek() >= neededSize).toList();
 
         model.addAttribute("allRooms", sortedRooms);
         model.addAttribute("rubrik", "Lediga rum");
