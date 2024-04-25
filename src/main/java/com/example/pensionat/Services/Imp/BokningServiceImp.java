@@ -67,30 +67,6 @@ public class BokningServiceImp implements BokningService {
      */
 
 
-    /*
-            Kund kund = kr.findById(k.getId()).get();
-        if (k.getNamn() != null && !k.getNamn().isEmpty())
-            kund.setNamn(k.getNamn());
-        if (k.getTel() != null && !k.getTel().isEmpty())
-            kund.setTel(k.getTel());
-        if (k.getEmail() != null && !k.getEmail().isEmpty())
-            kund.setEmail(k.getEmail());
-        kr.save(kund);
-        return "Kunden har uppdaterats.";
-
-
-                Rum rum = rr.findById(r.getId()).get();
-        if (r.getRumsnr() != 0)
-            rum.setRumsnr(r.getRumsnr());
-        //Vet inte hur man ska testa denna, får återkomma senare
-        rum.setDubbelrum(r.isDubbelrum());
-        if (r.getStorlek() != 0)
-            rum.setStorlek(r.getStorlek());
-        rr.save(rum);
-        return "Rummet har uppdaterats.";
-     */
-
-
     @Override
     public String updateBokning(BokningDto b) {
         return null;
