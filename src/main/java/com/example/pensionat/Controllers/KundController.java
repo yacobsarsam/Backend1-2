@@ -1,10 +1,14 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
+import com.example.pensionat.Services.KundService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,10 +19,14 @@ import java.util.List;
 public class KundController {
 
     private final KundService kundService;
+    private final KundRepo kundRepo;
 
     @RequestMapping("")
-    public List<KundDto> getAllKunder(){
-        return kundService.getAllKunder();
+    public String getAllKunder(Model model){
+        //TODO inväntar service-klassens funktion
+        List<DetailedKundDto> allaKunder=kundService.getAllCustomers();
+        model.addAttribute("allakunder", allaKunder);
+        return "kunder.html";
     }
 
     @PostMapping("/add")

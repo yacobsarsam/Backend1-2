@@ -12,5 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class DetailedBokingDto {
     protected long id;
-    protected String datum;
+    protected String startdatum;
+    protected String slutdatum;
+    protected int numOfBeds;
 }

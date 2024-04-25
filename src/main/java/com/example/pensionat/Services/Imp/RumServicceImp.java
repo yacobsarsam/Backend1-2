@@ -1,4 +1,10 @@
 package com.example.pensionat.Services.Imp;
 
-public class RumServicceImp {
+import com.example.pensionat.Services.RumService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class RumServicceImp implements RumService {
 }
