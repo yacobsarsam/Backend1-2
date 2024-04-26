@@ -1,5 +1,6 @@
 package com.example.pensionat.Services;
 
+import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 
@@ -22,5 +23,6 @@ public interface KundService {
     public KundDto checkIfKundExistByName(String name, String email, String telefon);
     public Kund kundDtoToKund(KundDto k);
     public KundDto kundToKundDto(Kund k);
-
+    public DetailedKundDto kundToDetailedKundDto(Kund k);
+    public List<DetailedKundDto> getAllKunder2();
 }

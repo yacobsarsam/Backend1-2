@@ -21,7 +21,6 @@ public class RumServiceImp implements RumService {
 
     private final RumRepo rr;
     private final BokningRepo bokningRepo;
-    private final RumRepo rumRepo;
 
 
     /*
@@ -127,7 +126,7 @@ public class RumServiceImp implements RumService {
             System.out.println("Parsed dates: " + from + " " + until);
             //Hämta ut alla rums-id som inte är bokade under det spannet som angets
             List<Long> notAva = getNonAvailableRoomsId(bokningRepo.findAll(), from, until);
-            sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
+            sortedRooms = rr.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
                     .filter(rum -> rum.getStorlek() >= neededSize)
                     .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
         } else {
