@@ -23,6 +23,7 @@ import java.util.Optional;
 public class BokningServiceImp implements BokningService {
 
     private final BokningRepo br;
+    private final RumRepo rumRepo;
 
     private final KundService kundService;
     private final RumService rumService;
@@ -94,11 +95,11 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, DetailedRumDto rum) {
+    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
         KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
-        Rum r = rumService.DetailedRumDtoToRum(rum);
-        Bokning b = new Bokning(kund, r, startdatum, slutdatum);
+        Rum rum = rumService.getRumById(rumId);
+        Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
         br.save(b);
         return "Bokning gjord";
     }

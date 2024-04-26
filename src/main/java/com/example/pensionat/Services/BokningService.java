@@ -18,7 +18,7 @@ public interface BokningService {
     public String updateBokning(BokningDto b);
     DetailedBokningDto getBookingDetailsById(Long id);
     public String deleteBokning(long id);
-    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, DetailedRumDto rum);
+    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
 
     String addBokning();
 }
