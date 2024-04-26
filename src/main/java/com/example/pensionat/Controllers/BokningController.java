@@ -13,12 +13,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BokningController {
 
-    BokningRepo bokningRepo;
-    BokningService bokningService;
-    BokningController(BokningRepo bokningRepo, BokningService bokningService){
-        this.bokningRepo = bokningRepo;
-        this.bokningService = bokningService;
-    }
+
+    private final BokningService bokningService;
+
+    //    private final BokningRepo bokningRepo;
+    //    BokningController(BokningRepo bokningRepo, BokningService bokningService){
+    //        this.bokningRepo = bokningRepo;
+    //        this.bokningService = bokningService;
+    //    }
 
     @RequestMapping("/")
     public List<Bokning> getAllBokningar(){

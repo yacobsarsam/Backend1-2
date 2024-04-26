@@ -1,5 +1,6 @@
 package com.example.pensionat.Services.Imp;
 
+import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
@@ -18,8 +19,12 @@ public class KundServiceImp implements KundService {
     @Override
     public List<KundDto> getAllKunder() {
         return kr.findAll().stream().map(k -> kundToKundDto(k)).toList();
+    }
 
-        //return null;
+    //Test/ alt erätta metod över
+    @Override
+    public List<DetailedKundDto> getAllKunder2() {
+        return kr.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
 
     @Override
@@ -58,6 +63,14 @@ public class KundServiceImp implements KundService {
     public KundDto kundToKundDto(Kund k) {
         return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
     }
+
+    @Override
+    public DetailedKundDto kundToDetailedKundDto(Kund k) {
+//        return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
+//                .bokningDtos(k.getBokning()).build();
+        return null;
+    }
+
     /*private final KundRepo kr;
     private final BokningService bokningService;
 
