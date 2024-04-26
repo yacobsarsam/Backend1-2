@@ -1,13 +1,10 @@
 package com.example.pensionat.Services.Imp;
 
-import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
-import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +17,9 @@ public class KundServiceImp implements KundService {
     private final KundRepo kr;
     @Override
     public List<KundDto> getAllKunder() {
-        return null;
+        return kr.findAll().stream().map(k -> kundToKundDto(k)).toList();
+
+        //return null;
     }
 
     @Override
@@ -59,11 +58,8 @@ public class KundServiceImp implements KundService {
     public KundDto kundToKundDto(Kund k) {
         return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
     }
-
-    /*
-    private final KundRepo kr;
-        private final BokningService bokningService;
-
+    /*private final KundRepo kr;
+    private final BokningService bokningService;
 
 
     @Override
@@ -95,7 +91,7 @@ public class KundServiceImp implements KundService {
         Kund kund = kr.findById(id).get();
         kr.deleteById(id);
         return "Kunden " + kund.getNamn() + " har raderats.";
-    }
+
 
     @Override
     public List<DetailedKundDto> getAllCustomers() {
@@ -105,9 +101,9 @@ public class KundServiceImp implements KundService {
     @Override
     public DetailedKundDto kundToDetailedKundDto(Kund k) {
         return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).
-                email(k.getEmail()).bokningDtos(k.getBokning().stream().
-                        map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
+                email(k.getEmail()).bokningDtos(k.getBokning().stream().map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
     }
-
      */
+
+
 }
