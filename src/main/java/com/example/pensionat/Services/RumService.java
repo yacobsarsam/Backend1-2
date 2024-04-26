@@ -22,5 +22,8 @@ public interface RumService {
     public String addRum(Rum r);
     public String updateRum(RumDto r);
     public String deleteRum(long id);
-    String getAllAvailableRooms(@RequestParam String startDate, @RequestParam String endDate, @RequestParam String antalPersoner, Model model);
+
+    public Rum getRumById(Long id);
+    String getAllAvailableRooms(String name, String telNr, String email,
+                                String startDate,String endDate,String antalPersoner, Model model);
 }

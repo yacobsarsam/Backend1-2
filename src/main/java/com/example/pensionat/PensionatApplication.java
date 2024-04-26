@@ -51,8 +51,8 @@ public class PensionatApplication {
             kundRepo.save(k1);
             kundRepo.save(k2);
 
-            Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3));
-            Bokning b2 = new Bokning(k2,r5, LocalDate.now(), LocalDate.now().plusDays(3));
+            Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3), 0);
+            Bokning b2 = new Bokning(k2,r5, LocalDate.now(), LocalDate.now().plusDays(3), 1);
             bokningRepo.save(b1);
             bokningRepo.save(b2);
 
