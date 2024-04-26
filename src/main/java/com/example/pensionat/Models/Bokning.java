@@ -23,10 +23,10 @@ public class Bokning {
     protected int numOfBeds;
 
     @ManyToOne
-    @JoinColumn
+    //yacoub comment bort @JoinColumn
     protected Kund kund;
     @ManyToOne
-    @JoinColumn
+    //yacoub comment bort @JoinColumn
     protected Rum rum;
 
     public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum){
