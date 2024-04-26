@@ -57,7 +57,10 @@ public class RumServiceImp implements RumService {
         return null;
     }
 
-
+    @Override
+    public Rum DetailedRumDtoToRum(DetailedRumDto r) {
+        return null;
+    }
 
 
     @Override
