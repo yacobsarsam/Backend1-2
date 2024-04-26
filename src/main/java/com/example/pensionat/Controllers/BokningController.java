@@ -26,6 +26,7 @@ public class BokningController {
         this.bokningService = bokningService;
     }
 
+
      */
 
     @RequestMapping("/")

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +52,16 @@ public class BokningServiceImp implements BokningService {
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds())
                 .kund(new KundDto(b.getKund().getId(), b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail()))
                 .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
+    }
+    @Override
+    public DetailedBokningDto getBookingDetailsById(Long id) {
+        Optional<Bokning> optionalBokning = br.findById(id);
+        if (optionalBokning.isPresent()) {
+            Bokning bokning = optionalBokning.get();
+            return bokningToDetailedBokningDto(bokning);
+        } else {
+            return null;
+        }
     }
 
     @Override

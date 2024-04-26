@@ -1,5 +1,6 @@
 package com.example.pensionat.Services.Imp;
 
+import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
@@ -18,12 +19,16 @@ public class KundServiceImp implements KundService {
     @Override
     public List<KundDto> getAllKunder() {
         return kr.findAll().stream().map(k -> kundToKundDto(k)).toList();
-
-        //return null;
     }
 
+    //Test/ alt erätta metod över
+    @Override
+    public List<DetailedKundDto> getAllKunder2() {
+        return kr.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
+    }
     @Override
     public String addKund(Kund k) {
+        kr.save(k);
         return null;
     }
 
@@ -31,12 +36,6 @@ public class KundServiceImp implements KundService {
     public String updateKund(KundDto k) {
         return null;
     }
-
-    @Override
-    public String deleteKund(long id) {
-        return null;
-    }
-
     @Override
     public KundDto checkIfKundExistByName(String name, String email, String telefon){
         KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
@@ -58,6 +57,34 @@ public class KundServiceImp implements KundService {
     public KundDto kundToKundDto(Kund k) {
         return KundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
     }
+
+    @Override
+    public DetailedKundDto kundToDetailedKundDto(Kund k) {
+//        return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
+//                .bokningDtos(k.getBokning()).build();
+        return null;
+    }
+    @Override
+    public boolean checkIfKundHasBokningar(Long kundId) {
+        Kund kund = kr.findById(kundId).orElse(null);
+        return kund!= null && !kund.getBokning().isEmpty();
+    }
+    @Override
+    public String deleteKund(long id) {
+        // Kontrollera om kunden har bokningar kopplade till sig
+        boolean hasBokningar = checkIfKundHasBokningar(id);
+        if (hasBokningar) {
+            return "Kunden har bokningar kopplade till sig och kan inte tas bort.";
+        } else {
+            try {
+                kr.deleteById(id);
+                return "Kunden har tagits bort.";
+            } catch (Exception e) {
+                return "Ett fel uppstod vid borttagning av kunden.";
+            }
+        }
+    }
+
     /*private final KundRepo kr;
     private final BokningService bokningService;
 

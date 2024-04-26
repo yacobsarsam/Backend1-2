@@ -1,15 +1,14 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +18,7 @@ import java.util.List;
 public class KundController {
 
     private final KundService kundService;
+    private final BokningService bokningService;
 
    @RequestMapping("")
     public String getAllKunder(Model model){
@@ -32,17 +32,30 @@ public class KundController {
         public List<KundDto> getAllKunder(){
         return kundService.getAllKunder();
         }*/
-
-    @PostMapping("/add")
-    public String addKund(@RequestBody Kund kund){
-        return kundService.addKund(kund);
+    @GetMapping("/showBokingarById/{id}")
+    public String showBookingDetails(@PathVariable Long id, Model model) {
+        DetailedBokningDto booking = bokningService.getBookingDetailsById(id);
+        model.addAttribute("booking", booking);
+        return "bookingDetails.html";
     }
-
+    @PostMapping("/registreraNyKund")
+    public String createKund(@ModelAttribute KundDto kundDto) {
+        Kund kund = kundService.kundDtoToKund(kundDto);
+        kundService.addKund(kund);
+        return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
+    }
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
-    @RequestMapping("/delete/{id}")
-    public String deleteKund(@PathVariable Long id){
-        return kundService.deleteKund(id);
+    @RequestMapping("/deleteById/{id}") //kollar först om kunden har bokningar annars raderas den om knappen trycks
+    public String deleteKund(@PathVariable Long id) {
+        boolean hasBokningar = kundService.checkIfKundHasBokningar(id);
+        if (hasBokningar) {
+            return "redirect:/kunder";
+        } else {
+            kundService.deleteKund(id);
+            return "redirect:/kunder";
+        }
     }
+
 
     //TODO saknas kommande metoder från Service klasserna
 }

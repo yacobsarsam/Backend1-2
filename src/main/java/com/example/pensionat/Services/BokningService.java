@@ -16,6 +16,7 @@ public interface BokningService {
     public List<DetailedBokningDto> getAllBokningar();
     //public String addBokning(Bokning b);
     public String updateBokning(BokningDto b);
+    DetailedBokningDto getBookingDetailsById(Long id);
     public String deleteBokning(long id);
     public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
 
