@@ -26,9 +26,9 @@ public class KundServiceImp implements KundService {
     public List<DetailedKundDto> getAllKunder2() {
         return kr.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
-
     @Override
     public String addKund(Kund k) {
+        kr.save(k);
         return null;
     }
 

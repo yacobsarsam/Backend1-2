@@ -38,11 +38,12 @@ public class KundController {
         model.addAttribute("booking", booking);
         return "bookingDetails.html";
     }
-    @PostMapping("/add")
-    public String addKund(@RequestBody Kund kund){
-        return kundService.addKund(kund);
+    @PostMapping("/registreraNyKund")
+    public String createKund(@ModelAttribute KundDto kundDto) {
+        Kund kund = kundService.kundDtoToKund(kundDto);
+        kundService.addKund(kund);
+        return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
     }
-
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
     @RequestMapping("/delete/{id}")
     public String deleteKund(@PathVariable Long id){
