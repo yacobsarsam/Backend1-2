@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Details</title>
+</head>
+<body>
+<h2>Booking Details</h2>
+<p>ID: <span th:text="${booking.id}"></span></p>
+<p>Start Date: <span th:text="${booking.startdatum}"></span></p>
+<p>End Date: <span th:text="${booking.slutdatum}"></span></p>
+<p>Number of Beds: <span th:text="${booking.numOfBeds}"></span></p>
+</body>
+</html>
