@@ -36,12 +36,6 @@ public class KundServiceImp implements KundService {
     public String updateKund(KundDto k) {
         return null;
     }
-
-    @Override
-    public String deleteKund(long id) {
-        return null;
-    }
-
     @Override
     public KundDto checkIfKundExistByName(String name, String email, String telefon){
         KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
@@ -69,6 +63,26 @@ public class KundServiceImp implements KundService {
 //        return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
 //                .bokningDtos(k.getBokning()).build();
         return null;
+    }
+    @Override
+    public boolean checkIfKundHasBokningar(Long kundId) {
+        Kund kund = kr.findById(kundId).orElse(null);
+        return kund!= null && !kund.getBokning().isEmpty();
+    }
+    @Override
+    public String deleteKund(long id) {
+        // Kontrollera om kunden har bokningar kopplade till sig
+        boolean hasBokningar = checkIfKundHasBokningar(id);
+        if (hasBokningar) {
+            return "Kunden har bokningar kopplade till sig och kan inte tas bort.";
+        } else {
+            try {
+                kr.deleteById(id);
+                return "Kunden har tagits bort.";
+            } catch (Exception e) {
+                return "Ett fel uppstod vid borttagning av kunden.";
+            }
+        }
     }
 
     /*private final KundRepo kr;

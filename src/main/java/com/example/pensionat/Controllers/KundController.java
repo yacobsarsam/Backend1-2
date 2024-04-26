@@ -45,10 +45,17 @@ public class KundController {
         return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
     }
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
-    @RequestMapping("/delete/{id}")
-    public String deleteKund(@PathVariable Long id){
-        return kundService.deleteKund(id);
+    @RequestMapping("/deleteById/{id}") //kollar först om kunden har bokningar annars raderas den om knappen trycks
+    public String deleteKund(@PathVariable Long id) {
+        boolean hasBokningar = kundService.checkIfKundHasBokningar(id);
+        if (hasBokningar) {
+            return "redirect:/kunder";
+        } else {
+            kundService.deleteKund(id);
+            return "redirect:/kunder";
+        }
     }
+
 
     //TODO saknas kommande metoder från Service klasserna
 }
