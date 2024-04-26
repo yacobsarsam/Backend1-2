@@ -3,9 +3,11 @@ package com.example.pensionat.Services.Imp;
 import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Dtos.RumDto;
 import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ public class RumServiceImp implements RumService {
     private final RumRepo rr;
     private final BokningRepo bokningRepo;
     private final RumRepo rumRepo;
+    private final KundService kundService;
 
 
     /*
@@ -95,6 +98,10 @@ public class RumServiceImp implements RumService {
 
      */
 
+    public Rum getRumById(Long id){
+        return rumRepo.findById(id).get();
+    }
+
     @Override
     public String deleteRum(long id) {
         Rum rum = rr.findById(id).get();
@@ -104,7 +111,9 @@ public class RumServiceImp implements RumService {
     }
 
     @Override
-    public String getAllAvailableRooms(String startDate, String endDate, String antalPersoner, Model model) {
+    public String getAllAvailableRooms(String name, String telNr, String email,
+                                       String startDate, String endDate, String antalPersoner, Model model) {
+        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
         int antalPersonerInt = Integer.parseInt(antalPersoner);
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersonerInt > 1;
@@ -137,7 +146,11 @@ public class RumServiceImp implements RumService {
         model.addAttribute("allRooms", sortedRooms);
         model.addAttribute("rubrik", "Lediga rum");
         model.addAttribute("roomType", roomType);
-
+        model.addAttribute("name", kund.getNamn());
+        model.addAttribute("telNr", kund.getTel());
+        model.addAttribute("email", kund.getEmail());
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
         //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
         //TODO Bryta ut till mindre metoder
         return "addBokning";
@@ -159,7 +172,6 @@ public class RumServiceImp implements RumService {
         System.out.println("Available room id's from getAvailableRoomsId: " + availableRooms);
         return availableRooms;
     }
-
     boolean roomIdExistInList(Long roomId, List<Long> nonAvailableID){
         return nonAvailableID.stream().anyMatch(id -> id.equals(roomId));
     }

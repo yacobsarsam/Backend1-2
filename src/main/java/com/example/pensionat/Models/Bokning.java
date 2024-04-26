@@ -29,11 +29,12 @@ public class Bokning {
     //yacoub comment bort @JoinColumn
     protected Rum rum;
 
-    public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum){
+    public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds){
         this.startdatum = startdatum;
         this.slutdatum = slutdatum;
         this.kund = kund;
         this.rum = rum;
+        this.numOfBeds = numOfBeds;
     }
 
 }

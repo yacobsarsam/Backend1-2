@@ -1,24 +1,32 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
-@RestController
-@RequestMapping("/bokningar")
+@Controller
+@RequestMapping(path = "bokningar")
 @RequiredArgsConstructor
 public class BokningController {
 
-    BokningRepo bokningRepo;
-    BokningService bokningService;
+    private final BokningRepo bokningRepo;
+    private final BokningService bokningService;
+    /*
     BokningController(BokningRepo bokningRepo, BokningService bokningService){
         this.bokningRepo = bokningRepo;
         this.bokningService = bokningService;
     }
+
+     */
 
     @RequestMapping("/")
     public List<Bokning> getAllBokningar(){
@@ -29,9 +37,9 @@ public class BokningController {
 
 
     @PostMapping("/add")
-    public String addBokning(@RequestBody Bokning bokning){
-        //TODO inväntar service-klassens funktion
-        return null;
+    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds){
+        System.out.println("Num of beds in /add " + numOfBeds);
+        return bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
     }
 
     @DeleteMapping("/delete/{id}")
