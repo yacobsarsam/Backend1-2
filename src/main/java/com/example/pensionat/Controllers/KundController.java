@@ -1,6 +1,8 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
+import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
@@ -34,12 +36,21 @@ public class KundController {
         public List<KundDto> getAllKunder(){
         return kundService.getAllKunder();
         }*/
-    @GetMapping("/showBokingarById/{id}")
+/*    @GetMapping("/showBokingarById/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model) {
         DetailedBokningDto booking = bokningService.getBookingDetailsById(id);
         model.addAttribute("booking", booking);
         return "bookingDetails.html";
+    }*/
+
+    @GetMapping("/showBokingarById/{id}")
+    public String showBookingDetails(@PathVariable Long id, Model model) {
+        DetailedKundDto k = kundService.kundToDetailedKundDto(kundRepo.findById(id).get());
+        List <BokningDto> allabokningar = k.getBokningDtos();
+        model.addAttribute("allabokningar", allabokningar);
+        return "visabokningperkund.html";
     }
+
     @PostMapping("/registreraNyKund")
     public String createKund(@ModelAttribute KundDto kundDto) {
         Kund kund = kundService.kundDtoToKund(kundDto);

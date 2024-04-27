@@ -13,6 +13,7 @@ import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -80,8 +81,11 @@ public class BokningServiceImp implements BokningService {
 
 
     @Override
-    public String updateBokning(BokningDto b) {
-        return null;
+    public String updateBokning(DetailedBokningDto b) {
+        Model model = null;
+        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
+        return "addBokning";
     }
 
     @Override

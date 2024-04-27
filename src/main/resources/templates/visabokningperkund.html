@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head>
+        <meta charset="UTF-8">
+        <title>Mina bokningar</title>
+</head>
+<body>
+
+<h2>Mina bokningar</h2>
+<!-- Visa denna div om det inte finns bokningar-->
+<div class="all_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
+    <p>Du har inga registrerade bokningar</p>
+</div>
+<!-- Visa denna div om det finns bokningar-->
+<div class="all_bokningar" th:unless=" ${#lists.isEmpty(allabokningar)}">
+    <table>
+        <tr >
+            <td>Startdatum</td>
+            <td>Slutdatum</td>
+            <td>Antal sängar</td>
+            <td>Ändra bokning</td>
+        </tr>
+        <tr th:each="bokning:${allabokningar}">
+            <th th:text="${bokning.startdatum}"></th>
+            <th th:text="${bokning.slutdatum}"></th>
+            <th th:text="${bokning.numOfBeds}"></th>
+            <th><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></th>
+        </tr>
+    </table>
+</div>
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>
