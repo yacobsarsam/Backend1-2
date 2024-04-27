@@ -3,6 +3,7 @@ package com.example.pensionat.Controllers;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping(path = "kunder")
 public class KundController {
 
+    private final KundRepo kundRepo;
     private final KundService kundService;
     private final BokningService bokningService;
 
@@ -45,6 +47,8 @@ public class KundController {
         return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
     }
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
+    //TODO MÅSTE uppdattera funktionen och kolla att bokningarna är framtida och inte utgått,
+    // dvs matcha bokningarnas datum mot dagens datum
     @RequestMapping("/deleteById/{id}") //kollar först om kunden har bokningar annars raderas den om knappen trycks
     public String deleteKund(@PathVariable Long id) {
         boolean hasBokningar = kundService.checkIfKundHasBokningar(id);
@@ -55,7 +59,19 @@ public class KundController {
             return "redirect:/kunder";
         }
     }
-
+    @RequestMapping("/editById/{id}")
+    public String EditKundInfo(@PathVariable Long id, Model model) {
+        Kund k = kundService.updateKund(id);
+        model.addAttribute("updatekund",k);
+        return "updatekund";
+    }
+    @PostMapping("/update")
+    public String updateKundinfo(Model model, Kund k){
+        kundService.addKund(k);
+        List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
+        model.addAttribute("allakunder", allaKunder);
+        return "redirect:/kunder";
+    }
 
     //TODO saknas kommande metoder från Service klasserna
 }
