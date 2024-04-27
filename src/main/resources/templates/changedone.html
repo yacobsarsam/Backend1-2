@@ -10,34 +10,9 @@
 
 <form action="#" th:action="@{/kunder}" th:object="${updatekund}" method="post">
 
-
     <h2>Ändringen lyckades genomföras!</h2>
     <input type="submit" value="Ok">
 </form>
 
-<p>--------------------------------------------------</p>
-<!-- Visa alla kunder-->
-<h2>Alla registrerade kunder</h2>
-<!-- Visa denna div om det inte finns kunder-->
-<div class="all_customers" th:if="${#lists.isEmpty(allakunder)}">
-    <p>Det finns inga registrerade kunder</p>
-</div>
-<!-- Visa denna div om det finns kunder-->
-<div class="all_customers" th:unless=" ${#lists.isEmpty(allakunder)}">
-<table>
-    <tr >
-        <td>Kund namn</td>
-        <td>Alla bokningar</td>
-        <td>Ändra bokning</td>
-        <td>Delete bokning</td>
-    </tr>
-    <tr th:each="kund:${allakunder}">
-        <th th:text="${kund.namn}"></th>
-        <th><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></th>
-        <th><a th:href="@{/kunder/editById/{id}(id=${kund.id})}">Ändra</a></th>
-        <th><a th:href="@{/kunder/delete/{id}(id=${kund.id})}">Delete</a></th>
-    </tr>
-</table>
-</div>
 </body>
 </html>

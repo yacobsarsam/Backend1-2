@@ -46,6 +46,14 @@ public class KundController {
         kundService.addKund(kund);
         return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
     }
+
+    //skapar kund från sidan "visakunder / Visa alla kunder" (utan bokning)
+    @PostMapping("/create")
+    public String createKundutanbokning(@RequestParam String namn, @RequestParam String tel, @RequestParam String email) {
+        Kund kund = new Kund(namn, tel, email);
+        kundService.addKund(kund);
+        return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
+    }
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
     //TODO MÅSTE uppdattera funktionen och kolla att bokningarna är framtida och inte utgått,
     // dvs matcha bokningarnas datum mot dagens datum
