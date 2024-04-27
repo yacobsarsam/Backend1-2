@@ -4,6 +4,7 @@ import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
+import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
@@ -45,16 +46,16 @@ public class KundController {
 
     @GetMapping("/showBokingarById/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model) {
-        DetailedKundDto k = kundService.kundToDetailedKundDto(kundRepo.findById(id).get());
-        List <BokningDto> allabokningar = k.getBokningDtos();
+        List <BokningDto> allabokningar = bokningService.getAllBokningarbyId(id);
         model.addAttribute("allabokningar", allabokningar);
         return "visabokningperkund.html";
     }
 
     @PostMapping("/registreraNyKund")
     public String createKund(@ModelAttribute KundDto kundDto) {
-        Kund kund = kundService.kundDtoToKund(kundDto);
-        kundService.addKund(kund);
+        kundService.checkIfKundExistByName(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel());
+        //Kund kund = kundService.kundDtoToKund(kundDto);
+        //kundService.addKund(kund);
         return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
     }
 
