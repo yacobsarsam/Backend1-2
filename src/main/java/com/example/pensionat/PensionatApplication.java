@@ -48,8 +48,10 @@ public class PensionatApplication {
 
             Kund k1 = new Kund("Test", "123456789", "test@mail.com");
             Kund k2 = new Kund("Test2", "123456789", "test2@mail.com");
+            Kund k3 = new Kund("Test3", "133456789", "test3@mail.com");
             kundRepo.save(k1);
             kundRepo.save(k2);
+            kundRepo.save(k3);
 
             Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3), 0);
             Bokning b2 = new Bokning(k2,r5, LocalDate.now(), LocalDate.now().plusDays(3), 1);

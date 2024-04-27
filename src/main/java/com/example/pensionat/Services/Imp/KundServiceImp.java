@@ -33,8 +33,9 @@ public class KundServiceImp implements KundService {
     }
 
     @Override
-    public String updateKund(KundDto k) {
-        return null;
+    public Kund updateKund(long id) {
+        Kund k =kr.findById(id).get();
+                return k;
     }
     @Override
     public KundDto checkIfKundExistByName(String name, String email, String telefon){
