@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alla kunder</title>
+</head>
+<body>
+<!-- Uppdatera kundinfo -->
+<h2>Uppdatera kundinfo</h2>
+
+<form action="#" th:action="@{/kunder/update}" th:object="${updatekund}" method="post">
+    <label for="name">Name:  </label>
+    <input type="text" id="name" name="name" th:field="*{namn}" ><br>
+
+    <label for="email">E-post:</label>
+    <input type="email" id="email" name="email" th:field="*{email}"><br>
+
+    <label for="tel">Mobil: </label>
+    <input type="tel" id="tel" name="tel" th:field="*{tel}">
+    <input type=hidden id="id" name="tel" th:field="*{id}">
+
+    <br><br>
+    <input type="submit" value="Uppdatera kundinfo">
+</form>
+
+</table>
+</div>
+</body>
+</html>
