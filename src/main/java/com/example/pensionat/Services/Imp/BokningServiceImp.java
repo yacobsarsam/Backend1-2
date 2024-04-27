@@ -93,14 +93,15 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public String deleteBokning(long id) {
-        Bokning b = br.findById(id).get();
-        if (b != null){
-            br.deleteById(id);
+        Optional<Bokning> optionalBokning = br.findById(id);
+        if (optionalBokning.isPresent()) {
+            Bokning bokning = optionalBokning.get();
+            br.delete(bokning);
             return "Bokningen borttagen";
+        } else {
+            return "Bokningen hittas inte";
         }
-        return "Bokningen hittas inte";
     }
-
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
         KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);

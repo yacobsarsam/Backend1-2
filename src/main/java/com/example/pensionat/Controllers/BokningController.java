@@ -45,10 +45,10 @@ public class BokningController {
         return "bookingDetails";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteBokning(@PathVariable Long id){
-        //TODO inväntar service-klassens funktion
-        return null;
+    @PostMapping("/delete/{id}")
+    public String deleteBokning(@PathVariable Long id) {
+        bokningService.deleteBokning(id);
+        return "visabokningperkund";
     }
 
     //TODO saknas mappings för att uppdatera en bokning, behöver kika på hur vi hanterar datumen i Boknings modellen
