@@ -1,9 +1,12 @@
 package com.example.pensionat.Services.Imp;
 
+import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
+import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -61,15 +64,19 @@ public class KundServiceImp implements KundService {
 
     @Override
     public DetailedKundDto kundToDetailedKundDto(Kund k) {
-//        return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
-//                .bokningDtos(k.getBokning()).build();
-        return null;
+        return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
+                .bokningDtos(k.getBokning().stream().map(b -> bokningToBokningDto(b)).toList()).build();
+    }
+    public BokningDto bokningToBokningDto(Bokning b) {
+        return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
+                slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds()).build();
     }
     @Override
     public boolean checkIfKundHasBokningar(Long kundId) {
         Kund kund = kr.findById(kundId).orElse(null);
         return kund!= null && !kund.getBokning().isEmpty();
     }
+
     @Override
     public String deleteKund(long id) {
         // Kontrollera om kunden har bokningar kopplade till sig

@@ -13,6 +13,7 @@ import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -69,7 +70,10 @@ public class BokningServiceImp implements BokningService {
         return br.findAll().stream().map(bok -> bokningToDetailedBokningDto(bok)).toList();
     }
 
-
+    @Override
+    public List<BokningDto> getAllBokningarbyId(Long id) {
+        return br.findAll().stream().filter(b -> b.getKund().getId() == id).map(bok -> BokningToBokningDto(bok)).toList();
+    }
     /* Kommenterar ut denna för tillfället då jag har samma länkad till thymeleaf
     @Override
     public String addBokning(Bokning b) {
@@ -80,8 +84,11 @@ public class BokningServiceImp implements BokningService {
 
 
     @Override
-    public String updateBokning(BokningDto b) {
-        return null;
+    public String updateBokning(DetailedBokningDto b) {
+        Model model = null;
+        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
+        return "addBokning";
     }
 
     @Override
@@ -95,12 +102,12 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
+    public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
         KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
         br.save(b);
-        return "Bokning gjord";
+        return b;
     }
 }

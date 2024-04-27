@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mina bokningar</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<h2>Mina bokningar</h2>
+<!-- Visa denna div om det inte finns bokningar-->
+<div class="alla_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
+    <p>Du har inga registrerade bokningar</p>
+</div>
+<!-- Visa denna div om det finns bokningar-->
+<div class="alla_bokningar" th:unless=" ${#lists.isEmpty(allabokningar)}">
+
+    <table>
+        <tr >
+            <td>Startdatum</td>
+            <td>Slutdatum</td>
+            <td>Antal sängar</td>
+            <td>Ändra bokning</td>
+        </tr>
+        <tr th:each="bokning:${allabokningar}">
+            <th th:text="${bokning.startdatum}"></th>
+            <th th:text="${bokning.slutdatum}"></th>
+            <th th:text="${bokning.numOfBeds}"></th>
+
+            <!-- länka till en ändra bokningssida -->
+            <th><a th:href="@{/book}">Ändra bokning</a></th>
+
+        </tr>
+    </table>
+</div>
+</body>
+</html></title>
+</head>
+<body>
+</body>
+</html>

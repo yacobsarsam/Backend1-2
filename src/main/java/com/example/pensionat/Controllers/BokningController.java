@@ -38,9 +38,11 @@ public class BokningController {
 
 
     @PostMapping("/add")
-    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds){
+    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds, Model model){
         System.out.println("Num of beds in /add " + numOfBeds);
-        return bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
+        Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
+        model.addAttribute("booking", b);
+        return "bookingDetails";
     }
 
     @DeleteMapping("/delete/{id}")

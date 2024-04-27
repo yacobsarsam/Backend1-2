@@ -4,6 +4,7 @@ import com.example.pensionat.Dtos.*;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
+import org.springframework.ui.Model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,10 +16,10 @@ public interface BokningService {
     public DetailedBokningDto bokningToDetailedBokningDto(Bokning b);
     public List<DetailedBokningDto> getAllBokningar();
     //public String addBokning(Bokning b);
-    public String updateBokning(BokningDto b);
+    public String updateBokning(DetailedBokningDto b);
     DetailedBokningDto getBookingDetailsById(Long id);
     public String deleteBokning(long id);
-    public String newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
-
+    public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
+    public List<BokningDto> getAllBokningarbyId(Long id);
     String addBokning();
 }
