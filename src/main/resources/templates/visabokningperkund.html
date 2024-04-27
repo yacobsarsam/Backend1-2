@@ -10,6 +10,10 @@
 
 </head>
 <body>
+<div class="container">
+<nav class="navbar">
+    <button class="navButton"><a th:href="@{/kunder}" >Gå tillbaka</a></button>
+</nav>
 <h2>Mina bokningar</h2>
 <!-- Visa denna div om det inte finns bokningar-->
 <div class="alla_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
@@ -35,6 +39,7 @@
 
         </tr>
     </table>
+</div>
 </div>
 </body>
 </html></title>
