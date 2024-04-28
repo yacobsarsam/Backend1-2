@@ -1,14 +1,15 @@
 package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -41,6 +42,7 @@ public class BokningController {
     public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds, Model model){
         System.out.println("Num of beds in /add " + numOfBeds);
         Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
+        //DetailedBokningDto bdto = DetailedBokningDto.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         model.addAttribute("booking", b);
         return "bookingDetails";
     }

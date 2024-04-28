@@ -1,10 +1,7 @@
 package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Dtos.BokningDto;
-import com.example.pensionat.Dtos.DetailedBokningDto;
-import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
-import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
@@ -67,10 +64,12 @@ public class KundController {
     public String deleteKund(@PathVariable Long id) {
         boolean hasBokningar = kundService.checkIfKundHasBokningar(id);
         if (hasBokningar) {
-            return "redirect:/kunder";
+            return "changenotdone";
+            //return "redirect:/kunder";
         } else {
             kundService.deleteKund(id);
-            return "redirect:/kunder";
+            return "changedone";
+            //return "redirect:/kunder";
         }
     }
     @RequestMapping("/editById/{id}")
@@ -84,7 +83,8 @@ public class KundController {
         kundService.addKund(k);
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
-        return "redirect:/kunder";
+        return "changedone";
+        //return "redirect:/kunder";
     }
 
     //TODO saknas kommande metoder från Service klasserna

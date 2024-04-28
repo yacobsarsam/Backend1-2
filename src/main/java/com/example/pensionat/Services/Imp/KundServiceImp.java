@@ -6,7 +6,6 @@ import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Repositories.KundRepo;
-import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -74,6 +73,7 @@ public class KundServiceImp implements KundService {
     @Override
     public boolean checkIfKundHasBokningar(Long kundId) {
         Kund kund = kr.findById(kundId).orElse(null);
+       // DetailedKundDto detailedKundDto = DetailedKundDto.kundToDetailedKundDto(kund);
         return kund!= null && !kund.getBokning().isEmpty();
     }
 
