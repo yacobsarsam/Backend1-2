@@ -1,6 +1,6 @@
 package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Dtos.DetailedRumDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
@@ -18,21 +18,27 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BokningController {
 
-    private final BokningRepo bokningRepo;
+
     private final BokningService bokningService;
-    /*
-    BokningController(BokningRepo bokningRepo, BokningService bokningService){
-        this.bokningRepo = bokningRepo;
-        this.bokningService = bokningService;
+
+    //    private final BokningRepo bokningRepo;
+    //    BokningController(BokningRepo bokningRepo, BokningService bokningService){
+    //        this.bokningRepo = bokningRepo;
+    //        this.bokningService = bokningService;
+    //    }
+
+    @GetMapping("/updateBokning/{id}")
+    public String showBookingDetails(@PathVariable Long id, Model model) {
+        DetailedBokningDto booking = bokningService.getBookingDetailsById(id);
+        model.addAttribute("booking", booking);
+        return "updateBooking.html";
     }
 
-
-     */
-
-    @RequestMapping("/")
-    public List<Bokning> getAllBokningar(){
-        //TODO inväntar service-klassens funktion
-        return null;
+    @RequestMapping("")
+    public String getAllBokningar(Model model){
+        List<DetailedBokningDto> allBookings = bokningService.getAllBokningar();
+        model.addAttribute("allBookings", allBookings);
+        return "visaBokningar.html";
     }
 
 

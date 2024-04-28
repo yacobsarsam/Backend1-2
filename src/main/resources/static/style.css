@@ -127,3 +127,11 @@ body{
 .book-button:hover{
     background-color: slategrey;
 }
+form {
+    margin: 0 auto;
+    width:400px;
+}
+
+.paddingBetweenCols td {
+    padding: 0 15px;
+}
