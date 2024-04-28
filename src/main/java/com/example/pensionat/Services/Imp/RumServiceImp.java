@@ -114,12 +114,11 @@ public class RumServiceImp implements RumService {
 
     @Override
     public String getAllAvailableRooms(String name, String telNr, String email,
-                                       String startDate, String endDate, String antalPersoner, Model model) {
+                                       String startDate, String endDate, int antalPersoner, Model model) {
         Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
-        int antalPersonerInt = Integer.parseInt(antalPersoner);
         //Kolla vilken storlek på rum som kan visas
-        boolean needsDouble = antalPersonerInt > 1;
-        int neededSize = antalPersonerInt - 1;
+        boolean needsDouble = antalPersoner > 1;
+        int neededSize = antalPersoner - 1;
         String roomType;
         if (needsDouble){
             roomType = "Dubbelrum";
@@ -153,6 +152,7 @@ public class RumServiceImp implements RumService {
         model.addAttribute("email", kund.getEmail());
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
+        model.addAttribute("antalPersoner", antalPersoner);
         //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
         //TODO Bryta ut till mindre metoder
         return "addBokning";
