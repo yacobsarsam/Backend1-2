@@ -1,7 +1,10 @@
 package com.example.pensionat.Services.Imp;
 
 
-import com.example.pensionat.Dtos.*;
+import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
+import com.example.pensionat.Dtos.KundDto;
+import com.example.pensionat.Dtos.RumDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -25,6 +28,7 @@ public class BokningServiceImp implements BokningService {
 
     private final BokningRepo br;
     private final RumRepo rumRepo;
+    private final KundRepo kundRepo;
 
     private final KundService kundService;
     private final RumService rumService;
@@ -106,8 +110,14 @@ public class BokningServiceImp implements BokningService {
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
         KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
+
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
+//        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
+//        List<Bokning> kundbokningar = kund.getBokning();
+//        kundbokningar.add(bUtanKund);
+//        kund.setBokning(kundbokningar);
+//        kundRepo.save(kund);
         br.save(b);
         return b;
     }

@@ -25,12 +25,19 @@ public class Kund {
     protected String tel;
     protected String email;
 
-    @OneToMany
+    @OneToMany(mappedBy = "kund")
     protected List<Bokning> bokning;
 
     public Kund(String namn, String tel, String email){
         this.namn = namn;
         this.tel = tel;
         this.email = email;
+    }
+
+    public Kund(String namn, String tel, String email, List<Bokning> emptyList) {
+        this.namn = namn;
+        this.tel = tel;
+        this.email = email;
+        this.bokning=emptyList;
     }
 }
