@@ -23,7 +23,7 @@ public class BokningsViewController {
     @GetMapping("book/viewRooms")
     public String showAllRooms(@RequestParam String namn, @RequestParam String telNr, @RequestParam String email,
                                @RequestParam String startDate, @RequestParam String endDate,
-                               @RequestParam String antalPersoner, Model model){
+                               @RequestParam int antalPersoner, Model model){
         return rumService.getAllAvailableRooms(namn, telNr, email, startDate, endDate, antalPersoner, model);
     }
 }

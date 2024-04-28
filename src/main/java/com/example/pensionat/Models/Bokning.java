@@ -36,5 +36,10 @@ public class Bokning {
         this.rum = rum;
         this.numOfBeds = numOfBeds;
     }
-
+    public Bokning( Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds){
+        this.startdatum = startdatum;
+        this.slutdatum = slutdatum;
+        this.rum = rum;
+        this.numOfBeds = numOfBeds;
+    }
 }
