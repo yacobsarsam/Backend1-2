@@ -91,8 +91,8 @@ public class BokningServiceImp implements BokningService {
     public String updateBokning(DetailedBokningDto b) {
         Model model = null;
         rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
-                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
-        return "addBokning";
+                b.getStartdatum(), b.getSlutdatum(), b.getNumOfBeds(), model);
+        return "changeBooking";
     }
 
     @Override

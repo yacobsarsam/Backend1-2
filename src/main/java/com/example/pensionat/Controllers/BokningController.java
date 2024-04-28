@@ -21,6 +21,7 @@ public class BokningController {
 
     private final BokningRepo bokningRepo;
     private final BokningService bokningService;
+    private final KundController kundController;
     /*
     BokningController(BokningRepo bokningRepo, BokningService bokningService){
         this.bokningRepo = bokningRepo;
@@ -48,9 +49,9 @@ public class BokningController {
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteBokning(@PathVariable Long id) {
+    public String deleteBokning(@PathVariable Long id, Model model) {
         bokningService.deleteBokning(id);
-        return "visabokningperkund";
+        return kundController.showBookingDetails(id, model);
     }
 
     //TODO saknas mappings för att uppdatera en bokning, behöver kika på hur vi hanterar datumen i Boknings modellen
