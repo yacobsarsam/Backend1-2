@@ -32,7 +32,8 @@ body{
     text-align: center;
     margin: auto;
     width: 600px;
-    height: 700px;
+    min-height: 700px;
+    height: auto;
     display: flex;
     flex-direction: column;
     border: 2px solid dimgrey;
