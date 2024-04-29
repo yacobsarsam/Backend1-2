@@ -28,7 +28,7 @@
         <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
         <br><br>
         <input type="hidden" name="bokId" th:value="${booking.id}">
-        <input class="book-button" type="submit" value="Sök lediga rum">
+        <button class="book-button" type="submit" >Sök lediga rum</button>
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
         <h3 th:text="${rubrik}" ></h3>

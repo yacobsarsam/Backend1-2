@@ -99,8 +99,10 @@ public class BokningServiceImp implements BokningService {
 //    }
 
     @Override
-    public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
-        Bokning b = getBookingDetailsById(id);
+    public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
+        System.out.println("bokningsId är: " + bokId);
+        Bokning b = getBookingDetailsById(bokId);
+        System.out.println("rumsId är: " + rumId);
         Rum r = rumService.getRumById(rumId);
         b.setRum(r);
         b.setStartdatum(startDate);
@@ -169,6 +171,7 @@ public class BokningServiceImp implements BokningService {
         model.addAttribute("roomType", roomType);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
+        model.addAttribute("numOfBeds", antalPersonerInt);
         //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
         //TODO Bryta ut till mindre metoder
         return "updateBooking";

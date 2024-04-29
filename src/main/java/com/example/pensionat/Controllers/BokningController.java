@@ -34,19 +34,17 @@ public class BokningController {
     @GetMapping("/updateBokning/{id}")
     public String updateInfo(@PathVariable Long id, Model model) {
         Bokning booking = bokningService.getBookingDetailsById(id);
-        List<DetailedBokningDto> allBookings = bokningService.getAllBokningar();
         model.addAttribute("booking", booking);
-        model.addAttribute("allBookings", allBookings);
-        //nåt fel här
         return "updateBooking.html";
     }
 
     @PostMapping("/update")
-    public String makeBookingUpdate(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId, Model model){
+    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int numOfBeds, Model model){
         System.out.println("Num of beds in /add " + numOfBeds);
-        Bokning b = bokningService.updateBokning(id, startDate, endDate, numOfBeds, rumId);
+        Bokning b = bokningService.updateBokning(bokId, startDate, endDate, numOfBeds, rumId);
 
         model.addAttribute("booking", b);
+        model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
         return "bookingDetails";
     }
 
