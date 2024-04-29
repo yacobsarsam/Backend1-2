@@ -33,7 +33,7 @@
                 <th th:text="${bokning.startdatum}"></th>
                 <th th:text="${bokning.slutdatum}"></th>
                 <th th:text="${bokning.numOfBeds}"></th>
-                <th><a th:href="@{/book}">Ändra bokning</a></th>
+                <th><a th:href="@{/bokningar/updateBokning/{id}(id=${bokning.id})}">Ändra bokning</a></th>
                 <td>
                 <td>
                     <form method="post" th:action="@{/bokningar/delete/{id}(id=${bokning.id})}"onsubmit="return confirm('Är du säker på att du vill ta bort bokningen?')">>
