@@ -40,17 +40,19 @@ public class KundServiceImp implements KundService {
                 return k;
     }
     @Override
-    public KundDto checkIfKundExistByName(String name, String email, String telefon){
-        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
+    public KundDto checkIfKundExistByEmail(String name, String email, String telefon){
+        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getEmail(), email)).findFirst().orElse(null);
         if(kundDto == null){
             Kund k = new Kund(name, telefon, email);
             kr.save(k);
             return kundToKundDto(k);
         }
         else{
+
             return kundDto;
         }
     }
+
 
     @Override
     public Kund kundDtoToKund(KundDto k) {
@@ -97,6 +99,8 @@ public class KundServiceImp implements KundService {
     public Kund getKundById(Long id) {
         return kr.findById(id).orElse(null);
     }
+
+
 
     /*private final KundRepo kr;
     private final BokningService bokningService;

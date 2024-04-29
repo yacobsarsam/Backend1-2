@@ -17,7 +17,6 @@ import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -146,7 +145,7 @@ public class BokningServiceImp implements BokningService {
     }
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
-        KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
+        KundDto kundDto = kundService.checkIfKundExistByEmail(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);

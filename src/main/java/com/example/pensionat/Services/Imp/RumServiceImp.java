@@ -126,7 +126,7 @@ public class RumServiceImp implements RumService {
             return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
         }
 
-        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
+        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByEmail(name, email, telNr));
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersoner > 1;
         int neededSize = antalPersoner - 1;
