@@ -17,11 +17,11 @@
     </nav>
     <form action="/book/viewRooms" method="get" class="form-container">
         <label for="namn">Namn:</label>
-        <input class="text-input" type="text" id="namn" name="namn" th:value="${name}">
+        <input class="text-input" type="text" id="namn" name="namn" th:value="${name}" placeholder="För- & efternamn">
         <label for="telNr">Telefonnummer:</label>
-        <input class="text-input" type="tel" id="telNr" name="telNr" th:value="${telNr}">
+        <input class="text-input" type="tel" id="telNr" name="telNr" th:value="${telNr}" placeholder="Ditt 10-siffriga telefonnummer">
         <label for="email">Email:</label>
-        <input class="text-input" type="email" id="email" name="email" th:value="${email}">
+        <input class="text-input" type="email" id="email" name="email" th:value="${email}" placeholder="Din email-address">
         <hr>
         <div class="date-container">
             <label for="startDate">Från:</label>

@@ -115,8 +115,14 @@ public class RumServiceImp implements RumService {
     @Override
     public String getAllAvailableRooms(String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
-        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
         String felmeddelande;
+        if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)){
+            felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
+            model.addAttribute("felmeddelande", felmeddelande);
+            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+        }
+
+        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersoner > 1;
         int neededSize = antalPersoner - 1;
@@ -193,5 +199,23 @@ public class RumServiceImp implements RumService {
     }
     boolean roomIdExistInList(Long roomId, List<Long> nonAvailableID){
         return nonAvailableID.stream().anyMatch(id -> id.equals(roomId));
+    }
+
+    boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email){
+        if (name.trim().isEmpty()){
+            return false;
+        } else if (telnr.trim().length() < 10 && !telnr.trim().matches("[0-9+-}+]")) {
+            return false;
+        } else return !email.trim().isEmpty();
+    }
+
+    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model){
+        model.addAttribute("name", name);
+        model.addAttribute("telNr", telnr);
+        model.addAttribute("email", email);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("antalPersoner", antalPersoner);
+        return "addBokning";
     }
 }
