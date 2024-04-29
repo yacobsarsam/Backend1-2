@@ -40,8 +40,8 @@ public class KundServiceImp implements KundService {
                 return k;
     }
     @Override
-    public KundDto checkIfKundExistByName(String name, String email, String telefon){
-        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
+    public KundDto checkIfKundExistByEmail(String name, String email, String telefon){
+        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getEmail(), email)).findFirst().orElse(null);
         if(kundDto == null){
             Kund k = new Kund(name, telefon, email);
             kr.save(k);
