@@ -19,6 +19,7 @@
             <td>Boknings id</td>
             <td>Kund</td>
             <td>Rumsnummer</td>
+            <td>Antal personer</td>
             <td>Startdatum</td>
             <td>Slutdatum</td>
         </tr>
@@ -26,6 +27,7 @@
             <td th:text="${book.id}"></td>
             <td th:text="${book.kund.namn}"></td>
             <td th:text="${book.rum.rumsnr}"></td>
+            <td th:text="${book.numOfBeds}"></td>
             <td th:text="${book.startdatum}"></td>
             <td th:text="${book.slutdatum}"></td>
         </tr>

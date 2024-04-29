@@ -15,7 +15,7 @@
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/index}">Home</a></button>
     </nav>
-    <form>
+    <form action="/book/update/viewRooms" method="get" class="form-container">
         <h4>Ändra bokning</h4>
         <div class="date-container">
             <label for="startDate" >Från:&nbsp;</label>
@@ -27,6 +27,7 @@
         <label for="antalPersoner">Antal personer:</label>
         <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
         <br><br>
+        <input type="hidden" name="bokId" th:value="${booking.id}">
         <input class="book-button" type="submit" value="Sök lediga rum">
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
@@ -39,6 +40,7 @@
                         <label for="numOfBeds">Extrasäng</label>
                         <input type="number" id="numOfBeds" name="numOfBeds" th:max="${room.storlek - 1}" min="0" value="0">
                     </div>
+                    <input type="hidden" name="bokId" th:value="${booking.id}">
                     <input type="hidden" name="rumId" th:value="${room.id}">
                     <input type="hidden" name="namn" th:value="${name}">
                     <input type="hidden" name="telNr" th:value="${telNr}">

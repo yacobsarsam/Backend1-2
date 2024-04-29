@@ -32,9 +32,12 @@ public class BokningController {
     //    }
 
     @GetMapping("/updateBokning/{id}")
-    public String showBookingDetails(@PathVariable Long id, Model model) {
+    public String updateInfo(@PathVariable Long id, Model model) {
         Bokning booking = bokningService.getBookingDetailsById(id);
+        List<DetailedBokningDto> allBookings = bokningService.getAllBokningar();
         model.addAttribute("booking", booking);
+        model.addAttribute("allBookings", allBookings);
+        //nåt fel här
         return "updateBooking.html";
     }
 

@@ -131,8 +131,9 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public String getAllAvailableRooms(Long id, String startDate, String endDate,
+    public String getAllAvailableRooms(Long bokId, Long rumId, String startDate, String endDate,
                                        String antalPersoner, Model model) {
+        Bokning booking = getBookingDetailsById(bokId);
         int antalPersonerInt = Integer.parseInt(antalPersoner);
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersonerInt > 1;
@@ -163,6 +164,7 @@ public class BokningServiceImp implements BokningService {
             System.out.println("Inga eller bara ett datum valdes");
         }
         model.addAttribute("allRooms", sortedRooms);
+        model.addAttribute("booking", booking);
         model.addAttribute("rubrik", "Lediga rum");
         model.addAttribute("roomType", roomType);
         model.addAttribute("startDate", startDate);
