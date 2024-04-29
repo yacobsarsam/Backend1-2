@@ -17,7 +17,7 @@ public class Bokning {
 
     @Id
     @GeneratedValue
-    protected long id;
+    protected Long id;
     protected LocalDate startdatum;
     protected LocalDate slutdatum;
     protected int numOfBeds;

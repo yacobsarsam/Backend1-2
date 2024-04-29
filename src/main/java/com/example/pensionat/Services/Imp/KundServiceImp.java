@@ -66,6 +66,7 @@ public class KundServiceImp implements KundService {
         return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
                 .bokningDtos(k.getBokning().stream().map(b -> bokningToBokningDto(b)).toList()).build();
     }
+
     public BokningDto bokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds()).build();
