@@ -14,7 +14,7 @@
 
 <div class="container">
   <nav class="navbar">
-    <button class="navButton"><a th:href="@{/kunder}">Gå tillbaka</a></button>
+    <button class="navButton"><a th:href="@{'/kunder/showBokingarById/' + ${id}}">Gå tillbaka</a></button>
   </nav>
   <form action="/book/viewRooms" method="get" class="form-container">
     <label for="namn">Namn:</label>
