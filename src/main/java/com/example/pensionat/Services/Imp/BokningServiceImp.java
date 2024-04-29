@@ -1,7 +1,10 @@
 package com.example.pensionat.Services.Imp;
 
 
-import com.example.pensionat.Dtos.*;
+import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
+import com.example.pensionat.Dtos.KundDto;
+import com.example.pensionat.Dtos.RumDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -27,6 +30,7 @@ public class BokningServiceImp implements BokningService {
 
     private final BokningRepo br;
     private final RumRepo rumRepo;
+    private final KundRepo kundRepo;
 
     private final KundService kundService;
     private final RumService rumService;
@@ -66,6 +70,17 @@ public class BokningServiceImp implements BokningService {
             return null;
         }
     }
+
+//    @Override
+//    public DetailedBokningDto getBookingDetailsById(Long id) {
+//        Optional<Bokning> optionalBokning = br.findById(id);
+//        if (optionalBokning.isPresent()) {
+//            Bokning bokning = optionalBokning.get();
+//            return bokningToDetailedBokningDto(bokning);
+//        } else {
+//            return null;
+//        }
+//    }
 
     @Override
     public List<DetailedBokningDto> getAllBokningar() {
@@ -110,6 +125,14 @@ public class BokningServiceImp implements BokningService {
         return b;
     }
 
+//    @Override
+//    public String updateBokning(DetailedBokningDto b) {
+//        Model model = null;
+//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+//                b.getStartdatum(), b.getSlutdatum(), b.getNumOfBeds(), model);
+//        return "changeBooking";
+//    }
+
     @Override
     public String deleteBokning(long id) {
         Optional<Bokning> optionalBokning = br.findById(id);
@@ -127,6 +150,11 @@ public class BokningServiceImp implements BokningService {
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
+//        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
+//        List<Bokning> kundbokningar = kund.getBokning();
+//        kundbokningar.add(bUtanKund);
+//        kund.setBokning(kundbokningar);
+//        kundRepo.save(kund);
         br.save(b);
         return b;
     }

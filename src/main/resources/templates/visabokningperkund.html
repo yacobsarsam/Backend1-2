@@ -18,6 +18,7 @@
     <!-- Visa denna div om det inte finns bokningar-->
     <div class="alla_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
         <p>Du har inga registrerade bokningar</p>
+        <th><a th:href="@{/nyBokning(id=${id})}">Lägg till bokning</a></th>
     </div>
     <!-- Visa denna div om det finns bokningar-->
     <div class="alla_bokningar" th:unless=" ${#lists.isEmpty(allabokningar)}">

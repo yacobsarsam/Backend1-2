@@ -22,15 +22,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BokningController {
 
-
+    private final BokningRepo bokningRepo;
     private final BokningService bokningService;
+    private final KundController kundController;
+    /*
+    BokningController(BokningRepo bokningRepo, BokningService bokningService){
+        this.bokningRepo = bokningRepo;
+        this.bokningService = bokningService;
 
     //    private final BokningRepo bokningRepo;
     //    BokningController(BokningRepo bokningRepo, BokningService bokningService){
     //        this.bokningRepo = bokningRepo;
     //        this.bokningService = bokningService;
     //    }
-
+*/
     @GetMapping("/updateBokning/{id}")
     public String updateInfo(@PathVariable Long id, Model model) {
         Bokning booking = bokningService.getBookingDetailsById(id);
@@ -47,6 +52,7 @@ public class BokningController {
     }
 
 
+
     @RequestMapping("")
     public String getAllBokningar(Model model){
         List<DetailedBokningDto> allBookings = bokningService.getAllBokningar();
@@ -60,14 +66,15 @@ public class BokningController {
     public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds, Model model){
         System.out.println("Num of beds in /add " + numOfBeds);
         Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
+        //DetailedBokningDto bdto = DetailedBokningDto.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         model.addAttribute("booking", b);
         return "bookingDetails";
     }
 
     @PostMapping("/delete/{id}")
-    public String deleteBokning(@PathVariable Long id) {
+    public String deleteBokning(@PathVariable Long id, Model model) {
         bokningService.deleteBokning(id);
-        return "visabokningperkund";
+        return kundController.showBookingDetails(id, model);
     }
 
     //TODO saknas mappings för att uppdatera en bokning, behöver kika på hur vi hanterar datumen i Boknings modellen
