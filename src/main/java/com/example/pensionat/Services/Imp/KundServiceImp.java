@@ -92,6 +92,10 @@ public class KundServiceImp implements KundService {
             }
         }
     }
+    @Override
+    public Kund getKundById(Long id) {
+        return kr.findById(id).orElse(null);
+    }
 
     /*private final KundRepo kr;
     private final BokningService bokningService;
@@ -139,6 +143,4 @@ public class KundServiceImp implements KundService {
                 email(k.getEmail()).bokningDtos(k.getBokning().stream().map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
     }
      */
-
-
 }

@@ -45,6 +45,7 @@ public class KundController {
     public String showBookingDetails(@PathVariable Long id, Model model) {
         List <BokningDto> allabokningar = bokningService.getAllBokningarbyId(id);
         model.addAttribute("allabokningar", allabokningar);
+        model.addAttribute("id",id);
         return "visabokningperkund.html";
     }
 

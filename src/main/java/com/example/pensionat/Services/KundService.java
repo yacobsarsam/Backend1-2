@@ -24,4 +24,5 @@ public interface KundService {
     public KundDto kundToKundDto(Kund k);
     public DetailedKundDto kundToDetailedKundDto(Kund k);
     public List<DetailedKundDto> getAllKunder2();
+    public Kund getKundById(Long id);
 }
