@@ -14,6 +14,7 @@
         <button class="navButton"><a th:href="@{/kunder}" >Gå tillbaka</a></button>
     </nav>
     <h2>Boknings information</h2>
+    <h4 th:text="${bookingDetailText}" ></h4>
     <p>Start Datum: <span th:text="${booking.startdatum}"></span></p>
     <p>Slut Datum: <span th:text="${booking.slutdatum}"></span></p>
     <p>Antal sängar: <span th:text="${booking.numOfBeds}"></span></p>
