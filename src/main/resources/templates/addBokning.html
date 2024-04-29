@@ -32,6 +32,7 @@
         </div>
         <label for="antalPersoner">Antal personer:</label>
         <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
+        <p class="error" th:name="felmeddelande" th:text="${felmeddelande}"></p>
         <input class="book-button" type="submit" value="Sök lediga rum">
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
