@@ -116,6 +116,7 @@ public class RumServiceImp implements RumService {
     public String getAllAvailableRooms(String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
         Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByName(name, email, telNr));
+        String felmeddelande;
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersoner > 1;
         int neededSize = antalPersoner - 1;
@@ -129,33 +130,49 @@ public class RumServiceImp implements RumService {
         List<Long> ledigaRumsId = new ArrayList<>();
         List<Rum> sortedRooms = new ArrayList<>();
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
-            //TODO kontroll för att slut datum är EFTER startdatum
-            //TODO Kontroll att start datumet inte has passerat redan
-
             LocalDate from = LocalDate.parse(startDate);
             LocalDate until = LocalDate.parse(endDate);
-            System.out.println("Parsed dates: " + from + " " + until);
+            //kontroll för att slut datum är EFTER startdatum
+            if (!from.isBefore(until)){
+                felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
+                System.out.println("Fel i datumen, du har valt ett till-datum som är före från-datum");
+                model.addAttribute("felmeddelande", felmeddelande);
+                return "addBokning";
+            } else if (from.isBefore(LocalDate.now())){
+                //kontroll att start datumet inte has passerat redan
+                felmeddelande = "Fel i datumen, du har valt ett datum som redan paserat";
+                System.out.println("Fel i datumen, du har valt ett datum som redan paserat");
+                model.addAttribute("felmeddelande", felmeddelande);
+                return "addBokning";
+            }
+
             //Hämta ut alla rums-id som inte är bokade under det spannet som angets
             List<Long> notAva = getNonAvailableRoomsId(bokningRepo.findAll(), from, until);
             sortedRooms = rr.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
                     .filter(rum -> rum.getStorlek() >= neededSize)
                     .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
+
+            model.addAttribute("allRooms", sortedRooms);
+            model.addAttribute("rubrik", "Lediga rum");
+            model.addAttribute("roomType", roomType);
+            model.addAttribute("name", kund.getNamn());
+            model.addAttribute("telNr", kund.getTel());
+            model.addAttribute("email", kund.getEmail());
+            model.addAttribute("startDate", startDate);
+            model.addAttribute("endDate", endDate);
+            model.addAttribute("antalPersoner", antalPersoner);
+
+            //TODO Bryta ut till mindre metoder
+            return "addBokning";
+
         } else {
             //TODO felhantering
+            felmeddelande = "Inga eller bara ett datum valdes";
             System.out.println("Inga eller bara ett datum valdes");
+            model.addAttribute("felmeddelande", felmeddelande);
+            return "addBokning";
         }
-        model.addAttribute("allRooms", sortedRooms);
-        model.addAttribute("rubrik", "Lediga rum");
-        model.addAttribute("roomType", roomType);
-        model.addAttribute("name", kund.getNamn());
-        model.addAttribute("telNr", kund.getTel());
-        model.addAttribute("email", kund.getEmail());
-        model.addAttribute("startDate", startDate);
-        model.addAttribute("endDate", endDate);
-        model.addAttribute("antalPersoner", antalPersoner);
-        //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
-        //TODO Bryta ut till mindre metoder
-        return "addBokning";
+
     }
 
     List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){

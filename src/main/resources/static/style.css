@@ -127,3 +127,7 @@ body{
 .book-button:hover{
     background-color: slategrey;
 }
+
+.error{
+    color: red;
+}
