@@ -14,8 +14,10 @@ import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +73,11 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
+    public List<Bokning> getAllBokningar2() {
+        return br.findAll();
+    }
+
+    @Override
     public List<BokningDto> getAllBokningarbyId(Long id) {
         return br.findAll().stream().filter(b -> b.getKund().getId() == id).map(bok -> BokningToBokningDto(bok)).toList();
     }
@@ -111,4 +118,48 @@ public class BokningServiceImp implements BokningService {
         br.save(b);
         return b;
     }
+
+    @Override
+    public String getAllAvailableRooms(Long id, String startDate, String endDate,
+                                       String antalPersoner, Model model) {
+        int antalPersonerInt = Integer.parseInt(antalPersoner);
+        //Kolla vilken storlek på rum som kan visas
+        boolean needsDouble = antalPersonerInt > 1;
+        int neededSize = antalPersonerInt - 1;
+        String roomType;
+        if (needsDouble){
+            roomType = "Dubbelrum";
+        } else {
+            roomType = "Enkelrum";
+        }
+        //get the dates:
+        List<Long> ledigaRumsId = new ArrayList<>();
+        List<Rum> sortedRooms = new ArrayList<>();
+        if (!startDate.isEmpty() && !endDate.isEmpty()) {
+            //TODO kontroll för att slut datum är EFTER startdatum
+            //TODO Kontroll att start datumet inte has passerat redan
+
+            LocalDate from = LocalDate.parse(startDate);
+            LocalDate until = LocalDate.parse(endDate);
+            System.out.println("Parsed dates: " + from + " " + until);
+            //Hämta ut alla rums-id som inte är bokade under det spannet som angets
+            List<Long> notAva = rumService.getNonAvailableRoomsId(getAllBokningar2(), from, until);
+            sortedRooms = rumService.getAllRum2().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
+                    .filter(rum -> rum.getStorlek() >= neededSize)
+                    .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
+        } else {
+            //TODO felhantering
+            System.out.println("Inga eller bara ett datum valdes");
+        }
+        model.addAttribute("allRooms", sortedRooms);
+        model.addAttribute("rubrik", "Lediga rum");
+        model.addAttribute("roomType", roomType);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
+        //TODO Bryta ut till mindre metoder
+        return "updateBooking";
+    }
+
+
 }

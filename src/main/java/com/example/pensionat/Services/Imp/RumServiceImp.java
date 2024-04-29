@@ -74,6 +74,10 @@ public class RumServiceImp implements RumService {
     }
 
     @Override
+    public List<Rum> getAllRum2() {
+        return rr.findAll();
+    }
+    @Override
     public String addRum(Rum r) {
         rr.save(r);
         return "Rum nr " + r.getRumsnr() + " har sparats.";
@@ -158,7 +162,7 @@ public class RumServiceImp implements RumService {
         return "addBokning";
     }
 
-    List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){
+    public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){
         List<Long> availableRooms = new ArrayList<>();
 
         for (Bokning bokning:bokningar

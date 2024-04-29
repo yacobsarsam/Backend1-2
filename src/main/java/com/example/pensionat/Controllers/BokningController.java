@@ -2,6 +2,8 @@ package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
 import lombok.Builder;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,6 +36,8 @@ public class BokningController {
         model.addAttribute("booking", booking);
         return "updateBooking.html";
     }
+
+
 
     @RequestMapping("")
     public String getAllBokningar(Model model){
