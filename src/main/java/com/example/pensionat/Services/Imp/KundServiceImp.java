@@ -48,9 +48,11 @@ public class KundServiceImp implements KundService {
             return kundToKundDto(k);
         }
         else{
+
             return kundDto;
         }
     }
+
 
     @Override
     public Kund kundDtoToKund(KundDto k) {
@@ -97,6 +99,8 @@ public class KundServiceImp implements KundService {
     public Kund getKundById(Long id) {
         return kr.findById(id).orElse(null);
     }
+
+
 
     /*private final KundRepo kr;
     private final BokningService bokningService;
