@@ -100,14 +100,13 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
-        System.out.println("bokningsId är: " + bokId);
         Bokning b = getBookingDetailsById(bokId);
-        System.out.println("rumsId är: " + rumId);
         Rum r = rumService.getRumById(rumId);
         b.setRum(r);
         b.setStartdatum(startDate);
         b.setSlutdatum(endDate);
         b.setNumOfBeds(numOfBeds);
+        br.save(b);
         return b;
     }
 
