@@ -57,11 +57,11 @@ public class BokningServiceImp implements BokningService {
                 .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
     }
     @Override
-    public DetailedBokningDto getBookingDetailsById(Long id) {
+    public Bokning getBookingDetailsById(Long id) {
         Optional<Bokning> optionalBokning = br.findById(id);
         if (optionalBokning.isPresent()) {
             Bokning bokning = optionalBokning.get();
-            return bokningToDetailedBokningDto(bokning);
+            return bokning;
         } else {
             return null;
         }
@@ -90,12 +90,23 @@ public class BokningServiceImp implements BokningService {
      */
 
 
+//    @Override
+//    public String updateBokning(DetailedBokningDto b) {
+//        Model model = null;
+//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+//                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
+//        return "addBokning";
+//    }
+
     @Override
-    public String updateBokning(DetailedBokningDto b) {
-        Model model = null;
-        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
-                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
-        return "addBokning";
+    public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
+        Bokning b = getBookingDetailsById(id);
+        Rum r = rumService.getRumById(rumId);
+        b.setRum(r);
+        b.setStartdatum(startDate);
+        b.setSlutdatum(endDate);
+        b.setNumOfBeds(numOfBeds);
+        return b;
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.RumService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -32,11 +33,19 @@ public class BokningController {
 
     @GetMapping("/updateBokning/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model) {
-        DetailedBokningDto booking = bokningService.getBookingDetailsById(id);
+        Bokning booking = bokningService.getBookingDetailsById(id);
         model.addAttribute("booking", booking);
         return "updateBooking.html";
     }
 
+    @PostMapping("/update")
+    public String makeBookingUpdate(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId, Model model){
+        System.out.println("Num of beds in /add " + numOfBeds);
+        Bokning b = bokningService.updateBokning(id, startDate, endDate, numOfBeds, rumId);
+
+        model.addAttribute("booking", b);
+        return "bookingDetails";
+    }
 
 
     @RequestMapping("")
