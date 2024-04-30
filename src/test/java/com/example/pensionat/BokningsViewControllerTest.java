@@ -49,7 +49,7 @@ public class BokningsViewControllerTest {
 
 
     @InjectMocks
-    private RumServiceImp mockRumServiceImp = new RumServiceImp(mockRumRepo, mockBokningRepo, mockRumRepo, mockKundService);
+    private RumServiceImp mockRumServiceImp = new RumServiceImp(mockBokningRepo, mockRumRepo, mockKundService);
 
 
     @BeforeEach
