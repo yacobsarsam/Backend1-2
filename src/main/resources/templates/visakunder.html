@@ -30,12 +30,16 @@
     </div>
     <div class="all_customers room-container" th:unless="${#lists.isEmpty(allakunder)}" th:each="kund : ${allakunder}">
         <div class="room-inner-container">
-            <p th:text="${kund.namn}"></p>
+            <div class="text-container">
+                <p th:text="${kund.namn}"></p>
+            </div>
+            <div class="button-container">
                 <button class="navButton"><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></button>
                 <button class="navButton"><a th:href="@{/kunder/editById/{id}(id=${kund.id})}">Ändra</a></button>
                 <form th:action="@{/kunder/deleteById/{id}(id=${kund.id})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort kunden?')">
                     <button class="navButton" type="submit">Ta bort kund</button>
                 </form>
+            </div>
         </div>
         <!--
         <table>

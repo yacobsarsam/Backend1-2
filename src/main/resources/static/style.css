@@ -94,6 +94,7 @@ body{
 
 .room-container{
     padding: 0 2px;
+    overflow-x: hidden;
 }
 
 .room-inner-container{
@@ -106,6 +107,7 @@ body{
     justify-content: space-between;
     white-space: nowrap;
     width: 100%;
+    max-width: 100%;
 }
 
 .room-inner-container p{
@@ -151,8 +153,27 @@ form {
 }
 
 .button-container{
+    align-items: center;
     display: flex;
+    justify-content: end;
     gap: 5px;
+    width: 50%;
+}
+
+.button-container form{
+    align-items: center;
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    width: 40%;
+    margin-right: 5px;
+}
+
+.text-container{
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    width: 50%;
 }
 
 .mt-10{
