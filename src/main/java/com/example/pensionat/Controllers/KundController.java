@@ -45,12 +45,14 @@ public class KundController {
     public String showBookingDetails(@PathVariable Long id, Model model) {
         List <BokningDto> allabokningar = bokningService.getAllBokningarbyId(id);
         model.addAttribute("allabokningar", allabokningar);
+        model.addAttribute("id",id);
         return "visabokningperkund.html";
     }
 
     @PostMapping("/registreraNyKund")
-    public String createKund(@ModelAttribute KundDto kundDto) {
-        kundService.checkIfKundExistByName(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel());
+    public String createKund(@ModelAttribute KundDto kundDto, Model model) {
+        kundService.checkIfKundExistByEmail(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel());
+
         //Kund kund = kundService.kundDtoToKund(kundDto);
         //kundService.addKund(kund);
         return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till

@@ -19,9 +19,10 @@ public interface KundService {
     public List<KundDto> getAllKunder();
     public String addKund(Kund k);
     public Kund updateKund(long id);
-    public KundDto checkIfKundExistByName(String name, String email, String telefon);
+    public KundDto checkIfKundExistByEmail(String name, String email, String telefon);
     public Kund kundDtoToKund(KundDto k);
     public KundDto kundToKundDto(Kund k);
     public DetailedKundDto kundToDetailedKundDto(Kund k);
     public List<DetailedKundDto> getAllKunder2();
+    public Kund getKundById(Long id);
 }

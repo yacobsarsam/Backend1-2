@@ -45,6 +45,7 @@ public class PensionatApplication {
             rr.save(r10);
             rr.save(r11);
             rr.save(r12);
+
             //List<Bokning> emptyList = new ArrayList<>();
 
             Kund k1 = new Kund("Test", "123456789", "test@mail.com");
