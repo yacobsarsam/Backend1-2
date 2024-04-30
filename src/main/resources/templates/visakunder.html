@@ -14,23 +14,24 @@
         <button class="navButton"><a th:href="@{/index}" >Home</a></button>
     </nav>
     <h2>Registrera ny kund</h2>
-    <form action="#" th:action="@{/kunder/registreraNyKund}" method="post">
-        <label for="namn">Name: </label>
-        <input type="text" id="namn" name="namn" value=""><br>
-        <label for="email">E-post:</label>
-        <input type="email" id="email" name="email" value=""><br>
-        <label for="tel">Mobil: </label>
-        <input type="tel" id="tel" name="tel" value="">
+    <form action="#" th:action="@{/kunder/registreraNyKund}" method="post" class="form-container">
+        <label for="namn">Namn: </label>
+        <input type="text" id="namn" name="namn" value="" placeholder="För- & Efternamn">
+        <label for="tel">Telefonnummer: </label>
+        <input type="tel" id="tel" name="tel" value="" placeholder="10-siffrigt telefonnummer">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="" placeholder="Email address">
+
 
         <br>        <br>
         <input type="submit" value="Lägg till kund">
     </form>
-    <p>--------------------------------------------------</p>
+    <hr class="divider">
     <h2>Alla registrerade kunder</h2>
     <div class="all_customers" th:if="${#lists.isEmpty(allakunder)}">
         <p>Det finns inga registrerade kunder</p>
     </div>
-    <div class="all_customers" th:unless="${#lists.isEmpty(allakunder)}">
+    <div class="all_customers room-inner-container" th:unless="${#lists.isEmpty(allakunder)}">
         <table>
             <tr>
                 <td>Kund namn</td>

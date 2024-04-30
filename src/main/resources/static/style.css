@@ -140,3 +140,8 @@ form {
 .error{
     color: red;
 }
+
+.divider{
+    width: 90%;
+    margin: 5px auto;
+}
