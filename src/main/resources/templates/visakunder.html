@@ -21,17 +21,23 @@
         <input type="tel" id="tel" name="tel" value="" placeholder="10-siffrigt telefonnummer">
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" value="" placeholder="Email address">
-
-
-        <br>        <br>
-        <input type="submit" value="Lägg till kund">
+        <input class="book-button mt-10" type="submit" value="Lägg till kund">
     </form>
     <hr class="divider">
     <h2>Alla registrerade kunder</h2>
     <div class="all_customers" th:if="${#lists.isEmpty(allakunder)}">
         <p>Det finns inga registrerade kunder</p>
     </div>
-    <div class="all_customers room-inner-container" th:unless="${#lists.isEmpty(allakunder)}">
+    <div class="all_customers room-container" th:unless="${#lists.isEmpty(allakunder)}" th:each="kund : ${allakunder}">
+        <div class="room-inner-container">
+            <p th:text="${kund.namn}"></p>
+                <button class="navButton"><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></button>
+                <button class="navButton"><a th:href="@{/kunder/editById/{id}(id=${kund.id})}">Ändra</a></button>
+                <form th:action="@{/kunder/deleteById/{id}(id=${kund.id})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort kunden?')">
+                    <button class="navButton" type="submit">Ta bort kund</button>
+                </form>
+        </div>
+        <!--
         <table>
             <tr>
                 <td>Kund namn</td>
@@ -50,6 +56,7 @@
                 </td>
             </tr>
         </table>
+        -->
     </div>
 </div>
 </body>

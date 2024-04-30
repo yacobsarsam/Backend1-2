@@ -12,6 +12,8 @@ body{
 
 .navButton{
     margin-left: 4px;
+    font-family: "Poppins", sans-serif;
+    color: black;
 }
 
 .navButton a{
@@ -101,7 +103,9 @@ body{
     padding: 2px;
     text-align: center;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
+    white-space: nowrap;
+    width: 100%;
 }
 
 .room-inner-container p{
@@ -144,4 +148,13 @@ form {
 .divider{
     width: 90%;
     margin: 5px auto;
+}
+
+.button-container{
+    display: flex;
+    gap: 5px;
+}
+
+.mt-10{
+    margin-top: 10px;
 }
