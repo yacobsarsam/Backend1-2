@@ -149,13 +149,13 @@ public class RumServiceImp implements RumService {
                 felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
                 System.out.println("Fel i datumen, du har valt ett till-datum som är före från-datum");
                 model.addAttribute("felmeddelande", felmeddelande);
-                return "addBokning";
+                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
             } else if (from.isBefore(LocalDate.now())){
                 //kontroll att start datumet inte has passerat redan
-                felmeddelande = "Fel i datumen, du har valt ett datum som redan paserat";
-                System.out.println("Fel i datumen, du har valt ett datum som redan paserat");
+                felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
+                System.out.println("Fel i datumen, du har valt ett datum som redan passerat");
                 model.addAttribute("felmeddelande", felmeddelande);
-                return "addBokning";
+                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
             }
 
             //Hämta ut alla rums-id som inte är bokade under det spannet som angets
