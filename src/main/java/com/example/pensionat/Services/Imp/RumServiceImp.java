@@ -9,6 +9,7 @@ import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,10 +19,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RumServiceImp implements RumService {
 
-    private final RumRepo rr;
+    //private final RumRepo rr;
     private final BokningRepo bokningRepo;
 
     private final RumRepo rumRepo;
@@ -70,16 +72,16 @@ public class RumServiceImp implements RumService {
 
     @Override
     public List<DetailedRumDto> getAllRum() {
-        return rr.findAll().stream().map(rum -> rumToDetailedRumDto(rum)).toList();
+        return rumRepo.findAll().stream().map(rum -> rumToDetailedRumDto(rum)).toList();
     }
 
     @Override
     public List<Rum> getAllRum2() {
-        return rr.findAll();
+        return rumRepo.findAll();
     }
     @Override
     public String addRum(Rum r) {
-        rr.save(r);
+        rumRepo.save(r);
         return "Rum nr " + r.getRumsnr() + " har sparats.";
     }
 
@@ -109,9 +111,9 @@ public class RumServiceImp implements RumService {
     }
 
     @Override
-    public String deleteRum(long id) {
-        Rum rum = rr.findById(id).get();
-        rr.deleteById(id);
+    public String deleteRum(Long id) {
+        Rum rum = rumRepo.findById(id).get();
+        rumRepo.deleteById(id);
         return "Rum nr " + rum.getRumsnr() + " har raderats.";
 
     }
@@ -158,7 +160,7 @@ public class RumServiceImp implements RumService {
 
             //Hämta ut alla rums-id som inte är bokade under det spannet som angets
             List<Long> notAva = getNonAvailableRoomsId(bokningRepo.findAll(), from, until);
-            sortedRooms = rr.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
+            sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
                     .filter(rum -> rum.getStorlek() >= neededSize)
                     .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
 
@@ -205,7 +207,7 @@ public class RumServiceImp implements RumService {
         return nonAvailableID.stream().anyMatch(id -> id.equals(roomId));
     }
 
-    boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email){
+    public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email){
         if (name.trim().isEmpty()){
             return false;
         } else if (telnr.trim().length() < 10 && !telnr.trim().matches("[0-9+-}+]")) {
