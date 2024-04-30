@@ -12,6 +12,8 @@ body{
 
 .navButton{
     margin-left: 4px;
+    font-family: "Poppins", sans-serif;
+    color: black;
 }
 
 .navButton a{
@@ -92,6 +94,7 @@ body{
 
 .room-container{
     padding: 0 2px;
+    overflow-x: hidden;
 }
 
 .room-inner-container{
@@ -101,7 +104,10 @@ body{
     padding: 2px;
     text-align: center;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
+    white-space: nowrap;
+    width: 100%;
+    max-width: 100%;
 }
 
 .room-inner-container p{
@@ -139,4 +145,37 @@ form {
 
 .error{
     color: red;
+}
+
+.divider{
+    width: 90%;
+    margin: 5px auto;
+}
+
+.button-container{
+    align-items: center;
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    width: 50%;
+}
+
+.button-container form{
+    align-items: center;
+    display: flex;
+    justify-content: end;
+    gap: 5px;
+    width: 40%;
+    margin-right: 5px;
+}
+
+.text-container{
+    align-items: center;
+    display: flex;
+    justify-content: start;
+    width: 50%;
+}
+
+.mt-10{
+    margin-top: 10px;
 }

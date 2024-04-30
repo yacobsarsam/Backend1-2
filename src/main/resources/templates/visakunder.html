@@ -14,23 +14,34 @@
         <button class="navButton"><a th:href="@{/index}" >Home</a></button>
     </nav>
     <h2>Registrera ny kund</h2>
-    <form action="#" th:action="@{/kunder/registreraNyKund}" method="post">
-        <label for="namn">Name: </label>
-        <input type="text" id="namn" name="namn" value=""><br>
-        <label for="email">E-post:</label>
-        <input type="email" id="email" name="email" value=""><br>
-        <label for="tel">Mobil: </label>
-        <input type="tel" id="tel" name="tel" value="">
-
-        <br>        <br>
-        <input type="submit" value="Lägg till kund">
+    <form action="#" th:action="@{/kunder/registreraNyKund}" method="post" class="form-container">
+        <label for="namn">Namn: </label>
+        <input type="text" id="namn" name="namn" value="" placeholder="För- & Efternamn">
+        <label for="tel">Telefonnummer: </label>
+        <input type="tel" id="tel" name="tel" value="" placeholder="10-siffrigt telefonnummer">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" value="" placeholder="Email address">
+        <input class="book-button mt-10" type="submit" value="Lägg till kund">
     </form>
-    <p>--------------------------------------------------</p>
+    <hr class="divider">
     <h2>Alla registrerade kunder</h2>
     <div class="all_customers" th:if="${#lists.isEmpty(allakunder)}">
         <p>Det finns inga registrerade kunder</p>
     </div>
-    <div class="all_customers" th:unless="${#lists.isEmpty(allakunder)}">
+    <div class="all_customers room-container" th:unless="${#lists.isEmpty(allakunder)}" th:each="kund : ${allakunder}">
+        <div class="room-inner-container">
+            <div class="text-container">
+                <p th:text="${kund.namn}"></p>
+            </div>
+            <div class="button-container">
+                <button class="navButton"><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></button>
+                <button class="navButton"><a th:href="@{/kunder/editById/{id}(id=${kund.id})}">Ändra</a></button>
+                <form th:action="@{/kunder/deleteById/{id}(id=${kund.id})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort kunden?')">
+                    <button class="navButton" type="submit">Ta bort kund</button>
+                </form>
+            </div>
+        </div>
+        <!--
         <table>
             <tr>
                 <td>Kund namn</td>
@@ -49,6 +60,7 @@
                 </td>
             </tr>
         </table>
+        -->
     </div>
 </div>
 </body>
