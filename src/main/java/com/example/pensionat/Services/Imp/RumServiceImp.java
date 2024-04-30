@@ -181,7 +181,7 @@ public class RumServiceImp implements RumService {
 
     }
 
-    List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){
+    public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){
         List<Long> availableRooms = new ArrayList<>();
 
         for (Bokning bokning:bokningar
