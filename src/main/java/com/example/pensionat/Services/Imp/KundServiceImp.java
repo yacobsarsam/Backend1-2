@@ -40,17 +40,19 @@ public class KundServiceImp implements KundService {
                 return k;
     }
     @Override
-    public KundDto checkIfKundExistByName(String name, String email, String telefon){
-        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getNamn(), name)).findFirst().orElse(null);
+    public KundDto checkIfKundExistByEmail(String name, String email, String telefon){
+        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getEmail(), email)).findFirst().orElse(null);
         if(kundDto == null){
             Kund k = new Kund(name, telefon, email);
             kr.save(k);
             return kundToKundDto(k);
         }
         else{
+
             return kundDto;
         }
     }
+
 
     @Override
     public Kund kundDtoToKund(KundDto k) {
@@ -66,6 +68,7 @@ public class KundServiceImp implements KundService {
         return DetailedKundDto.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail())
                 .bokningDtos(k.getBokning().stream().map(b -> bokningToBokningDto(b)).toList()).build();
     }
+
     public BokningDto bokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds()).build();
@@ -92,6 +95,12 @@ public class KundServiceImp implements KundService {
             }
         }
     }
+    @Override
+    public Kund getKundById(Long id) {
+        return kr.findById(id).orElse(null);
+    }
+
+
 
     /*private final KundRepo kr;
     private final BokningService bokningService;
@@ -139,6 +148,4 @@ public class KundServiceImp implements KundService {
                 email(k.getEmail()).bokningDtos(k.getBokning().stream().map(bokning -> bokningService.BokningToBokningDto(bokning)).toList()).build();
     }
      */
-
-
 }

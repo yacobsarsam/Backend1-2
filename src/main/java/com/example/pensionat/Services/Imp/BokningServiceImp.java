@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -59,19 +60,35 @@ public class BokningServiceImp implements BokningService {
                 .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
     }
     @Override
-    public DetailedBokningDto getBookingDetailsById(Long id) {
+    public Bokning getBookingDetailsById(Long id) {
         Optional<Bokning> optionalBokning = br.findById(id);
         if (optionalBokning.isPresent()) {
             Bokning bokning = optionalBokning.get();
-            return bokningToDetailedBokningDto(bokning);
+            return bokning;
         } else {
             return null;
         }
     }
 
+//    @Override
+//    public DetailedBokningDto getBookingDetailsById(Long id) {
+//        Optional<Bokning> optionalBokning = br.findById(id);
+//        if (optionalBokning.isPresent()) {
+//            Bokning bokning = optionalBokning.get();
+//            return bokningToDetailedBokningDto(bokning);
+//        } else {
+//            return null;
+//        }
+//    }
+
     @Override
     public List<DetailedBokningDto> getAllBokningar() {
         return br.findAll().stream().map(bok -> bokningToDetailedBokningDto(bok)).toList();
+    }
+
+    @Override
+    public List<Bokning> getAllBokningar2() {
+        return br.findAll();
     }
 
     @Override
@@ -87,13 +104,33 @@ public class BokningServiceImp implements BokningService {
      */
 
 
+//    @Override
+//    public String updateBokning(DetailedBokningDto b) {
+//        Model model = null;
+//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+//                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
+//        return "addBokning";
+//    }
+
     @Override
-    public String updateBokning(DetailedBokningDto b) {
-        Model model = null;
-        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
-                b.getStartdatum(), b.getSlutdatum(), b.getNumOfBeds(), model);
-        return "changeBooking";
+    public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
+        Bokning b = getBookingDetailsById(bokId);
+        Rum r = rumService.getRumById(rumId);
+        b.setRum(r);
+        b.setStartdatum(startDate);
+        b.setSlutdatum(endDate);
+        b.setNumOfBeds(numOfBeds);
+        br.save(b);
+        return b;
     }
+
+//    @Override
+//    public String updateBokning(DetailedBokningDto b) {
+//        Model model = null;
+//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
+//                b.getStartdatum(), b.getSlutdatum(), b.getNumOfBeds(), model);
+//        return "changeBooking";
+//    }
 
     @Override
     public String deleteBokning(long id) {
@@ -108,9 +145,8 @@ public class BokningServiceImp implements BokningService {
     }
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
-        KundDto kundDto = kundService.checkIfKundExistByName(namn, email, tel);
+        KundDto kundDto = kundService.checkIfKundExistByEmail(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
-
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
 //        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
@@ -121,4 +157,51 @@ public class BokningServiceImp implements BokningService {
         br.save(b);
         return b;
     }
+
+    @Override
+    public String getAllAvailableRooms(Long bokId, Long rumId, String startDate, String endDate,
+                                       String antalPersoner, Model model) {
+        Bokning booking = getBookingDetailsById(bokId);
+        int antalPersonerInt = Integer.parseInt(antalPersoner);
+        //Kolla vilken storlek på rum som kan visas
+        boolean needsDouble = antalPersonerInt > 1;
+        int neededSize = antalPersonerInt - 1;
+        String roomType;
+        if (needsDouble){
+            roomType = "Dubbelrum";
+        } else {
+            roomType = "Enkelrum";
+        }
+        //get the dates:
+        List<Long> ledigaRumsId = new ArrayList<>();
+        List<Rum> sortedRooms = new ArrayList<>();
+        if (!startDate.isEmpty() && !endDate.isEmpty()) {
+            //TODO kontroll för att slut datum är EFTER startdatum
+            //TODO Kontroll att start datumet inte has passerat redan
+
+            LocalDate from = LocalDate.parse(startDate);
+            LocalDate until = LocalDate.parse(endDate);
+            System.out.println("Parsed dates: " + from + " " + until);
+            //Hämta ut alla rums-id som inte är bokade under det spannet som angets
+            List<Long> notAva = rumService.getNonAvailableRoomsId(getAllBokningar2(), from, until);
+            sortedRooms = rumService.getAllRum2().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
+                    .filter(rum -> rum.getStorlek() >= neededSize)
+                    .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
+        } else {
+            //TODO felhantering
+            System.out.println("Inga eller bara ett datum valdes");
+        }
+        model.addAttribute("allRooms", sortedRooms);
+        model.addAttribute("booking", booking);
+        model.addAttribute("rubrik", "Lediga rum");
+        model.addAttribute("roomType", roomType);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+        model.addAttribute("numOfBeds", antalPersonerInt);
+        //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
+        //TODO Bryta ut till mindre metoder
+        return "updateBooking";
+    }
+
+
 }

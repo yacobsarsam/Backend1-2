@@ -10,13 +10,10 @@
 </head>
 <body>
 <div class="container">
-    <nav class="navbar">
-        <button class="navButton"><a th:href="@{/index}" >Home</a></button>
-    </nav>
     <div>
         <form action="#" th:action="@{/kunder}" method="post">
 
-            <h2>Ändringen misslyckades genomföras pga kund hat registrerad bokning!</h2>
+            <h2>Kunden har aktiva bokningar och kan inte tas bort.!</h2>
             <input type="submit" value="Ok">
         </form>
     </div>

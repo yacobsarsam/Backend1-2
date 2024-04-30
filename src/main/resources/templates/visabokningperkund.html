@@ -18,6 +18,7 @@
     <!-- Visa denna div om det inte finns bokningar-->
     <div class="alla_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
         <p>Du har inga registrerade bokningar</p>
+        <th><a th:href="@{/nyBokning(id=${id})}">Lägg till bokning</a></th>
     </div>
     <!-- Visa denna div om det finns bokningar-->
     <div class="alla_bokningar" th:unless=" ${#lists.isEmpty(allabokningar)}">
@@ -33,7 +34,7 @@
                 <th th:text="${bokning.startdatum}"></th>
                 <th th:text="${bokning.slutdatum}"></th>
                 <th th:text="${bokning.numOfBeds}"></th>
-                <th><a th:href="@{/book}">Ändra bokning</a></th>
+                <th><a th:href="@{/bokningar/updateBokning/{id}(id=${bokning.id})}">Ändra bokning</a></th>
                 <td>
                 <td>
                     <form method="post" th:action="@{/bokningar/delete/{id}(id=${bokning.id})}"onsubmit="return confirm('Är du säker på att du vill ta bort bokningen?')">>

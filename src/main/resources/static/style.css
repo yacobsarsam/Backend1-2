@@ -32,7 +32,8 @@ body{
     text-align: center;
     margin: auto;
     width: 600px;
-    height: 700px;
+    min-height: 700px;
+    height: auto;
     display: flex;
     flex-direction: column;
     border: 2px solid dimgrey;
@@ -126,6 +127,14 @@ body{
 
 .book-button:hover{
     background-color: slategrey;
+}
+form {
+    margin: 0 auto;
+    width:400px;
+}
+
+.paddingBetweenCols td {
+    padding: 0 15px;
 }
 
 .error{
