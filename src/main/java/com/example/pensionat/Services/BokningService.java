@@ -24,7 +24,7 @@ public interface BokningService {
     String addBokning();
     public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
                                        String email, String startDate, String endDate,
-                                       String antalPersoner, Model model);
+                                       int antalPersoner, Model model);
     public List<Bokning> getAllBokningar2();
     public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId);
 }

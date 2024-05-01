@@ -162,12 +162,12 @@ public class BokningServiceImp implements BokningService {
     @Override
     public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
                                        String email, String startDate, String endDate,
-                                       String antalPersoner, Model model) {
+                                       int antalPersoner, Model model) {
         Bokning booking = getBookingDetailsById(bokId);
-        int antalPersonerInt = Integer.parseInt(antalPersoner);
+//        int antalPersonerInt = Integer.parseInt(antalPersoner);
         //Kolla vilken storlek på rum som kan visas
-        boolean needsDouble = antalPersonerInt > 1;
-        int neededSize = antalPersonerInt - 1;
+        boolean needsDouble = antalPersoner > 1;
+        int neededSize = antalPersoner - 1;
         String roomType;
         if (needsDouble){
             roomType = "Dubbelrum";
@@ -199,7 +199,7 @@ public class BokningServiceImp implements BokningService {
         model.addAttribute("roomType", roomType);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
-        model.addAttribute("numOfBeds", antalPersonerInt);
+        model.addAttribute("numOfBeds", antalPersoner);
         //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
         //TODO Bryta ut till mindre metoder
         return "updateBooking";
