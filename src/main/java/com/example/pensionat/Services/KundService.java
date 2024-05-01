@@ -3,6 +3,7 @@ package com.example.pensionat.Services;
 import com.example.pensionat.Dtos.DetailedKundDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
+import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -25,4 +26,8 @@ public interface KundService {
     public DetailedKundDto kundToDetailedKundDto(Kund k);
     public List<DetailedKundDto> getAllKunder2();
     public Kund getKundById(Long id);
+
+    boolean checkIfKundExistByEmailUtanAttSkapa(String namn, String email, String tel);
+    String getAllAvailableKundInfo(String name, String telNr, String email, Model model);
+    boolean isCustomerFieldsFilledAndCorrect(String namn, String tel, String email);
 }
