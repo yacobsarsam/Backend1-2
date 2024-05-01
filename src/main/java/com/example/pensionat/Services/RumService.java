@@ -27,9 +27,9 @@ public interface RumService {
     public String deleteRum(Long id);
 
     public Rum getRumById(Long id);
-    String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
-                                String startDate, String endDate, int antalPersoner, Model model);
+//    String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
+//                                String startDate, String endDate, int antalPersoner, Model model);
     public List<Rum> getAllRum2();
-    List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate);
-    boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email);
+//    List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate);
+//    boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email);
 }

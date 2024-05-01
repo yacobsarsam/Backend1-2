@@ -35,7 +35,7 @@ public class BokningsViewController {
     public String showAllRooms(@RequestParam(defaultValue = "0") Long bokId, @RequestParam(defaultValue = "0") Long rumId, @RequestParam String namn, @RequestParam String telNr,
                                @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
                                @RequestParam(defaultValue = "1") int antalPersoner, Model model){
-        return rumService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
+        return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
     }
 
     @GetMapping("book/update/viewRooms")
