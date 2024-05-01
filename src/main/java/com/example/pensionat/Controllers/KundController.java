@@ -1,8 +1,11 @@
 package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
+import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
@@ -44,8 +47,10 @@ public class KundController {
     @GetMapping("/showBokingarById/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model) {
         List <BokningDto> allabokningar = bokningService.getAllBokningarbyId(id);
+        List<Bokning> bokningar = bokningService.getAllBokningarAsBokningById(id);
         model.addAttribute("allabokningar", allabokningar);
         model.addAttribute("id",id);
+        model.addAttribute("bokningarAsBokning", bokningar);
         return "visabokningperkund.html";
     }
 

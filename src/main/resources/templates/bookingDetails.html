@@ -14,10 +14,18 @@
         <button class="navButton"><a th:href="@{/kunder}" >Gå tillbaka</a></button>
     </nav>
     <h2>Boknings information</h2>
+    <hr class="divider">
     <h4 th:text="${bookingDetailText}" ></h4>
-    <p>Start Datum: <span th:text="${booking.startdatum}"></span></p>
-    <p>Slut Datum: <span th:text="${booking.slutdatum}"></span></p>
-    <p>Antal sängar: <span th:text="${booking.numOfBeds}"></span></p>
+    <p>Rum <span th:text="${rumInfo.rumsnr}"></span></p>
+    <p>Från: <span th:text="${booking.startdatum}"></span></p>
+    <p>Till: <span th:text="${booking.slutdatum}"></span></p>
+    <p>Sängplatser: <span th:text="${booking.numOfBeds}"></span></p>
+    <hr class="divider">
+    <h2>Gäst information</h2>
+    <hr class="divider">
+    <p th:text="${kundInfo.namn}"></p>
+    <p th:text="${kundInfo.tel}"></p>
+    <p th:text="${kundInfo.email}"></p>
 </div>
 </body>
 </html>

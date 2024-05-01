@@ -14,14 +14,37 @@
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/kunder}" >Gå tillbaka</a></button>
     </nav>
-    <h2>Mina bokningar</h2>
+    <h2>Bokningar</h2>
     <!-- Visa denna div om det inte finns bokningar-->
     <div class="alla_bokningar" th:if="${#lists.isEmpty(allabokningar)}">
-        <p>Du har inga registrerade bokningar</p>
-        <th><a th:href="@{/nyBokning(id=${id})}">Lägg till bokning</a></th>
+        <p>Denna kund har inga registrerade bokningar</p>
+        <button class="navButton"><a th:href="@{/nyBokning(id=${id})}">Lägg till bokning</a></button>
     </div>
     <!-- Visa denna div om det finns bokningar-->
-    <div class="alla_bokningar" th:unless=" ${#lists.isEmpty(allabokningar)}">
+    <div class="alla-bokningar room-container" th:unless="${#lists.isEmpty(allabokningar)}" th:each="bokning : ${allabokningar}">
+        <div class="room-inner-container">
+            <div class="text-container kund-text">
+                <div class="left-text-container">
+                    <div class="top-text-container">
+                        <p class="ml-10">Från</p>
+                        <p class="kund-text" th:text="${bokning.startdatum}"></p>
+                    </div>
+                    <div class="bottom-text-container">
+                        <p class="ml-10">Till</p>
+                        <p class="kund-text ml-12" th:text="${bokning.slutdatum}"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="navButton button-kunder"><a th:href="@{/bokningar/updateBokning/{id}(id=${bokning.id})}">Ändra bokning</a></button>
+                <form method="post" th:action="@{/bokningar/delete/{id}(id=${bokning.id})}"onsubmit="return confirm('Är du säker på att du vill ta bort bokningen?')">
+                    <button class="navButton" type="submit">Ta bort</button>
+                </form>
+            </div>
+        </div>
+
+<!--
+    <div class="alla_bokningar" th:unless="${#lists.isEmpty(allabokningar)}">
 
         <table>
             <tr >
@@ -47,10 +70,8 @@
             </tr>
         </table>
     </div>
+    -->
 </div>
-</body>
-</html></title>
-</head>
-<body>
+</div>
 </body>
 </html>
