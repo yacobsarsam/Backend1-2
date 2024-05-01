@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -18,8 +20,16 @@ public class Bokning {
     @Id
     @GeneratedValue
     protected Long id;
+
+    @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     protected LocalDate startdatum;
+
+    @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     protected LocalDate slutdatum;
+
+    @Column(nullable = false)
     protected int numOfBeds;
 
     @ManyToOne

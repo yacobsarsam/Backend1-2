@@ -1,9 +1,6 @@
 package com.example.pensionat.Models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,8 +18,11 @@ public class Kund {
     @Id
     @GeneratedValue
     protected long id;
+    @Column(nullable = false, unique = false, length = 100)
     protected String namn;
+    @Column(nullable = false, unique = false)
     protected String tel;
+    @Column(nullable = false, unique = true)
     protected String email;
 
     @OneToMany(mappedBy = "kund")

@@ -1,5 +1,6 @@
 package com.example.pensionat.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,10 +19,12 @@ public class Rum {
     @Id
     @GeneratedValue
     protected long id;
+    @Column(nullable = false)
     protected int rumsnr;
+    @Column(nullable = false)
     protected boolean dubbelrum;
-    // storlek 1 - enkelrum, 2 - Dubbelrum med möjlighet till en extrasäng, 3 - Dubbelrum  med möjlighet till två extrasängar.
-    protected int storlek;
+    @Column(nullable = false)
+    protected int storlek; // storlek 1 - enkelrum, 2 - Dubbelrum med möjlighet till en extrasäng, 3 - Dubbelrum  med möjlighet till två extrasängar.
 
     public Rum(boolean dubbelrum, int storlek, int rumsnr) {
         this.rumsnr = rumsnr;
