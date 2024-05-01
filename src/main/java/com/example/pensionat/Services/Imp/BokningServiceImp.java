@@ -35,8 +35,10 @@ public class BokningServiceImp implements BokningService {
     private final KundService kundService;
     private final RumService rumService;
 
-    public String addBokning() {
-        return "addBokning";
+    public String addBokning(Model model) {
+        Bokning booking = new Bokning();
+        model.addAttribute("booking", booking);
+        return "updateBooking";
     }
 
     //String valueOf och LocalDate parse på nedan metoder, behöver kontroll testas så dom fungerar
@@ -163,8 +165,10 @@ public class BokningServiceImp implements BokningService {
     public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
                                        String email, String startDate, String endDate,
                                        int antalPersoner, Model model) {
-        Bokning booking = getBookingDetailsById(bokId);
-//        int antalPersonerInt = Integer.parseInt(antalPersoner);
+        Bokning booking= new Bokning();
+        if (!(bokId == 0))
+            booking = getBookingDetailsById(bokId);
+
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersoner > 1;
         int neededSize = antalPersoner - 1;
@@ -197,6 +201,10 @@ public class BokningServiceImp implements BokningService {
         model.addAttribute("booking", booking);
         model.addAttribute("rubrik", "Lediga rum");
         model.addAttribute("roomType", roomType);
+        model.addAttribute("name", namn);
+        model.addAttribute("telNr", telNr);
+        model.addAttribute("email", email);
+        model.addAttribute("roomType", roomType);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("numOfBeds", antalPersoner);
@@ -205,5 +213,78 @@ public class BokningServiceImp implements BokningService {
         return "updateBooking";
     }
 
+//    @Override
+//    public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
+//                                       String startDate, String endDate, int antalPersoner, Model model) {
+//        String felmeddelande;
+//        if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
+//            felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
+//            model.addAttribute("felmeddelande", felmeddelande);
+//            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+//        }
+//
+//        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByEmail(name, email, telNr));
+//        Bokning booking= new Bokning();
+//        if (!(bokId == 0))
+//            booking = getBookingDetailsById(bokId);
+//
+//        //Kolla vilken storlek på rum som kan visas
+//        boolean needsDouble = antalPersoner > 1;
+//        int neededSize = antalPersoner - 1;
+//        String roomType;
+//        if (needsDouble) {
+//            roomType = "Dubbelrum";
+//        } else {
+//            roomType = "Enkelrum";
+//        }
+//        //get the dates:
+//        List<Long> ledigaRumsId = new ArrayList<>();
+//        List<Rum> sortedRooms = new ArrayList<>();
+//        if (!startDate.isEmpty() && !endDate.isEmpty()) {
+//            LocalDate from = LocalDate.parse(startDate);
+//            LocalDate until = LocalDate.parse(endDate);
+//            //kontroll för att slut datum är EFTER startdatum
+//            if (!from.isBefore(until)) {
+//                felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
+//                System.out.println("Fel i datumen, du har valt ett till-datum som är före från-datum");
+//                model.addAttribute("felmeddelande", felmeddelande);
+//                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+//            } else if (from.isBefore(LocalDate.now())) {
+//                //kontroll att start datumet inte has passerat redan
+//                felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
+//                System.out.println("Fel i datumen, du har valt ett datum som redan passerat");
+//                model.addAttribute("felmeddelande", felmeddelande);
+//                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+//            }
+//
+//            //Hämta ut alla rums-id som inte är bokade under det spannet som angets
+//            List<Long> notAva = getNonAvailableRoomsId(bokningRepo.findAll(), from, until);
+//            sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
+//                    .filter(rum -> rum.getStorlek() >= neededSize)
+//                    .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
+//
+//            model.addAttribute("allRooms", sortedRooms);
+//            model.addAttribute("booking", booking);
+//            model.addAttribute("rubrik", "Lediga rum");
+//            model.addAttribute("roomType", roomType);
+//            model.addAttribute("name", kund.getNamn());
+//            model.addAttribute("telNr", kund.getTel());
+//            model.addAttribute("email", kund.getEmail());
+//            model.addAttribute("startDate", startDate);
+//            model.addAttribute("endDate", endDate);
+//            model.addAttribute("antalPersoner", antalPersoner);
+//
+//            //TODO Bryta ut till mindre metoder
+//            return "addBokning";
+//
+//        } else {
+//            //TODO felhantering
+//            felmeddelande = "Inga eller bara ett datum valdes";
+//            System.out.println("Inga eller bara ett datum valdes");
+//            model.addAttribute("felmeddelande", felmeddelande);
+//            return "addBokning";
+//        }
+//
+//    }
 
 }

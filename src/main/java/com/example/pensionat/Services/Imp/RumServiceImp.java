@@ -7,6 +7,7 @@ import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import jakarta.transaction.Transactional;
@@ -79,6 +80,7 @@ public class RumServiceImp implements RumService {
     public List<Rum> getAllRum2() {
         return rumRepo.findAll();
     }
+
     @Override
     public String addRum(Rum r) {
         rumRepo.save(r);
@@ -106,7 +108,7 @@ public class RumServiceImp implements RumService {
 
      */
 
-    public Rum getRumById(Long id){
+    public Rum getRumById(Long id) {
         return rumRepo.findById(id).get();
     }
 
@@ -122,18 +124,19 @@ public class RumServiceImp implements RumService {
     public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
         String felmeddelande;
-        if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)){
+        if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
             felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
             model.addAttribute("felmeddelande", felmeddelande);
             return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
         }
 
         Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByEmail(name, email, telNr));
+
         //Kolla vilken storlek på rum som kan visas
         boolean needsDouble = antalPersoner > 1;
         int neededSize = antalPersoner - 1;
         String roomType;
-        if (needsDouble){
+        if (needsDouble) {
             roomType = "Dubbelrum";
         } else {
             roomType = "Enkelrum";
@@ -145,12 +148,12 @@ public class RumServiceImp implements RumService {
             LocalDate from = LocalDate.parse(startDate);
             LocalDate until = LocalDate.parse(endDate);
             //kontroll för att slut datum är EFTER startdatum
-            if (!from.isBefore(until)){
+            if (!from.isBefore(until)) {
                 felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
                 System.out.println("Fel i datumen, du har valt ett till-datum som är före från-datum");
                 model.addAttribute("felmeddelande", felmeddelande);
                 return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
-            } else if (from.isBefore(LocalDate.now())){
+            } else if (from.isBefore(LocalDate.now())) {
                 //kontroll att start datumet inte has passerat redan
                 felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
                 System.out.println("Fel i datumen, du har valt ett datum som redan passerat");
@@ -187,12 +190,12 @@ public class RumServiceImp implements RumService {
 
     }
 
-    public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate){
+    public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate) {
         List<Long> availableRooms = new ArrayList<>();
 
-        for (Bokning bokning:bokningar
+        for (Bokning bokning : bokningar
         ) {
-            if (bokning.getStartdatum().isBefore(endDate) && bokning.getSlutdatum().isAfter(startDate)){
+            if (bokning.getStartdatum().isBefore(endDate) && bokning.getSlutdatum().isAfter(startDate)) {
                 System.out.println("Added to rooms: " + bokning.getRum().getId());
                 availableRooms.add(bokning.getRum().getId());
             } else {
@@ -203,19 +206,20 @@ public class RumServiceImp implements RumService {
         System.out.println("Available room id's from getAvailableRoomsId: " + availableRooms);
         return availableRooms;
     }
-    boolean roomIdExistInList(Long roomId, List<Long> nonAvailableID){
+
+    boolean roomIdExistInList(Long roomId, List<Long> nonAvailableID) {
         return nonAvailableID.stream().anyMatch(id -> id.equals(roomId));
     }
 
-    public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email){
-        if (name.trim().isEmpty()){
+    public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email) {
+        if (name.trim().isEmpty()) {
             return false;
         } else if (telnr.trim().length() < 10 && !telnr.trim().matches("[0-9+-}+]")) {
             return false;
         } else return !email.trim().isEmpty();
     }
 
-    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model){
+    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model) {
         model.addAttribute("name", name);
         model.addAttribute("telNr", telnr);
         model.addAttribute("email", email);
