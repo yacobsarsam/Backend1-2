@@ -107,7 +107,7 @@ public class KundController {
         kundService.addKund(k);
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
-        return "changedone";
+        return "updateKundDone.html";
         //return "redirect:/kunder";
     }
 
