@@ -119,7 +119,7 @@ public class RumServiceImp implements RumService {
     }
 
     @Override
-    public String getAllAvailableRooms(String name, String telNr, String email,
+    public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
         String felmeddelande;
         if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)){

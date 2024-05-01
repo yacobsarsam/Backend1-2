@@ -17,6 +17,7 @@ import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -159,7 +160,8 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public String getAllAvailableRooms(Long bokId, Long rumId, String startDate, String endDate,
+    public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
+                                       String email, String startDate, String endDate,
                                        String antalPersoner, Model model) {
         Bokning booking = getBookingDetailsById(bokId);
         int antalPersonerInt = Integer.parseInt(antalPersoner);
