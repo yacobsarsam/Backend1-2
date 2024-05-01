@@ -22,8 +22,9 @@ public interface BokningService {
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
     public List<BokningDto> getAllBokningarbyId(Long id);
     String addBokning();
-    public String getAllAvailableRooms(Long bokId, Long rumId, String startDate, String endDate,
-                                       String antalPersoner, Model model);
+    public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
+                                       String email, String startDate, String endDate,
+                                       int antalPersoner, Model model);
     public List<Bokning> getAllBokningar2();
     public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId);
 

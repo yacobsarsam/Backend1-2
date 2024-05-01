@@ -27,6 +27,9 @@
         <label for="antalPersoner">Antal personer:</label>
         <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
         <br><br>
+        <input type="hidden" name="namn" th:value="${booking.kund.namn}">
+        <input type="hidden" name="telNr" th:value="${booking.kund.tel}">
+        <input type="hidden" name="email" th:value="${booking.kund.email}">
         <input type="hidden" name="bokId" th:value="${booking.id}">
         <button class="book-button" type="submit" >Sök lediga rum</button>
     </form>
