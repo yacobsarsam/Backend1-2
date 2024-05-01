@@ -26,4 +26,6 @@ public interface BokningService {
                                        String antalPersoner, Model model);
     public List<Bokning> getAllBokningar2();
     public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId);
+
+    public List<Bokning> getAllBokningarAsBokningById(Long id);
 }

@@ -86,6 +86,8 @@ body{
 .date-container{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .small-container{
@@ -183,10 +185,43 @@ form {
     width: 50%;
 }
 
+.kund-text p{
+    margin-right: 16px;
+}
+
+.top-text-container{
+    display: flex;
+}
+
+.bottom-text-container{
+    display: flex;
+}
+
 .mt-10{
     margin-top: 10px;
 }
 
+.ml-10{
+    margin-left: 10px;
+}
+
+.ml-12{
+    margin-left: 12px;
+}
+
+.ml-l{
+    margin-left: 50px;
+}
+
 .m-auto{
     margin: auto;
+}
+
+.left-text-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.button-kunder{
+    margin-left: 20px;
 }

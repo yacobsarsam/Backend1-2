@@ -68,6 +68,8 @@ public class BokningController {
         Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         //DetailedBokningDto bdto = DetailedBokningDto.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         model.addAttribute("booking", b);
+        model.addAttribute("rumInfo", b.getRum());
+        model.addAttribute("kundInfo", b.getKund());
         return "bookingDetails";
     }
 

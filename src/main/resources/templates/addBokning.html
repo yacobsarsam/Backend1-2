@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <!--Font-kit -->
+  <script src="https://kit.fontawesome.com/e381b12111.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -24,13 +26,11 @@
         <input class="text-input" type="email" id="email" name="email" th:value="${email}" placeholder="Din email-address">
         <hr>
         <div class="date-container">
-            <label for="startDate">Från:</label>
             <input type="date" id="startDate" name="startDate" th:value="${startDate}">
-            <hr>
-            <label for="endDate">Till och med:</label>
+            <i class="fa-solid fa-right-long"></i>
             <input type="date" id="endDate" name="endDate" th:value="${endDate}">
         </div>
-        <label for="antalPersoner">Antal personer:</label>
+        <label class="mt-10" for="antalPersoner">Antal personer:</label>
         <input class="num-input" type="number" id="antalPersoner" name="antalPersoner" max="4" min="1" value="1">
         <p class="error" th:name="felmeddelande" th:text="${felmeddelande}"></p>
         <input class="book-button" type="submit" value="Sök lediga rum">

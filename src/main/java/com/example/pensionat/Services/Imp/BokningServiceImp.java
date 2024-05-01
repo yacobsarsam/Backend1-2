@@ -95,6 +95,11 @@ public class BokningServiceImp implements BokningService {
     public List<BokningDto> getAllBokningarbyId(Long id) {
         return br.findAll().stream().filter(b -> b.getKund().getId() == id).map(bok -> BokningToBokningDto(bok)).toList();
     }
+
+    @Override
+    public List<Bokning> getAllBokningarAsBokningById(Long id){
+        return br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
+    }
     /* Kommenterar ut denna för tillfället då jag har samma länkad till thymeleaf
     @Override
     public String addBokning(Bokning b) {
@@ -123,6 +128,7 @@ public class BokningServiceImp implements BokningService {
         br.save(b);
         return b;
     }
+
 
 //    @Override
 //    public String updateBokning(DetailedBokningDto b) {
@@ -202,6 +208,5 @@ public class BokningServiceImp implements BokningService {
         //TODO Bryta ut till mindre metoder
         return "updateBooking";
     }
-
 
 }
