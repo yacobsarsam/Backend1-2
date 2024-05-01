@@ -9,6 +9,7 @@ import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +39,19 @@ public class KundServiceImp implements KundService {
     public Kund updateKund(long id) {
         Kund k =kr.findById(id).get();
                 return k;
+    }
+
+    @Override
+    public boolean checkIfKundExistByEmailUtanAttSkapa(String namn, String email, String tel) {
+        KundDto kundDto = getAllKunder().stream().filter(kund -> Objects.equals(kund.getEmail(), email)).findFirst().orElse(null);
+        if(kundDto == null){
+
+            return false;
+        }
+        else{
+
+            return true;
+        }
     }
     @Override
     public KundDto checkIfKundExistByEmail(String name, String email, String telefon){
@@ -99,7 +113,29 @@ public class KundServiceImp implements KundService {
     public Kund getKundById(Long id) {
         return kr.findById(id).orElse(null);
     }
-
+    public String getAllAvailableKundInfo(String name, String telNr, String email, Model model) {
+        String felmeddelande;
+        if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)){
+            felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
+            model.addAttribute("felmeddelande", felmeddelande);
+            return addModelsAndReturn(name, telNr, email, model);
+        }
+        else
+            return "visakunder";
+    }
+    public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email){
+        if (name.trim().isEmpty()){
+            return false;
+        } else if (telnr.trim().length() < 10 && !telnr.trim().matches("[0-9+-}+]")) {
+            return false;
+        } else return !email.trim().isEmpty();
+    }
+    String addModelsAndReturn(String name, String telnr, String email, Model model){
+        model.addAttribute("name", name);
+        model.addAttribute("telNr", telnr);
+        model.addAttribute("email", email);
+        return "visakunder";
+    }
 
 
     /*private final KundRepo kr;

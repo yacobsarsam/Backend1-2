@@ -51,13 +51,30 @@ public class KundController {
 
     @PostMapping("/registreraNyKund")
     public String createKund(@ModelAttribute KundDto kundDto, Model model) {
-        kundService.checkIfKundExistByEmail(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel());
+        kundService.getAllAvailableKundInfo(kundDto.getNamn(),kundDto.getTel(), kundDto.getEmail(),model);
+        if(kundService.isCustomerFieldsFilledAndCorrect(kundDto.getNamn(),kundDto.getTel(), kundDto.getEmail())){
+            String felmeddelande;
+            if(kundService.checkIfKundExistByEmailUtanAttSkapa(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel())){
+                felmeddelande = "Epost finns redan registrerad. Ny kund har inte skapats.";
+                model.addAttribute("felmeddelande", felmeddelande);
 
-        //Kund kund = kundService.kundDtoToKund(kundDto);
-        //kundService.addKund(kund);
-        return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
+                return getAllKunder(model);
+            }
+            else {
+                kundService.checkIfKundExistByEmail(kundDto.getNamn(), kundDto.getEmail(), kundDto.getTel());
+                felmeddelande = "Ny kund har skapats.";
+                model.addAttribute("felmeddelande", felmeddelande);
+
+                //felmeddelande
+                //Kund kund = kundService.kundDtoToKund(kundDto);
+                //kundService.addKund(kund);
+                return getAllKunder(model);
+            }
+        }
+        return getAllKunder(model);
+
+//       return "visakunder";
     }
-
 
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
     //TODO MÅSTE uppdattera funktionen och kolla att bokningarna är framtida och inte utgått,
