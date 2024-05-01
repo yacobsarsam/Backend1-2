@@ -147,6 +147,13 @@ form {
     color: red;
 }
 
+.error-container{
+    text-align: center;
+    align-items: center;
+    margin-top: 100px;
+    padding: 0 40px;
+}
+
 .divider{
     width: 90%;
     margin: 5px auto;
@@ -178,4 +185,8 @@ form {
 
 .mt-10{
     margin-top: 10px;
+}
+
+.m-auto{
+    margin: auto;
 }
