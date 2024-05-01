@@ -48,9 +48,11 @@ public class KundController {
     public String showBookingDetails(@PathVariable Long id, Model model) {
         List <BokningDto> allabokningar = bokningService.getAllBokningarbyId(id);
         List<Bokning> bokningar = bokningService.getAllBokningarAsBokningById(id);
+        List<DetailedBokningDto> bok = bokningar.stream().map(bokningService::bokningToDetailedBokningDto).toList();
         model.addAttribute("allabokningar", allabokningar);
         model.addAttribute("id",id);
         model.addAttribute("bokningarAsBokning", bokningar);
+        model.addAttribute("allaDetailedBokningar", bok);
         return "visabokningperkund.html";
     }
 
