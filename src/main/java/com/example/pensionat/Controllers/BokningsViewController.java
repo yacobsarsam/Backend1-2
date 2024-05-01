@@ -27,8 +27,8 @@ public class BokningsViewController {
     private final KundService kundService;
 
     @RequestMapping("/book")
-    public String addBokningSite(Model model){
-        return bokningService.addBokning(model);
+    public String addBokningSite(){
+        return bokningService.addBokning();
     }
 
     @GetMapping("book/viewRooms")
@@ -39,7 +39,7 @@ public class BokningsViewController {
     }
 
     @GetMapping("book/update/viewRooms")
-    public String showAllRooms2(@RequestParam(defaultValue = "0") Long bokId, @RequestParam(defaultValue = "0") Long rumId, @RequestParam String namn, @RequestParam String telNr,
+    public String showAllRooms2(@RequestParam Long bokId, Long rumId, @RequestParam String namn, @RequestParam String telNr,
                                 @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
                                 @RequestParam int antalPersoner, Model model){
         return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);

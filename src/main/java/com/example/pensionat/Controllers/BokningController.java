@@ -44,19 +44,11 @@ public class BokningController {
     }
 
     @PostMapping("/update")
-    public String makeBookingUpdate(Long bokId, Long rumId, String namn, String tel, String email, LocalDate startDate, LocalDate endDate, int numOfBeds, Model model){
-        System.out.println("Kommer till update metoden");
-        if (!(bokId == 0)) {
-            Bokning b = bokningService.updateBokning(bokId, startDate, endDate, numOfBeds, rumId);
-            model.addAttribute("booking", b);
-            model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
-            return "bookingDetails";
-        }
-        else {
-            Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
-            model.addAttribute("booking", b);
-            return "bookingDetails";
-        }
+    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int numOfBeds, Model model){
+        Bokning b = bokningService.updateBokning(bokId, startDate, endDate, numOfBeds, rumId);
+        model.addAttribute("booking", b);
+        model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
+        return "bookingDetails";
     }
 
 
