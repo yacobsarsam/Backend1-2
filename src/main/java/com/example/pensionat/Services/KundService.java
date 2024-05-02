@@ -18,7 +18,7 @@ public interface KundService {
     boolean checkIfKundHasBokningar(Long kundId);
     public String deleteKund(long id);
     public List<KundDto> getAllKunder();
-    public String addKund(Kund k);
+    public String addKund(Kund k, Model model);
     public Kund updateKund(long id);
     public KundDto checkIfKundExistByEmail(String name, String email, String telefon);
     public Kund kundDtoToKund(KundDto k);

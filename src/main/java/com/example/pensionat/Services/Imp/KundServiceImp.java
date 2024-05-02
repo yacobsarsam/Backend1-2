@@ -30,9 +30,15 @@ public class KundServiceImp implements KundService {
         return kr.findAll().stream().map(k -> kundToDetailedKundDto(k)).toList();
     }
     @Override
-    public String addKund(Kund k) {
-        kr.save(k);
-        return null;
+    public String addKund(Kund k, Model model) {
+        if (isCustomerFieldsFilledAndCorrect(k.getNamn(), k.getTel(), k.getEmail())){
+            kr.save(k);
+            return "updateKundDone";
+        } else {
+            model.addAttribute("felmeddelande", "Fel i kundfälten, kontrollera och försök igen");
+            model.addAttribute("updatekund", k);
+            return "updatekund";
+        }
     }
 
     @Override
