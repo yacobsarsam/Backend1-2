@@ -121,16 +121,18 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
-        int beds = numOfBeds;
-        if (beds > 4){
-            beds = 4;
+        int roomTypeSize;
+        if (rumService.getRumById(rumId).isDubbelrum()){
+            roomTypeSize = 2;
+        } else {
+            roomTypeSize = 1;
         }
         Bokning b = getBookingDetailsById(bokId);
         Rum r = rumService.getRumById(rumId);
         b.setRum(r);
         b.setStartdatum(startDate);
         b.setSlutdatum(endDate);
-        b.setNumOfBeds(beds);
+        b.setNumOfBeds(numOfBeds + roomTypeSize);
         br.save(b);
         return b;
     }
@@ -158,14 +160,17 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
-        int beds = numOfBeds;
-        if (beds > 4){
-            beds = 4;
+        int roomTypeSize;
+
+        if (rumService.getRumById(rumId).isDubbelrum()){
+            roomTypeSize = 2;
+        } else {
+            roomTypeSize = 1;
         }
         KundDto kundDto = kundService.checkIfKundExistByEmail(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
-        Bokning b = new Bokning(kund, rum, startdatum, slutdatum, beds);
+        Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds + roomTypeSize);
 //        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
 //        List<Bokning> kundbokningar = kund.getBokning();
 //        kundbokningar.add(bUtanKund);

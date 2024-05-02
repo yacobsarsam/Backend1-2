@@ -71,7 +71,8 @@ public class BokningController {
     @PostMapping("/add")
     public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner, Model model){
         System.out.println("Num of beds in /add " + extraBeds);
-        Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, extraBeds + antalPersoner);
+
+        Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, extraBeds);
         //DetailedBokningDto bdto = DetailedBokningDto.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
