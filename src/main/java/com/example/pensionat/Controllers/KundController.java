@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping(path = "kunder")
 public class KundController {
 
-    private final KundRepo kundRepo;
     private final KundService kundService;
     private final BokningService bokningService;
 
@@ -32,17 +31,6 @@ public class KundController {
         model.addAttribute("allakunder", allaKunder);
         return "visakunder.html";
     }
-
-    /*@RequestMapping("")
-        public List<KundDto> getAllKunder(){
-        return kundService.getAllKunder();
-        }*/
-/*    @GetMapping("/showBokingarById/{id}")
-    public String showBookingDetails(@PathVariable Long id, Model model) {
-        DetailedBokningDto booking = bokningService.getBookingDetailsById(id);
-        model.addAttribute("booking", booking);
-        return "bookingDetails.html";
-    }*/
 
     @GetMapping("/showBokingarById/{id}")
     public String showBookingDetails(@PathVariable Long id, Model model) {
@@ -72,15 +60,11 @@ public class KundController {
                 felmeddelande = "Ny kund har skapats.";
                 model.addAttribute("felmeddelande", felmeddelande);
 
-                //felmeddelande
-                //Kund kund = kundService.kundDtoToKund(kundDto);
-                //kundService.addKund(kund);
                 return getAllKunder(model);
             }
         }
         return getAllKunder(model);
 
-//       return "visakunder";
     }
 
     //Ändrade från @DeleteMapping till @RequestMapping då det inte gick att testa innan
@@ -91,11 +75,9 @@ public class KundController {
         boolean hasBokningar = kundService.checkIfKundHasBokningar(id);
         if (hasBokningar) {
             return "changenotdone";
-            //return "redirect:/kunder";
         } else {
             kundService.deleteKund(id);
             return "changedone";
-            //return "redirect:/kunder";
         }
     }
     @RequestMapping("/editById/{id}")

@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-//Har skapar Dto-klassar, vi kan ändra innehåller och lägga
-// till fler droklasser om det behövs utifrån vårt behov
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

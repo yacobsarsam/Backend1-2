@@ -24,7 +24,7 @@ public class Rum {
     @Column(nullable = false)
     protected boolean dubbelrum;
     @Column(nullable = false)
-    protected int storlek; // storlek 1 - enkelrum, 2 - Dubbelrum med möjlighet till en extrasäng, 3 - Dubbelrum  med möjlighet till två extrasängar.
+    protected int storlek;
 
     public Rum(boolean dubbelrum, int storlek, int rumsnr) {
         this.rumsnr = rumsnr;

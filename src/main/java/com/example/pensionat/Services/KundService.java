@@ -9,13 +9,7 @@ import java.util.List;
 
 public interface KundService {
 
-    /*
-
-    public Kund kundDtoToKund(KundDto k);
-    public DetailedKundDto kundToDetailedKundDto(Kund k);
-    public List<DetailedKundDto> getAllCustomers();
-    */
-    boolean checkIfKundHasBokningar(Long kundId);
+    public boolean checkIfKundHasBokningar(Long kundId);
     public String deleteKund(long id);
     public List<KundDto> getAllKunder();
     public String addKund(Kund k, Model model);

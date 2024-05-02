@@ -16,10 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BokningController {
 
-    private final BokningRepo bokningRepo;
-    private final RumService rumService;
     private final BokningService bokningService;
-    private final KundService kundService;
     private final KundController kundController;
 
     @GetMapping("/updateBokning/{id}")

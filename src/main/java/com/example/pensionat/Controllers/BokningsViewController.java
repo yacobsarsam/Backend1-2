@@ -18,7 +18,6 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class BokningsViewController {
     private final BokningService bokningService;
-    private final RumService rumService;
     private final KundService kundService;
 
     @RequestMapping("/book")

@@ -19,11 +19,7 @@ public class RumController {
 
 
     private final RumService rumService;
-//    RumRepo rumRepo;
-//    RumController(RumRepo rumRepo, RumService rumService){
-//        this.rumRepo = rumRepo;
-//        this.rumService = rumService;
-//    }
+
 
     @RequestMapping("")
     public List<DetailedRumDto> getAllRum(){
