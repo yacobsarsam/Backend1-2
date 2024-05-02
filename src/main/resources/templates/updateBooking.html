@@ -17,7 +17,7 @@
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/kunder/showBokingarById/{id}(id=${id})}" >Gå tillbaka</a></button>
     </nav>
-    <form action="/book/update/viewRooms" method="get" class="form-container">
+    <form id="bookingForm" action="/book/update/viewRooms" method="get" class="form-container">
         <h4>Ändra bokning</h4>
         <div class="date-container">
             <input type="date" id="startDate" name="startDate">
@@ -32,7 +32,7 @@
         <input type="hidden" name="telNr" th:value="${booking.kund.tel}">
         <input type="hidden" name="email" th:value="${booking.kund.email}">
         <input type="hidden" name="bokId" th:value="${booking.id}">
-        <button class="book-button" type="submit" >Sök lediga rum</button>
+        <button class="book-button" type="button" onclick="validateForm()">Sök lediga rum</button>
     </form>
     <div class="small-container" th:unless="${#lists.isEmpty(allRooms)}">
         <h3 th:text="${rubrik}" ></h3>
@@ -58,10 +58,18 @@
         </div>
     </div>
 </div>
-</body>
-</html>
 
-</div>
+<script>
+    function validateForm() {
+        var startDate = document.getElementById('startDate').value;
+        var endDate = document.getElementById('endDate').value;
+        if (startDate === '' || endDate === '') {
+            alert('Du måste välja start start datum och slut datum!.');
+        } else {
+            document.getElementById('bookingForm').submit();
+        }
+    }
+</script>
 
 </body>
 </html>
