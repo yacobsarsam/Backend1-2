@@ -48,9 +48,9 @@ public class PensionatApplication {
 
             //List<Bokning> emptyList = new ArrayList<>();
 
-            Kund k1 = new Kund("Test", "123456789", "test@mail.com");
-            Kund k2 = new Kund("Test2", "123456789", "test2@mail.com");
-            Kund k3 = new Kund("kund utan boknin", "133456789", "test3@mail.com");
+            Kund k1 = new Kund("Test", "1234567896", "test@mail.com");
+            Kund k2 = new Kund("Test2", "1234567897", "test2@mail.com");
+            Kund k3 = new Kund("kund utan bokning", "133456789", "test3@mail.com");
             kundRepo.save(k1);
             kundRepo.save(k2);
             kundRepo.save(k3);
