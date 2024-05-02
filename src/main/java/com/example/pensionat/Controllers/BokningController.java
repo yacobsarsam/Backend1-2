@@ -26,7 +26,6 @@ public class BokningController {
     private final BokningRepo bokningRepo;
     private final RumService rumService;
     private final BokningService bokningService;
-    private final RumService rumService;
     private final KundService kundService;
     private final KundController kundController;
     /*
