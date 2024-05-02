@@ -5,8 +5,6 @@ import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Models.Rum;
-import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;

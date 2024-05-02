@@ -4,9 +4,7 @@ import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
-import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
-import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.Imp.BokningServiceImp;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
@@ -16,10 +14,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
@@ -30,20 +26,11 @@ import java.util.List;
 @AutoConfigureMockMvc
 public class BokningsViewControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Mock
-    private BokningService mockBokningsService;
-
     @Mock
     private KundService mockKundService;
 
     @Mock
     private RumService mockRumService;
-
-    @Mock
-    private KundRepo mockKundrepo;
 
     @Mock
     private RumRepo mockRumRepo;

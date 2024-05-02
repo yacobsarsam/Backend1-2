@@ -4,7 +4,6 @@ import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
-import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

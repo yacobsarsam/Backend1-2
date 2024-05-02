@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -33,10 +32,8 @@ public class Bokning {
     protected int numOfBeds;
 
     @ManyToOne
-    //yacoub comment bort @JoinColumn
     protected Kund kund;
     @ManyToOne
-    //yacoub comment bort @JoinColumn
     protected Rum rum;
 
     public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds){

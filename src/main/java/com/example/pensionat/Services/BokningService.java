@@ -2,11 +2,7 @@ package com.example.pensionat.Services;
 
 import com.example.pensionat.Dtos.*;
 import com.example.pensionat.Models.Bokning;
-import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Models.Rum;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,7 +15,7 @@ public interface BokningService {
     public String deleteBokning(long id);
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds);
     public List<BokningDto> getAllBokningarbyId(Long id);
-    String addBokning();
+    public String addBokning();
     public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
                                        String email, String startDate, String endDate,
                                        int antalPersoner, Model model);

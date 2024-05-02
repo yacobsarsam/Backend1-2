@@ -1,9 +1,7 @@
 package com.example.pensionat;
 
-import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
-import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.Imp.BokningServiceImp;
 import com.example.pensionat.Services.Imp.RumServiceImp;
@@ -17,10 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
 import java.util.List;
@@ -35,9 +31,6 @@ import static org.mockito.Mockito.*;
 @AutoConfigureMockMvc
 public class RumControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
     @Mock
     private RumRepo mockRumRepo;
 
@@ -46,9 +39,6 @@ public class RumControllerTest {
 
     @Mock
     private KundService mockKundService;
-
-    @Mock
-    private KundRepo mockKundrepo;
 
     @Mock
     private RumService mockRumService;

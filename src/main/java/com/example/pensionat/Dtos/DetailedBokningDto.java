@@ -1,7 +1,5 @@
 package com.example.pensionat.Dtos;
 
-import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Models.Rum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

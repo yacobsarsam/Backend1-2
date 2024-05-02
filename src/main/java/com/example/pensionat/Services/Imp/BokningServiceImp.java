@@ -1,6 +1,5 @@
 package com.example.pensionat.Services.Imp;
 
-
 import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
@@ -9,7 +8,6 @@ import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
-import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
@@ -17,7 +15,6 @@ import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,7 +27,6 @@ public class BokningServiceImp implements BokningService {
 
     private final BokningRepo br;
     private final RumRepo rumRepo;
-    private final KundRepo kundRepo;
 
     private final KundService kundService;
     private final RumService rumService;
@@ -39,7 +35,6 @@ public class BokningServiceImp implements BokningService {
         return "addBokning";
     }
 
-    //String valueOf och LocalDate parse på nedan metoder, behöver kontroll testas så dom fungerar
     @Override
     public BokningDto BokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
@@ -65,25 +60,9 @@ public class BokningServiceImp implements BokningService {
         }
     }
 
-//    @Override
-//    public DetailedBokningDto getBookingDetailsById(Long id) {
-//        Optional<Bokning> optionalBokning = br.findById(id);
-//        if (optionalBokning.isPresent()) {
-//            Bokning bokning = optionalBokning.get();
-//            return bokningToDetailedBokningDto(bokning);
-//        } else {
-//            return null;
-//        }
-//    }
-
     @Override
     public List<DetailedBokningDto> getAllBokningar() {
         return br.findAll().stream().map(bok -> bokningToDetailedBokningDto(bok)).toList();
-    }
-
-    @Override
-    public List<Bokning> getAllBokningar2() {
-        return br.findAll();
     }
 
     @Override
@@ -95,22 +74,6 @@ public class BokningServiceImp implements BokningService {
     public List<Bokning> getAllBokningarAsBokningById(Long id){
         return br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
     }
-    /* Kommenterar ut denna för tillfället då jag har samma länkad till thymeleaf
-    @Override
-    public String addBokning(Bokning b) {
-        return null;
-    }
-
-     */
-
-
-//    @Override
-//    public String updateBokning(DetailedBokningDto b) {
-//        Model model = null;
-//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
-//                b.getStartdatum(), b.getSlutdatum(), String.valueOf(b.getNumOfBeds()), model);
-//        return "addBokning";
-//    }
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
@@ -129,15 +92,6 @@ public class BokningServiceImp implements BokningService {
         br.save(b);
         return b;
     }
-
-
-//    @Override
-//    public String updateBokning(DetailedBokningDto b) {
-//        Model model = null;
-//        rumService.getAllAvailableRooms(b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail(),
-//                b.getStartdatum(), b.getSlutdatum(), b.getNumOfBeds(), model);
-//        return "changeBooking";
-//    }
 
     @Override
     public String deleteBokning(long id) {
@@ -163,60 +117,9 @@ public class BokningServiceImp implements BokningService {
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds + roomTypeSize);
-//        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
-//        List<Bokning> kundbokningar = kund.getBokning();
-//        kundbokningar.add(bUtanKund);
-//        kund.setBokning(kundbokningar);
-//        kundRepo.save(kund);
         br.save(b);
         return b;
     }
-
-//    @Override
-//    public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr,
-//                                       String email, String startDate, String endDate,
-//                                       int antalPersoner, Model model) {
-//        Bokning booking = getBookingDetailsById(bokId);
-////        int antalPersonerInt = Integer.parseInt(antalPersoner);
-//        //Kolla vilken storlek på rum som kan visas
-//        boolean needsDouble = antalPersoner > 1;
-//        int neededSize = antalPersoner - 1;
-//        String roomType;
-//        if (needsDouble){
-//            roomType = "Dubbelrum";
-//        } else {
-//            roomType = "Enkelrum";
-//        }
-//        //get the dates:
-//        List<Long> ledigaRumsId = new ArrayList<>();
-//        List<Rum> sortedRooms = new ArrayList<>();
-//        if (!startDate.isEmpty() && !endDate.isEmpty()) {
-//            //TODO kontroll för att slut datum är EFTER startdatum
-//            //TODO Kontroll att start datumet inte has passerat redan
-//
-//            LocalDate from = LocalDate.parse(startDate);
-//            LocalDate until = LocalDate.parse(endDate);
-//            System.out.println("Parsed dates: " + from + " " + until);
-//            //Hämta ut alla rums-id som inte är bokade under det spannet som angets
-//            List<Long> notAva = rumService.getNonAvailableRoomsId(getAllBokningar2(), from, until);
-//            sortedRooms = rumService.getAllRum2().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
-//                    .filter(rum -> rum.getStorlek() >= neededSize)
-//                    .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
-//        } else {
-//            //TODO felhantering
-//            System.out.println("Inga eller bara ett datum valdes");
-//        }
-//        model.addAttribute("allRooms", sortedRooms);
-//        model.addAttribute("booking", booking);
-//        model.addAttribute("rubrik", "Lediga rum");
-//        model.addAttribute("roomType", roomType);
-//        model.addAttribute("startDate", startDate);
-//        model.addAttribute("endDate", endDate);
-//        model.addAttribute("numOfBeds", antalPersoner);
-//        //TODO sortera på bokning måste stämma med rums-id samt datumen. LocalDate parse?
-//        //TODO Bryta ut till mindre metoder
-//        return "updateBooking";
-//    }
 
     @Override
     public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
@@ -278,7 +181,6 @@ public class BokningServiceImp implements BokningService {
             model.addAttribute("endDate", endDate);
             model.addAttribute("antalPersoner", antalPersoner);
 
-            //TODO Bryta ut till mindre metoder
             if (bokId != 0) {
                 return "updateBooking";
             } else {
@@ -286,7 +188,6 @@ public class BokningServiceImp implements BokningService {
             }
 
         } else {
-            //TODO felhantering
             felmeddelande = "Inga eller bara ett datum valdes";
             model.addAttribute("felmeddelande", felmeddelande);
             return "addBokning";
@@ -306,10 +207,6 @@ public class BokningServiceImp implements BokningService {
             }
         }
         return availableRooms;
-    }
-
-    boolean roomIdExistInList(Long roomId, List<Long> nonAvailableID) {
-        return nonAvailableID.stream().anyMatch(id -> id.equals(roomId));
     }
 
     public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email) {

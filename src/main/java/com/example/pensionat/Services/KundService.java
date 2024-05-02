@@ -21,7 +21,7 @@ public interface KundService {
     public List<DetailedKundDto> getAllKunder2();
     public Kund getKundById(Long id);
 
-    boolean checkIfKundExistByEmailUtanAttSkapa(String namn, String email, String tel);
-    String getAllAvailableKundInfo(String name, String telNr, String email, Model model);
-    boolean isCustomerFieldsFilledAndCorrect(String namn, String tel, String email);
+    public boolean checkIfKundExistByEmailUtanAttSkapa(String namn, String email, String tel);
+    public String getAllAvailableKundInfo(String name, String telNr, String email, Model model);
+    public boolean isCustomerFieldsFilledAndCorrect(String namn, String tel, String email);
 }

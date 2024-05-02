@@ -46,26 +46,6 @@
                 </form>
             </div>
         </div>
-        <!--
-        <table>
-            <tr>
-                <td>Kund namn</td>
-                <td>Alla bokningar</td>
-                <td>Ändra Kundinfo</td>
-                <td>Ta bort Kund</td>
-            </tr>
-            <tr th:each="kund : ${allakunder}">
-                <td th:text="${kund.namn}"></td>
-                <td><a th:href="@{/kunder/showBokingarById/{id}(id=${kund.id})}">Visa bokningar</a></td>
-                <td><a th:href="@{/kunder/editById/{id}(id=${kund.id})}">Ändra</a></td>
-                <td>
-                    <form th:action="@{/kunder/deleteById/{id}(id=${kund.id})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort bokningen?')">
-                        <button type="submit">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        </table>
-        -->
     </div>
 </div>
 </body>
