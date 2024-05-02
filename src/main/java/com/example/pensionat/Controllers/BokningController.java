@@ -23,6 +23,7 @@ import java.util.List;
 public class BokningController {
 
     private final BokningRepo bokningRepo;
+    private final RumService rumService;
     private final BokningService bokningService;
     private final KundController kundController;
     /*
@@ -47,6 +48,8 @@ public class BokningController {
     public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int numOfBeds, Model model){
         Bokning b = bokningService.updateBokning(bokId, startDate, endDate, numOfBeds, rumId);
         model.addAttribute("booking", b);
+        model.addAttribute("rumInfo", b.getRum());
+        model.addAttribute("kundInfo", b.getKund());
         model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
         return "bookingDetails";
     }
