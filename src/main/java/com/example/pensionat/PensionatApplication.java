@@ -48,7 +48,7 @@ public class PensionatApplication {
 
             Kund k1 = new Kund("Test", "1234567896", "test@mail.com");
             Kund k2 = new Kund("Test2", "1234567897", "test2@mail.com");
-            Kund k3 = new Kund("kund utan bokning", "133456789", "test3@mail.com");
+            Kund k3 = new Kund("kund utan bokning", "1334567889", "test3@mail.com");
             kundRepo.save(k1);
             kundRepo.save(k2);
             kundRepo.save(k3);

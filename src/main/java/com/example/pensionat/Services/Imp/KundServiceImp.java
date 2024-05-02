@@ -67,11 +67,9 @@ public class KundServiceImp implements KundService {
             return kundToKundDto(k);
         }
         else{
-
             return kundDto;
         }
     }
-
 
     @Override
     public Kund kundDtoToKund(KundDto k) {
@@ -95,7 +93,6 @@ public class KundServiceImp implements KundService {
     @Override
     public boolean checkIfKundHasBokningar(Long kundId) {
         Kund kund = kr.findById(kundId).orElse(null);
-       // DetailedKundDto detailedKundDto = DetailedKundDto.kundToDetailedKundDto(kund);
         return kund!= null && !kund.getBokning().isEmpty();
     }
 
