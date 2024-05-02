@@ -27,7 +27,7 @@ public class BokningController {
     }
 
     @PostMapping("/update")
-    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int extraBeds, int antalPersoner, Model model){
+    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, @RequestParam(defaultValue = "0") int extraBeds, int antalPersoner, Model model){
         Bokning b = bokningService.updateBokning(bokId, startDate, endDate, extraBeds, rumId);
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
