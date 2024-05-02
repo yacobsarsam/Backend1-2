@@ -24,6 +24,7 @@ import java.util.List;
 public class BokningController {
 
     private final BokningRepo bokningRepo;
+    private final RumService rumService;
     private final BokningService bokningService;
     private final RumService rumService;
     private final KundService kundService;
@@ -49,12 +50,10 @@ public class BokningController {
     @PostMapping("/update")
     public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int extraBeds, int antalPersoner, Model model){
         Bokning b = bokningService.updateBokning(bokId, startDate, endDate, extraBeds + antalPersoner, rumId);
-        Rum rum = rumService.getRumById(rumId);
-        Kund kund = kundService.getKundById(bokningService.getBookingDetailsById(bokId).getKund().getId());
         System.out.println("numOfBeds" + b.getNumOfBeds());
         model.addAttribute("booking", b);
-        model.addAttribute("rumInfo", rum);
-        model.addAttribute("kundInfo", kund);
+        model.addAttribute("rumInfo", b.getRum());
+        model.addAttribute("kundInfo", b.getKund());
         model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
         return "bookingDetails";
     }
