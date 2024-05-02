@@ -106,10 +106,10 @@ public class KundController {
     }
     @PostMapping("/update")
     public String updateKundinfo(Model model, Kund k){
-        kundService.addKund(k);
+        System.out.println(k.getNamn() + " " + k.getEmail() + " " + k.getTel() + " " + k.getId());
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
-        return "updateKundDone.html";
+        return kundService.addKund(k, model);
         //return "redirect:/kunder";
     }
 

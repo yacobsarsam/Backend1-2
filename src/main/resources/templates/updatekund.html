@@ -24,6 +24,7 @@
         <label for="tel">Mobil: </label>
         <input type="tel" id="tel" name="tel" th:field="*{tel}">
         <input type="hidden" id="id" name="id" th:field="*{id}">
+        <p class="error" th:name="felmeddelande" th:text="${felmeddelande}"></p>
 
         <br><br>
         <input type="submit" value="Uppdatera kundinfo">
