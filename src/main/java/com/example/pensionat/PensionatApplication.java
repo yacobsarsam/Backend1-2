@@ -46,15 +46,15 @@ public class PensionatApplication {
             rr.save(r11);
             rr.save(r12);
 
-            Kund k1 = new Kund("Test", "1234567896", "test@mail.com");
-            Kund k2 = new Kund("Test2", "1234567897", "test2@mail.com");
-            Kund k3 = new Kund("kund utan bokning", "1334567889", "test3@mail.com");
+            Kund k1 = new Kund("TestKund 1", "1234567896", "test@mail.com");
+            Kund k2 = new Kund("TestKund 2", "1234567897", "test2@mail.com");
+            Kund k3 = new Kund("TestKund utan bokning", "1334567889", "test3@mail.com");
             kundRepo.save(k1);
             kundRepo.save(k2);
             kundRepo.save(k3);
 
-            Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3), 0);
-            Bokning b2 = new Bokning(k2,r5, LocalDate.now(), LocalDate.now().plusDays(3), 1);
+            Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3), 1);
+            Bokning b2 = new Bokning(k2,r5, LocalDate.now(), LocalDate.now().plusDays(3), 2);
             bokningRepo.save(b1);
             bokningRepo.save(b2);
 
