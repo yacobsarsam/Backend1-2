@@ -110,23 +110,6 @@ public class KundController {
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
         return kundService.addKund(k, model);
-        //return "redirect:/kunder";
-    }
-
-    //TODO saknas kommande metoder från Service klasserna
-
-
-    /*
-avvakta att deleta denna metod /Yacoub
-//skapar kund från sidan "visakunder / Visa alla kunder" (utan bokning)
-
-    @PostMapping("/create")
-    public String createKundutanbokning(@RequestParam String namn, @RequestParam String tel, @RequestParam String email) {
-        Kund kund = new Kund(namn, tel, email);
-        kundService.addKund(kund);
-        return "redirect:/kunder"; // Om du vill omdirigera till sidan för alla kunder efter att en ny kund har lagts till
-    }*/
-
-
+    }    //TODO saknas kommande metoder från Service klasserna
 }
 

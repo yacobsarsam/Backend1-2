@@ -8,7 +8,6 @@ import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.Imp.BokningServiceImp;
-import com.example.pensionat.Services.Imp.RumServiceImp;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,10 +51,8 @@ public class BokningsViewControllerTest {
     @Mock
     private BokningRepo mockBokningRepo;
 
-
     @InjectMocks
-    private BokningServiceImp mockBokningsServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundrepo, mockKundService, mockRumService);
-
+    private BokningServiceImp mockBokningsServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundService, mockRumService);
 
     @BeforeEach
     public void init(){

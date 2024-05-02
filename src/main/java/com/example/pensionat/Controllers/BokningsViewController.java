@@ -1,7 +1,5 @@
 package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Dtos.DetailedBokningDto;
-import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Services.BokningService;
@@ -11,11 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 import java.time.LocalDate;
 

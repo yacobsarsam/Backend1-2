@@ -61,8 +61,8 @@ public class RumControllerTest {
 
     @BeforeEach
     public void init(){
-        mockRumServiceImpl = new RumServiceImp(mockBokningRepo, mockRumRepo, mockKundService);
-        mockBokningServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundrepo, mockKundService, mockRumService);
+        mockRumServiceImpl = new RumServiceImp(mockRumRepo);
+        mockBokningServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundService, mockRumService);
         Rum r1 = new Rum(1L, 10, false, 1);
         Rum r2 = new Rum(2L, 21, true, 2);
         Rum r3 = new Rum(3L, 31, true, 3);

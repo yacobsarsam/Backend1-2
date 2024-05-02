@@ -47,13 +47,6 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public Bokning detailedBokningDtoToBokning(DetailedBokningDto b, Kund kund, Rum rum) {
-        return Bokning.builder().id(b.getId()).startdatum(LocalDate.parse(b.getStartdatum())).
-                slutdatum(LocalDate.parse(b.getSlutdatum())).numOfBeds(b.getNumOfBeds())
-                .kund(kund).rum(rum).build();
-    }
-
-    @Override
     public DetailedBokningDto bokningToDetailedBokningDto(Bokning b) {
         return DetailedBokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds())
@@ -161,7 +154,6 @@ public class BokningServiceImp implements BokningService {
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
         int roomTypeSize;
-
         if (rumService.getRumById(rumId).isDubbelrum()){
             roomTypeSize = 2;
         } else {
@@ -229,7 +221,6 @@ public class BokningServiceImp implements BokningService {
     @Override
     public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
-        System.out.println("antalpersoner i getAllAvairooms" + antalPersoner);
         String felmeddelande;
         if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
             felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
@@ -261,13 +252,11 @@ public class BokningServiceImp implements BokningService {
             //kontroll för att slut datum är EFTER startdatum
             if (!from.isBefore(until)) {
                 felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
-                System.out.println("Fel i datumen, du har valt ett till-datum som är före från-datum");
                 model.addAttribute("felmeddelande", felmeddelande);
                 return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
             } else if (from.isBefore(LocalDate.now())) {
                 //kontroll att start datumet inte has passerat redan
                 felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
-                System.out.println("Fel i datumen, du har valt ett datum som redan passerat");
                 model.addAttribute("felmeddelande", felmeddelande);
                 return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
             }
@@ -289,21 +278,16 @@ public class BokningServiceImp implements BokningService {
             model.addAttribute("endDate", endDate);
             model.addAttribute("antalPersoner", antalPersoner);
 
-            System.out.println("KOM TILL SLUTET AV getAllAvailableRooms I BokningsServiceImp");
-
             //TODO Bryta ut till mindre metoder
             if (bokId != 0) {
-                System.out.println("returned updateBooking");
                 return "updateBooking";
             } else {
-                System.out.println("returned addBokning");
                 return "addBokning";
             }
 
         } else {
             //TODO felhantering
             felmeddelande = "Inga eller bara ett datum valdes";
-            System.out.println("Inga eller bara ett datum valdes");
             model.addAttribute("felmeddelande", felmeddelande);
             return "addBokning";
         }
@@ -316,14 +300,11 @@ public class BokningServiceImp implements BokningService {
         for (Bokning bokning : bokningar
         ) {
             if (bokning.getStartdatum().isBefore(endDate) && bokning.getSlutdatum().isAfter(startDate)) {
-                System.out.println("Added to rooms: " + bokning.getRum().getId());
                 availableRooms.add(bokning.getRum().getId());
             } else {
-                System.out.println("Broke out of if");
                 break;
             }
         }
-        System.out.println("Available room id's from getAvailableRoomsId: " + availableRooms);
         return availableRooms;
     }
 

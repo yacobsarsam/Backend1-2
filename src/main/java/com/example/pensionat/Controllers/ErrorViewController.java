@@ -14,7 +14,6 @@ public class ErrorViewController implements ErrorController {
     public String handleError(){
         return "error";
     }
-
     @RequestMapping("/404")
     public ModelAndView handleNotFound(NoHandlerFoundException ex) {
         ModelAndView modelAndView = new ModelAndView();
