@@ -196,17 +196,14 @@ public class BokningServiceImp implements BokningService {
     }
 
     public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate) {
-        List<Long> availableRooms = new ArrayList<>();
+        List<Long> nonAvailableRooms = new ArrayList<>();
 
-        for (Bokning bokning : bokningar
-        ) {
+        for (Bokning bokning : bokningar) {
             if (bokning.getStartdatum().isBefore(endDate) && bokning.getSlutdatum().isAfter(startDate)) {
-                availableRooms.add(bokning.getRum().getId());
-            } else {
-                break;
+                nonAvailableRooms.add(bokning.getRum().getId());
             }
         }
-        return availableRooms;
+        return nonAvailableRooms;
     }
 
     public boolean isCustomerFieldsFilledAndCorrect(String name, String telnr, String email) {
