@@ -92,4 +92,3 @@ public class KundController {
         return kundService.addKund(k, model);
     }    //TODO saknas kommande metoder från Service klasserna
 }
-
