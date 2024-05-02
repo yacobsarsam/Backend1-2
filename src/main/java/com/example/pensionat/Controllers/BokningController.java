@@ -6,6 +6,7 @@ import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,8 @@ public class BokningController {
 
     private final BokningRepo bokningRepo;
     private final BokningService bokningService;
+    private final RumService rumService;
+    private final KundService kundService;
     private final KundController kundController;
     /*
     BokningController(BokningRepo bokningRepo, BokningService bokningService){
@@ -44,9 +47,14 @@ public class BokningController {
     }
 
     @PostMapping("/update")
-    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int numOfBeds, Model model){
-        Bokning b = bokningService.updateBokning(bokId, startDate, endDate, numOfBeds, rumId);
+    public String makeBookingUpdate(Long bokId, Long rumId, LocalDate startDate, LocalDate endDate, int extraBeds, int antalPersoner, Model model){
+        Bokning b = bokningService.updateBokning(bokId, startDate, endDate, extraBeds + antalPersoner, rumId);
+        Rum rum = rumService.getRumById(rumId);
+        Kund kund = kundService.getKundById(bokningService.getBookingDetailsById(bokId).getKund().getId());
+        System.out.println("numOfBeds" + b.getNumOfBeds());
         model.addAttribute("booking", b);
+        model.addAttribute("rumInfo", rum);
+        model.addAttribute("kundInfo", kund);
         model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
         return "bookingDetails";
     }
@@ -63,9 +71,9 @@ public class BokningController {
 
 
     @PostMapping("/add")
-    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int numOfBeds, Model model){
-        System.out.println("Num of beds in /add " + numOfBeds);
-        Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
+    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner, Model model){
+        System.out.println("Num of beds in /add " + extraBeds);
+        Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, extraBeds + antalPersoner);
         //DetailedBokningDto bdto = DetailedBokningDto.newBokning(namn, tel, email, startDate, endDate, rumId, numOfBeds);
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());

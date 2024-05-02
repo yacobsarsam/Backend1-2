@@ -42,6 +42,7 @@ public class BokningsViewController {
     public String showAllRooms2(@RequestParam Long bokId, Long rumId, @RequestParam String namn, @RequestParam String telNr,
                                 @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
                                 @RequestParam int antalPersoner, Model model){
+        System.out.println("antalpersoner" + antalPersoner);
         return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
     }
 

@@ -121,12 +121,16 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
+        int beds = numOfBeds;
+        if (beds > 4){
+            beds = 4;
+        }
         Bokning b = getBookingDetailsById(bokId);
         Rum r = rumService.getRumById(rumId);
         b.setRum(r);
         b.setStartdatum(startDate);
         b.setSlutdatum(endDate);
-        b.setNumOfBeds(numOfBeds);
+        b.setNumOfBeds(beds);
         br.save(b);
         return b;
     }
@@ -154,10 +158,14 @@ public class BokningServiceImp implements BokningService {
 
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
+        int beds = numOfBeds;
+        if (beds > 4){
+            beds = 4;
+        }
         KundDto kundDto = kundService.checkIfKundExistByEmail(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
-        Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds);
+        Bokning b = new Bokning(kund, rum, startdatum, slutdatum, beds);
 //        Bokning bUtanKund = new Bokning(rum, startdatum, slutdatum, numOfBeds);
 //        List<Bokning> kundbokningar = kund.getBokning();
 //        kundbokningar.add(bUtanKund);
@@ -216,6 +224,7 @@ public class BokningServiceImp implements BokningService {
     @Override
     public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
+        System.out.println("antalpersoner i getAllAvairooms" + antalPersoner);
         String felmeddelande;
         if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
             felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
@@ -279,8 +288,10 @@ public class BokningServiceImp implements BokningService {
 
             //TODO Bryta ut till mindre metoder
             if (bokId != 0) {
+                System.out.println("returned updateBooking");
                 return "updateBooking";
             } else {
+                System.out.println("returned addBokning");
                 return "addBokning";
             }
 
