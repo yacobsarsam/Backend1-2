@@ -3,7 +3,9 @@ package com.example.pensionat;
 import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Services.Imp.BokningServiceImp;
 import com.example.pensionat.Services.Imp.RumServiceImp;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
@@ -46,14 +48,21 @@ public class RumControllerTest {
     private KundService mockKundService;
 
     @Mock
+    private KundRepo mockKundrepo;
+
+    @Mock
     private RumService mockRumService;
 
     @InjectMocks
     private RumServiceImp mockRumServiceImpl;
 
+    @InjectMocks
+    private BokningServiceImp mockBokningServiceImp;
+
     @BeforeEach
     public void init(){
         mockRumServiceImpl = new RumServiceImp(mockBokningRepo, mockRumRepo, mockKundService);
+        mockBokningServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundrepo, mockKundService, mockRumService);
         Rum r1 = new Rum(1L, 10, false, 1);
         Rum r2 = new Rum(2L, 21, true, 2);
         Rum r3 = new Rum(3L, 31, true, 3);
@@ -69,14 +78,14 @@ public class RumControllerTest {
     @Test
     public void isCustomerFieldsFilledAndCorrectTest(){
         //komplett
-        assertTrue(mockRumServiceImpl.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "test@test.test"));
+        assertTrue(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "test@test.test"));
 
         //saknar namn
-        assertFalse(mockRumServiceImpl.isCustomerFieldsFilledAndCorrect(" ", "070-1234567", "test@test.test"));
+        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect(" ", "070-1234567", "test@test.test"));
         //för kort telefonnummer
-        assertFalse(mockRumServiceImpl.isCustomerFieldsFilledAndCorrect("test", "070-1234", "test@test.test"));
+        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234", "test@test.test"));
         //saknar email, format sköts av input i HTML
-        assertFalse(mockRumServiceImpl.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "  "));
+        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "  "));
     }
 
     @Test

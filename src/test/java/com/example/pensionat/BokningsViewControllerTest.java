@@ -7,8 +7,10 @@ import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.Imp.BokningServiceImp;
 import com.example.pensionat.Services.Imp.RumServiceImp;
 import com.example.pensionat.Services.KundService;
+import com.example.pensionat.Services.RumService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,6 +41,9 @@ public class BokningsViewControllerTest {
     private KundService mockKundService;
 
     @Mock
+    private RumService mockRumService;
+
+    @Mock
     private KundRepo mockKundrepo;
 
     @Mock
@@ -49,7 +54,7 @@ public class BokningsViewControllerTest {
 
 
     @InjectMocks
-    private RumServiceImp mockRumServiceImp = new RumServiceImp(mockBokningRepo, mockRumRepo, mockKundService);
+    private BokningServiceImp mockBokningsServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundrepo, mockKundService, mockRumService);
 
 
     @BeforeEach
@@ -64,7 +69,7 @@ public class BokningsViewControllerTest {
         Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1);
         Bokning b2 = new Bokning(2L, LocalDate.parse("2024-05-01"), LocalDate.parse("2024-05-05"), 1, k1, r2);
 
-        List<Long> roomIds = mockRumServiceImp.getNonAvailableRoomsId(List.of(b1), LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"));
+        List<Long> roomIds = mockBokningsServiceImp.getNonAvailableRoomsId(List.of(b1), LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"));
         assertEquals(1, roomIds.get(0));
         assertNotEquals(0, roomIds.get(0));
     }
