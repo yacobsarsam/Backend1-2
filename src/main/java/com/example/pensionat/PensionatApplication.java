@@ -8,17 +8,26 @@ import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @SpringBootApplication
 public class PensionatApplication {
     public static void main(String[] args) {
-        SpringApplication.run(PensionatApplication.class, args);
+        if(args.length == 0) {
+            SpringApplication.run(PensionatApplication.class, args);
+        }else if(Objects.equals(args[0], "fetchCustomers")){
+            SpringApplication application = new SpringApplication(CustomersConsoleApplication.class);
+            application.setWebApplicationType(WebApplicationType.NONE);
+            application.run(args);
+
+        }
     }
-    @Bean
+/*    @Bean
     public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo){
         return args -> {
             Rum r1 = new Rum(false, 1, 10);
@@ -59,8 +68,5 @@ public class PensionatApplication {
             bokningRepo.save(b2);
 
         };
-    }
-
-
-
+    }*/
 }
