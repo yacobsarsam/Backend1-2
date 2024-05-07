@@ -10,4 +10,9 @@ public class HomeController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("1")
+    public String test(){
+        return "visaAvtalsKunder";
+    }
 }
