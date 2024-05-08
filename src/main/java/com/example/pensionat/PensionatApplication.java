@@ -24,7 +24,10 @@ public class PensionatApplication {
             SpringApplication application = new SpringApplication(CustomersConsoleApplication.class);
             application.setWebApplicationType(WebApplicationType.NONE);
             application.run(args);
-
+        }else if(Objects.equals(args[0], "fetchShippers")){
+            SpringApplication application = new SpringApplication(ShippersConsoleApplication.class);
+            application.setWebApplicationType(WebApplicationType.NONE);
+            application.run(args);
         }
     }
 /*    @Bean
