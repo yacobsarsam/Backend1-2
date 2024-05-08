@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Alla Avtals Kunder</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!--Font-kit -->
+    <script src="https://kit.fontawesome.com/e381b12111.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="table-container">
+    <nav class="navbar">
+        <button class="navButton"><a th:href="@{/index}" >Home</a></button>
+    </nav>
+    <h2 class="text-align-center">Alla registrerade avtals-kunder</h2>
+    <hr class="divider">
+    <!--
+    <div th:if="${#lists.isEmpty(allaAvtalsKunder)}">
+        <p>Det finns inga registrerade kunder</p>
+        <th><a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a></th>
+                <th><a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a></th>
+    </div>
+    -->
+    <div class="room-container">
+        <table class="customer-table">
+            <thead>
+            <tr>
+                <th> Company
+                    <div class="header-flex">
+                        <a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                        <a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    </div>
+                </th>
+
+                <th>Contact
+                    <div class="header-flex">
+                        <a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                        <a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    </div>
+                </th>
+
+                <th>City
+                    <div class="header-flex">
+                        <a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                        <a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    </div>
+                </th>
+
+                <th>Country
+                    <div class="header-flex">
+                        <a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                        <a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    </div>
+                </th>
+                <!-- TODO Search input + button här -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- TODO Ta in den osorterade eller sorterade listan här, och generera rader -->
+            <tr>
+                <td>Company 1</td>
+                <td>Contact 1</td>
+                <td>City 1</td>
+                <td>Country 1</td>
+            </tr>
+            <tr>
+                <td>Company 2</td>
+                <td>Contact 2</td>
+                <td>City 2</td>
+                <td>Country 2</td>
+            </tr>
+            <tr>
+                <td>Company 3</td>
+                <td>Contact 3</td>
+                <td>City 3</td>
+                <td>Country 3</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

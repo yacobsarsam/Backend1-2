@@ -42,6 +42,15 @@ body{
     border-radius: 5px;
 }
 
+.table-container{
+    margin: auto;
+    width: 900px;
+    min-height: 700px;
+    height: auto;
+    border: 2px solid dimgrey;
+    border-radius: 5px;
+}
+
 .container h1{
     margin-bottom: 50px;
 }
@@ -235,4 +244,40 @@ form {
 
 .kund-container{
     flex-direction: column;
+}
+
+.customer-table {
+    width: 100%;
+    font-family: "Poppins", sans-serif;
+    text-align: left;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border: 2px black;
+}
+table a{
+    color: dodgerblue;
+}
+
+table a:visited{
+    color: dodgerblue;
+}
+
+.header-flex{
+    display: inline-flex;
+}
+
+.text-align-center{
+    text-align: center;
+}
+
+.customer-table tbody tr:nth-child(odd) {
+    background-color: lightgrey; /* Light gray background for odd rows */
+}
+
+.customer-table tbody tr:nth-child(even) {
+    background-color: #ffffff; /* White background for even rows */
 }
