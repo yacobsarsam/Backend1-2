@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Företagskund</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!--Font-kit -->
+    <script src="https://kit.fontawesome.com/e381b12111.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <!-- Länk tillbaka till hela listan -->
+        <button class="navButton"><a th:href="@{/...}" >Gå tillbaka</a></button>
+    </nav>
+    <h2>Företagskund</h2>
+        <hr class="divider">
+        <p>Företagsnamn: <span th:text="${customer.companyName}"></span></p>
+        <p>Kontaktnamn: <span th:text="${customer.contactName}"></span></p>
+        <p>Titel: <span th:text="${customer.contactTitle}"></span></p>
+        <p>Adress: <span th:text="${customer.streetAddress}"></span></p>
+        <p>Stad: <span th:text="${customer.city}"></span></p>
+        <p>Postnummer: <span th:text="${customer.postalCode}"></span></p>
+        <p>Land: <span th:text="${customer.country}"></span></p>
+        <p>Telefonnummer: <span th:text="${customer.phone}"></span></p>
+        <p>Faxnummer: <span th:text="${customer.fax}"></span></p>
+    </div>
+</body>
+</html>
