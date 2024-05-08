@@ -1,5 +1,8 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.CustomerDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.customers;
 import com.example.pensionat.Services.CompanyCustomerService;
@@ -9,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "company")
@@ -22,5 +27,12 @@ public class CompanyCustomerController {
         customers customer = ccs.getCustomerDetailsById(id);
         model.addAttribute("customer", customer);
         return "visaCompanyCustomerIndividual.html";
+    }
+
+    @GetMapping("")
+    public String showListOfCustomer(Model model) {
+        List<CustomerDto> allCustomers = ccs.getAllCustomers();
+        model.addAttribute("allCustomers", allCustomers);
+        return "visaAvtalsKunder.html";
     }
 }

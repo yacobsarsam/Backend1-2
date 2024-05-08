@@ -1,5 +1,6 @@
 package com.example.pensionat.Services.Imp;
 
+import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.CustomerDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Shippers;
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -33,6 +35,11 @@ public class CompanyCustomerImp implements CompanyCustomerService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<CustomerDto> getAllCustomers() {
+        return cr.findAll().stream().map(c -> customersToCustomerDto(c)).toList();
     }
 
     @Override
