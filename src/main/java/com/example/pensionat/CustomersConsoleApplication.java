@@ -2,15 +2,19 @@ package com.example.pensionat;
 
 import com.example.pensionat.Models.customers;
 import com.example.pensionat.Models.allcustomers;
+import com.example.pensionat.Services.CompanyCustomerService;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.net.URL;
 @ComponentScan
+@RequiredArgsConstructor
 public class CustomersConsoleApplication implements CommandLineRunner {
+    private final CompanyCustomerService companyCustomerService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -19,9 +23,10 @@ public class CustomersConsoleApplication implements CommandLineRunner {
         XmlMapper xmlMapper = new XmlMapper(module);
         allcustomers customerList = xmlMapper.readValue(new URL("https://javaintegration.systementor.se/customers"), allcustomers.class);
 
-        for( customers s : customerList.customers ){
-            System.out.println(s.contactName);
-            System.out.println(s.country);
+        for( customers c : customerList.customers ){
+            companyCustomerService.addCustomerToDB(c);
+//            System.out.println(c.contactName);
+//            System.out.println(c.country);
         }
         System.out.println("kör CustomersConsoleApplication");
 

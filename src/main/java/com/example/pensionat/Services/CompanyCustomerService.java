@@ -8,4 +8,5 @@ import com.example.pensionat.Models.customers;
 public interface CompanyCustomerService {
     public CustomerDto customersToCustomerDto(customers customer);
     public customers getCustomerDetailsById(Long id);
+    public void addCustomerToDB(customers customer);
 }
