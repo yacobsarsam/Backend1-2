@@ -1,5 +1,6 @@
 package com.example.pensionat.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Shippers {
 
     @Id
