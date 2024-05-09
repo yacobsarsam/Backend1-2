@@ -1,11 +1,13 @@
 package com.example.pensionat.Models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Data
@@ -13,11 +15,21 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class BlackListPerson {
-    //@Id
+    @Id
+    @GeneratedValue
     public int id;
     public String email;
     public String name;
     public String group;
-    public Date created;
+    public String created;
     public boolean ok;
+
+
+    public BlackListPerson(String email, String name, String group, LocalDateTime created, boolean ok) {
+        this.email = email;
+        this.name = name;
+        this.group = group;
+        this.created = created.toString();
+        this.ok = ok;
+    }
 }

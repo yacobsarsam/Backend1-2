@@ -128,12 +128,13 @@ public class BokningServiceImp implements BokningService {
 
    //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
    //Kollar om epost är blacklistad eller ej
+   //Om ok = fale --> epost är blacklistad
    private boolean CustomerIsBlackList(String email) throws IOException {
         JsonMapper jSonMapper = new JsonMapper();
         BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
                 ,BlackListPerson[].class);
         for (BlackListPerson bl : blps) {
-            if (bl.email.equals(email) && bl.ok)
+            if (bl.email.equals(email) && !bl.ok)
                 return true;
         }
         return false;
