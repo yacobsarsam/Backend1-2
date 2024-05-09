@@ -40,8 +40,8 @@
             </div>
             <div class="button-container">
 
-                <button class="navButton"><a th:href="@{/blacklist/editById/{id}(id=${blkund.email})}">Ändra</a></button>
-                <form th:action="@{/blacklist/deleteById/{id}(id=${blkund.email})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort kunden?')">
+                <button class="navButton"><a th:href="@{/blacklist/editByemail/{id}(id=${blkund.email})}">Ändra</a></button>
+                <form th:action="@{/blacklist/deleteById/{id}(id=${blkund.id})}" method="post" onsubmit="return confirm('Är du säker på att du vill ta bort kunden?')">
                     <button class="navButton" type="submit">Ta bort kund</button>
                 </form>
             </div>

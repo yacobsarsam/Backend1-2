@@ -25,7 +25,7 @@ public class BlackListPerson {
     public boolean ok;
 
 
-    public BlackListPerson(String email, String name, String group, LocalDateTime created, boolean ok) {
+    public BlackListPerson(String name, String email, String group, LocalDateTime created, boolean ok) {
         this.email = email;
         this.name = name;
         this.group = group;

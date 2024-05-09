@@ -16,4 +16,8 @@ public interface BlackListService {
      void AddBLKundToBlackList(String name, String email, String group);
 
      String getAllAvailableBLKundInfo(String name, String email, String group, Model model);
+
+     BlackListPerson getBlackListPrson(String email) throws IOException;
+
+     String UpdateBLKund(BlackListPerson k, Model model) throws IOException;
 }
