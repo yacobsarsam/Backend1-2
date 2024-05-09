@@ -4,6 +4,7 @@ import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Dtos.RumDto;
+import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -12,10 +13,13 @@ import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import com.example.pensionat.Services.RumService;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,19 +110,33 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) {
+    public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) throws IOException {
         int roomTypeSize;
         if (rumService.getRumById(rumId).isDubbelrum()){
             roomTypeSize = 2;
         } else {
             roomTypeSize = 1;
         }
+
         KundDto kundDto = kundService.checkIfKundExistByEmail(namn, email, tel);
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds + roomTypeSize);
         br.save(b);
         return b;
+   }
+
+   //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
+   //Kollar om epost är blacklistad eller ej
+   private boolean CustomerIsBlackList(String email) throws IOException {
+        JsonMapper jSonMapper = new JsonMapper();
+        BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
+                ,BlackListPerson[].class);
+        for (BlackListPerson bl : blps) {
+            if (bl.email.equals(email) && bl.ok)
+                return true;
+        }
+        return false;
     }
 
     @Override

@@ -30,7 +30,7 @@ public class PensionatApplication {
             application.run(args);
         }
     }
-/*    @Bean
+  @Bean
     public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo){
         return args -> {
             Rum r1 = new Rum(false, 1, 10);
@@ -71,5 +71,5 @@ public class PensionatApplication {
             bokningRepo.save(b2);
 
         };
-    }*/
+    }
 }

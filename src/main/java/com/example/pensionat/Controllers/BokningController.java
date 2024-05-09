@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class BokningController {
     }
 
     @PostMapping("/add")
-    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner, Model model){
+    public String addBokning(String namn, String tel, String email, LocalDate startDate, LocalDate endDate, Long rumId, @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner, Model model) throws IOException {
         Bokning b = bokningService.newBokning(namn, tel, email, startDate, endDate, rumId, extraBeds);
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
