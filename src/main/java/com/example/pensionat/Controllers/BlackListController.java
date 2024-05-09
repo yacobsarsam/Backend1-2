@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,6 +48,19 @@ public class BlackListController {
             }
         }
         return getAllBlKunder(model);
+    }
+    @RequestMapping("/editByemail/{email}")
+    public String EditKundInfo(@PathVariable String email, Model model) throws IOException {
+        BlackListPerson blp = blackListService.getBlackListPrson(email);
+        model.addAttribute("updateblkund",blp);
+        return "updateblkund";
+    }
+    @PostMapping("/update")
+    public String updateKundinfo(Model model, BlackListPerson k) throws IOException {
+        //System.out.println(k.getNamn() + " " + k.getEmail() + " " + k.getTel() + " " + k.getId());
+        List<BlackListPerson> allaBLKunder=blackListService.getAllBLKunder();
+        model.addAttribute("allakunder", allaBLKunder);
+        return blackListService.UpdateBLKund(k, model);
     }
 
     /*@RequestMapping("https://javabl.systementor.se/api/stefan/blacklist/{email}")

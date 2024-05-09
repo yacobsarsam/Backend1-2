@@ -31,6 +31,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
+// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+
+    implementation ("org.apache.httpcomponents:httpclient:4.5.14")
+
+
 }
 
 tasks.withType<Test> {
