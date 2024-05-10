@@ -136,7 +136,7 @@ public class BlackListServiceImp implements BlackListService {
 
             if (true){
                 // URL for the PUT request
-                String url = "https://javabl.systementor.se/api/stefan/" + k.getEmail();
+                String url = "https://javabl.systementor.se/api/stefan/blacklist/" + k.getEmail();
 
                 // JSON data to be sent in the PUT request
 
