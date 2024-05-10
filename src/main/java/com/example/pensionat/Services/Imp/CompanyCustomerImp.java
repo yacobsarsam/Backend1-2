@@ -55,4 +55,14 @@ public class CompanyCustomerImp implements CompanyCustomerService {
             System.out.println( "Företagskunden " + customer.getCompanyName() + " fanns redan.");
         }
     }
+
+    public List<customers> searchCompanyClients(String searchWord) {
+        List<customers> companyClientMatch;
+        companyClientMatch = cr.findAll().stream().filter(cc -> cc.getCompanyName().contains(searchWord) ||
+                                                            cc.getContactName().contains(searchWord) ||
+                                                            cc.getCity().contains(searchWord) ||
+                                                            cc.getCountry().contains(searchWord)).toList();
+        return companyClientMatch;
+    }
+
 }
