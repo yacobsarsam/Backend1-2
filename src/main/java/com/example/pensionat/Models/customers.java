@@ -2,6 +2,7 @@ package com.example.pensionat.Models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,8 +17,8 @@ import lombok.NoArgsConstructor;
 
 public class customers {
     @Id
-    @GeneratedValue
-    public int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
     public String companyName;
     public String contactName;
     public String contactTitle;

@@ -7,10 +7,11 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
 
-@ComponentScan
+@Component
 @RequiredArgsConstructor
 public class ShippersConsoleApplication implements CommandLineRunner {
 

@@ -9,9 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.net.URL;
-@ComponentScan
+@Component
 @RequiredArgsConstructor
 public class CustomersConsoleApplication implements CommandLineRunner {
     private final CompanyCustomerService companyCustomerService;
