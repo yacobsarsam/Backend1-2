@@ -7,11 +7,13 @@ import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.customers;
 import com.example.pensionat.Services.CompanyCustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -30,9 +32,17 @@ public class CompanyCustomerController {
     }
 
     @GetMapping("")
-    public String showListOfCustomer(Model model) {
-        List<CustomerDto> allCustomers = ccs.getAllCustomers();
+    public String showListOfCustomer(@RequestParam(defaultValue = "companyName") String sortField,
+                                     @RequestParam(defaultValue = "asc") String sortOrder, Model model) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortField);
+
+        List<CustomerDto> allCustomers = ccs.getAllCustomers(sort);
+
         model.addAttribute("allCustomers", allCustomers);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortOrder", sortOrder);
+
         return "visaAvtalsKunder.html";
     }
 }

@@ -14,5 +14,5 @@ public class CustomerDto {
     public String fax;
     public String companyName;
     public String contactName;
-    public String country;
+    public String city;
 }

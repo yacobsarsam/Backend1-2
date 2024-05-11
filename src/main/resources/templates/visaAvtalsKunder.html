@@ -7,7 +7,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    <!--Font-kit -->
     <script src="https://kit.fontawesome.com/e381b12111.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -17,44 +16,35 @@
     </nav>
     <h2 class="text-align-center">Alla registrerade avtals-kunder</h2>
     <hr class="divider">
-    <!--
-    <div th:if="${#lists.isEmpty(allaAvtalsKunder)}">
-        <p>Det finns inga registrerade kunder</p>
-        <th><a th:href="1"><i class="fa-solid fa-arrow-up-z-a"></i></a></th>
-                <th><a th:href="1"><i class="fa-solid fa-arrow-down-z-a"></i></a></th>
-    </div>
-    -->
     <div class="room-container">
         <table class="customer-table">
             <thead>
             <th> Fax
                 <div class="header-flex">
-                    <a th:href="@{/company/customers(sort='fax',order='asc')}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
-                    <a th:href="@{/company/customers(sort='fax',order='desc')}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    <a th:href="@{/company?sortField=fax&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                    <a th:href="@{/company?sortField=fax&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
                 </div>
             </th>
             <th> Company
                 <div class="header-flex">
-                    <a th:href="@{/company/customers(sort='companyName',order='asc')}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
-                    <a th:href="@{/company/customers(sort='companyName',order='desc')}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    <a th:href="@{/company?sortField=companyName&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                    <a th:href="@{/company?sortField=companyName&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
                 </div>
             </th>
 
             <th>Contact
                 <div class="header-flex">
-                    <a th:href="@{/company/customers(sort='contactName',order='asc')}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
-                    <a th:href="@{/company/customers(sort='contactName',order='desc')}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    <a th:href="@{/company?sortField=contactName&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                    <a th:href="@{/company?sortField=contactName&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
                 </div>
             </th>
 
             <th>Country
                 <div class="header-flex">
-                    <a th:href="@{/company/customers(sort='city',order='asc')}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
-                    <a th:href="@{/company/customers(sort='city',order='desc')}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                    <a th:href="@{/company?sortField=city&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                    <a th:href="@{/company?sortField=city&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
                 </div>
             </th>
-
-
             </thead>
             <tbody>
             <tr th:each="customer : ${allCustomers}">
@@ -65,13 +55,11 @@
                 </td>
                 <td th:text="${customer.companyName}">Company Name</td>
                 <td th:text="${customer.contactName}">Contact Name</td>
-                <td th:text="${customer.country}">Country</td>
+                <td th:text="${customer.city}">Country</td>
             </tr>
             </tbody>
-
         </table>
     </div>
 </div>
-
 </body>
 </html>

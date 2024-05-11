@@ -9,6 +9,7 @@ import com.example.pensionat.Repositories.CustomerRepo;
 import com.example.pensionat.Services.CompanyCustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class CompanyCustomerImp implements CompanyCustomerService {
 
     @Override
     public CustomerDto customersToCustomerDto(customers c) {
-        return CustomerDto.builder().fax(c.getFax()).id(c.getId()).companyName(c.getCompanyName()).contactName(c.getContactName()).country(c.getCountry()).build();
+        return CustomerDto.builder().fax(c.getFax()).id(c.getId()).companyName(c.getCompanyName()).contactName(c.getContactName()).city(c.getCity()).build();
     }
 
     @Override
@@ -38,8 +39,8 @@ public class CompanyCustomerImp implements CompanyCustomerService {
     }
 
     @Override
-    public List<CustomerDto> getAllCustomers() {
-        return cr.findAll().stream().map(c -> customersToCustomerDto(c)).toList();
+    public List<CustomerDto> getAllCustomers(Sort sort) {
+        return cr.findAll(sort).stream().map(c -> customersToCustomerDto(c)).toList();
     }
 
     @Override
