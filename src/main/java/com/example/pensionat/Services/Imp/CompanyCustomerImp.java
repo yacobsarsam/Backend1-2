@@ -24,7 +24,8 @@ public class CompanyCustomerImp implements CompanyCustomerService {
 
     @Override
     public CustomerDto customersToCustomerDto(customers c) {
-        return CustomerDto.builder().fax(c.getFax()).id(c.getId()).companyName(c.getCompanyName()).contactName(c.getContactName()).city(c.getCity()).build();
+        return CustomerDto.builder().fax(c.getFax()).id(c.getId()).companyName(c.getCompanyName()).contactName(c.getContactName()).city(c.getCity())
+                .country(c.getCountry()).build();
     }
 
     @Override

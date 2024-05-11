@@ -39,10 +39,17 @@
                 </div>
             </th>
 
-            <th>Country
+            <th>City
                 <div class="header-flex">
                     <a th:href="@{/company?sortField=city&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
                     <a th:href="@{/company?sortField=city&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
+                </div>
+            </th>
+
+            <th>Country
+                <div class="header-flex">
+                    <a th:href="@{/company?sortField=country&amp;sortOrder=asc}"><i class="fa-solid fa-arrow-up-z-a"></i></a>
+                    <a th:href="@{/company?sortField=country&amp;sortOrder=desc}"><i class="fa-solid fa-arrow-down-z-a"></i></a>
                 </div>
             </th>
             </thead>
@@ -55,7 +62,8 @@
                 </td>
                 <td th:text="${customer.companyName}">Company Name</td>
                 <td th:text="${customer.contactName}">Contact Name</td>
-                <td th:text="${customer.city}">Country</td>
+                <td th:text="${customer.city}">City</td>
+                <td th:text="${customer.country}">Country</td>
             </tr>
             </tbody>
         </table>

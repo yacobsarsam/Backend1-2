@@ -15,4 +15,5 @@ public class CustomerDto {
     public String companyName;
     public String contactName;
     public String city;
+    public String country;
 }
