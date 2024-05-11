@@ -12,5 +12,5 @@ public interface CompanyCustomerService {
     public CustomerDto customersToCustomerDto(customers customer);
     public customers getCustomerDetailsById(Long id);
     public void addCustomerToDB(customers customer);
-    public List<CustomerDto> getAllCustomers(Sort sort);
+    public List<customers> searchCompanyClients(String searchWord);
 }

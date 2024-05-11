@@ -5,6 +5,7 @@ import com.example.pensionat.Dtos.CustomerDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.customers;
+import com.example.pensionat.Repositories.CustomerRepo;
 import com.example.pensionat.Services.CompanyCustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -23,6 +24,7 @@ import java.util.List;
 public class CompanyCustomerController {
 
     private final CompanyCustomerService ccs;
+    private final CustomerRepo customerRepo;
 
     @GetMapping("/customers/{id}")
     public String showIndividualCustomer(@PathVariable Long id, Model model) {
@@ -37,12 +39,18 @@ public class CompanyCustomerController {
 
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortField);
 
-        List<CustomerDto> allCustomers = ccs.getAllCustomers(sort);
+        List<customers> allCustomers = customerRepo.findAll(sort); //Sort i CustomerRepo
 
         model.addAttribute("allCustomers", allCustomers);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
 
         return "visaAvtalsKunder.html";
+    }
+    @GetMapping("/search")
+    public String search(@RequestParam String searchWord, Model model) {
+        List<customers> matchingCustomers = ccs.searchCompanyClients(searchWord);
+        model.addAttribute("matchingCustomers", matchingCustomers);
+        return "visaSoktaKunder.html";
     }
 }

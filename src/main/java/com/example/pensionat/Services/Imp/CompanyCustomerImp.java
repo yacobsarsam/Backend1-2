@@ -40,11 +40,6 @@ public class CompanyCustomerImp implements CompanyCustomerService {
     }
 
     @Override
-    public List<CustomerDto> getAllCustomers(Sort sort) {
-        return cr.findAll(sort).stream().map(c -> customersToCustomerDto(c)).toList();
-    }
-
-    @Override
     public void addCustomerToDB(customers customer) {
         customers foundCustomer;
         foundCustomer = cr.findAll().stream().filter(c -> Objects.equals(c.getPhone(), customer.getPhone())).findFirst().orElse(null);
