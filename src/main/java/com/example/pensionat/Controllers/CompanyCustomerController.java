@@ -35,7 +35,9 @@ public class CompanyCustomerController {
 
     @GetMapping("")
     public String showListOfCustomer(@RequestParam(defaultValue = "companyName") String sortField,
-                                     @RequestParam(defaultValue = "asc") String sortOrder, Model model) {
+                                     @RequestParam(defaultValue = "asc") String sortOrder,
+                                     @RequestParam(required = false) String searchWord,
+                                     Model model) {
 
         Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortField);
 
@@ -44,13 +46,26 @@ public class CompanyCustomerController {
         model.addAttribute("allCustomers", allCustomers);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
+        model.addAttribute("searchWord", searchWord);
 
         return "visaAvtalsKunder.html";
     }
-    @GetMapping("/search")
-    public String search(@RequestParam String searchWord, Model model) {
-        List<customers> matchingCustomers = ccs.searchCompanyClients(searchWord);
-        model.addAttribute("matchingCustomers", matchingCustomers);
+
+    @GetMapping("/search") //sorterar sökta kunder
+    public String search(@RequestParam String searchWord,
+                         @RequestParam(defaultValue = "companyName") String sortField,
+                         @RequestParam(defaultValue = "asc") String sortOrder,
+                         Model model) {
+
+        Sort sort = Sort.by(Sort.Direction.fromString(sortOrder), sortField);
+
+        List<customers> companyClientMatch = ccs.searchCompanyClients(searchWord, sort);
+
+        model.addAttribute("matchingCustomers", companyClientMatch);
+        model.addAttribute("searchWord", searchWord);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortOrder", sortOrder);
+
         return "visaSoktaKunder.html";
     }
 }

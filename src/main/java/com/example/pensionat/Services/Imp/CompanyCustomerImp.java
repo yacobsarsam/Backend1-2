@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -53,13 +54,16 @@ public class CompanyCustomerImp implements CompanyCustomerService {
         }
     }
 
-    public List<customers> searchCompanyClients(String searchWord) {
-        List<customers> companyClientMatch;
-        companyClientMatch = cr.findAll().stream().filter(cc -> cc.getCompanyName().contains(searchWord) ||
-                                                            cc.getContactName().contains(searchWord) ||
-                                                            cc.getCity().contains(searchWord) ||
-                                                            cc.getCountry().contains(searchWord)).toList();
+    public List<customers> searchCompanyClients(String searchWord, Sort sort) {
+
+        List<customers> companyClients = cr.findAll(sort); // sorterar sökt kunder
+        List<customers> companyClientMatch = companyClients.stream()
+
+                .filter(cc -> cc.getCompanyName().contains(searchWord) ||
+                        cc.getContactName().contains(searchWord) ||
+                        cc.getCity().contains(searchWord) ||
+                        cc.getCountry().contains(searchWord))
+                .collect(Collectors.toList());
         return companyClientMatch;
     }
-
 }
