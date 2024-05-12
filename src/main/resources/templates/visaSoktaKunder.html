@@ -57,7 +57,7 @@
             </th>
             </thead>
             <tbody>
-            <tr th:each="customer : ${matchingCustomers}">
+            <tr th:each="customer : ${clientsPage.content}">
                 <td>
                     <a th:href="@{/company/customers/{id}(id=${customer.id})}">
                         <span th:text="${customer.fax}">Fax</span>
@@ -70,6 +70,31 @@
             </tr>
             </tbody>
         </table>
+    </div>
+    <div class="pagination">
+
+        <span>Page
+            <strong th:text="${clientsPage.number + 1}"></strong>
+            of
+            <strong th:text="${clientsPage.totalPages}"></strong>
+        </span>
+        <span th:if="${clientsPage.hasPrevious()}">
+
+        <a th:href="@{${'/company/search?page=' + (clientsPage.number) + '&size=' + clientsPage.size + '&sort='
+        + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">Previous</a>
+    </span>
+        <span th:each="pageNum : ${#numbers.sequence(1, clientsPage.totalPages)}">
+        <a th:href="@{${'/company/search?page=' + pageNum + '&size=' + clientsPage.size + '&sort='
+        + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">
+
+            <button th:text="${pageNum}" th:class="${pageNum == clientsPage.number + 1 ? 'active' : ''}"></button>
+        </a>
+    </span>
+        <span th:if="${clientsPage.hasNext()}">
+        <a th:href="@{${'/company/search?page=' + (clientsPage.number + 2) + '&size=' + clientsPage.size
+        + '&sort=' + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">Next</a>
+    </span>
+
     </div>
 </div>
 </body>
