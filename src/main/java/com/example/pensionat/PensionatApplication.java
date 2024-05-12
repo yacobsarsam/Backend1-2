@@ -1,9 +1,18 @@
 package com.example.pensionat;
 
+import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Repositories.BokningRepo;
+import com.example.pensionat.Repositories.KundRepo;
+import com.example.pensionat.Repositories.RumRepo;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -22,7 +31,7 @@ public class PensionatApplication {
         }
     }
 
-    /*@Bean
+    @Bean
     public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo) {
         return args -> {
 
@@ -52,20 +61,7 @@ public class PensionatApplication {
                 rr.save(r10);
                 rr.save(r11);
                 rr.save(r12);
-
-                Kund k1 = new Kund("TestKund 1", "1234567896", "test@mail.com");
-                Kund k2 = new Kund("TestKund 2", "1234567897", "test2@mail.com");
-                Kund k3 = new Kund("TestKund utan bokning", "1334567889", "test3@mail.com");
-                kundRepo.save(k1);
-                kundRepo.save(k2);
-                kundRepo.save(k3);
-
-                Bokning b1 = new Bokning(k1, r1, LocalDate.now(), LocalDate.now().plusDays(3), 1);
-                Bokning b2 = new Bokning(k2, r5, LocalDate.now(), LocalDate.now().plusDays(3), 2);
-                bokningRepo.save(b1);
-                bokningRepo.save(b2);
-
             }
         };
-    }*/
+    }
 }

@@ -40,15 +40,14 @@ public class BlackListServiceImp implements BlackListService {
         } else return !email.trim().isEmpty();
     }
 
-    @Override
+    @Override //Kolla 'ok' värde, om true så är den blacklistad
     public boolean checkIfBLKundExistByEmailUtanAttSkapa(String email) throws IOException {
-        BlackListPerson blkund = getAllBLKunder().stream().filter(kund -> Objects.equals(kund.getEmail(), email)).findFirst().orElse(null);
-        if(blkund == null){
-            return false;
-        }
-        else{
-            return true;
-        }
+        List<BlackListPerson> blacklist = getAllBLKunder();
+        return blacklist.stream()
+                .filter(person -> person.getEmail().equals(email))
+                .findFirst()
+                .map(BlackListPerson::isOk)
+                .orElse(false);
     }
 
     @Override

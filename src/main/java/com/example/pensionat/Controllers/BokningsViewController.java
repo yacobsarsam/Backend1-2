@@ -1,7 +1,9 @@
 package com.example.pensionat.Controllers;
 
+import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Services.BlackListService;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.IOException;
 import java.time.LocalDate;
 
 @Controller
@@ -18,6 +21,7 @@ import java.time.LocalDate;
 public class BokningsViewController {
     private final BokningService bokningService;
     private final KundService kundService;
+    private final BlackListService blackListService;
 
     @RequestMapping("/book")
     public String addBokningSite(){
@@ -28,6 +32,15 @@ public class BokningsViewController {
     public String showAllRooms(@RequestParam(defaultValue = "0") Long bokId, @RequestParam(defaultValue = "0") Long rumId, @RequestParam String namn, @RequestParam String telNr,
                                @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
                                @RequestParam(defaultValue = "1") int antalPersoner, Model model){
+        try {
+            boolean isBlacklisted = blackListService.checkIfBLKundExistByEmailUtanAttSkapa(email);
+            if (isBlacklisted) {
+                return "blockedUserTemplate";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("antalpersoner" + antalPersoner);
         return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
     }
 

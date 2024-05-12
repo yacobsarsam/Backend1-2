@@ -5,6 +5,7 @@ import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Services.BlackListService;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.KundService;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -21,6 +23,7 @@ public class KundController {
 
     private final KundService kundService;
     private final BokningService bokningService;
+    private final BlackListService blackListService;
 
    @RequestMapping("")
     public String getAllKunder(Model model){
@@ -44,6 +47,13 @@ public class KundController {
 
     @PostMapping("/registreraNyKund")
     public String createKund(@ModelAttribute KundDto kundDto, Model model) {
+        try {
+            if (blackListService.checkIfBLKundExistByEmailUtanAttSkapa(kundDto.getEmail())) {
+                return "blockedUserTemplate";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         kundService.getAllAvailableKundInfo(kundDto.getNamn(),kundDto.getTel(), kundDto.getEmail(),model);
         if(kundService.isCustomerFieldsFilledAndCorrect(kundDto.getNamn(),kundDto.getTel(), kundDto.getEmail())){
             String felmeddelande;
@@ -86,6 +96,13 @@ public class KundController {
     }
     @PostMapping("/update")
     public String updateKundinfo(Model model, Kund k){
+        try {
+            if (blackListService.checkIfBLKundExistByEmailUtanAttSkapa(k.getEmail())) {
+                return "blockedUserTemplate";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println(k.getNamn() + " " + k.getEmail() + " " + k.getTel() + " " + k.getId());
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
