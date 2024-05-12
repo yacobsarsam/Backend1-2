@@ -1,18 +1,9 @@
 package com.example.pensionat;
 
-import com.example.pensionat.Models.Bokning;
-import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Models.Rum;
-import com.example.pensionat.Repositories.BokningRepo;
-import com.example.pensionat.Repositories.KundRepo;
-import com.example.pensionat.Repositories.RumRepo;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -31,7 +22,7 @@ public class PensionatApplication {
         }
     }
 
-    @Bean
+    /*@Bean
     public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo) {
         return args -> {
 
@@ -76,5 +67,5 @@ public class PensionatApplication {
 
             }
         };
-    }
+    }*/
 }

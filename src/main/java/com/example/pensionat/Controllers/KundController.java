@@ -27,7 +27,7 @@ public class KundController {
         //TODO inväntar service-klassens funktion
         List<KundDto> allaKunder=kundService.getAllKunder();//getAllCustomers();
         model.addAttribute("allakunder", allaKunder);
-        return "visakunder.html";
+        return "visakunder";
     }
 
     @GetMapping("/showBokingarById/{id}")
