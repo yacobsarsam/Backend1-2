@@ -36,6 +36,17 @@ public class Bokning {
     @ManyToOne
     protected Rum rum;
 
+    @Column(nullable = false)
+    protected int totalPrice;
+
+    public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds, int totalPrice){
+        this.startdatum = startdatum;
+        this.slutdatum = slutdatum;
+        this.kund = kund;
+        this.rum = rum;
+        this.numOfBeds = numOfBeds;
+        this.totalPrice = totalPrice;
+    }
     public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds){
         this.startdatum = startdatum;
         this.slutdatum = slutdatum;

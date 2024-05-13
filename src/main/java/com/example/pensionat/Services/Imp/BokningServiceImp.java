@@ -50,7 +50,7 @@ public class BokningServiceImp implements BokningService {
         return DetailedBokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds())
                 .kund(new KundDto(b.getKund().getId(), b.getKund().getNamn(), b.getKund().getTel(), b.getKund().getEmail()))
-                .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).build();
+                .rum(new RumDto(b.getRum().getId(), b.getRum().getRumsnr())).totalPrice(b.getTotalPrice()).build();
     }
 
     @Override

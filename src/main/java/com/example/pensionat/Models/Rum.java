@@ -25,11 +25,13 @@ public class Rum {
     protected boolean dubbelrum;
     @Column(nullable = false)
     protected int storlek;
-
-    public Rum(boolean dubbelrum, int storlek, int rumsnr) {
+    @Column(nullable = false)
+    protected int price;
+    public Rum(boolean dubbelrum, int storlek, int rumsnr, int price) {
         this.rumsnr = rumsnr;
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
+        this.price = price;
     }
 
 }
