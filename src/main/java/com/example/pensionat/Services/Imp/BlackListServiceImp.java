@@ -41,6 +41,7 @@ public class BlackListServiceImp implements BlackListService {
         } else return !email.trim().isEmpty();
     }
 
+    //TODO rename isCustomerBlackListed
     @Override //Kolla 'ok' värde, om true så är den blacklistad
     public boolean checkIfBLKundExistByEmailUtanAttSkapa(String email) throws IOException {
         List<BlackListPerson> blacklist = getAllBLKunder();
@@ -51,6 +52,7 @@ public class BlackListServiceImp implements BlackListService {
                 .orElse(false);
     }
 
+    //TODO rename addBlackListCustomer
     @Override
     public void AddBLKundToBlackList(String name, String email, String group) {
         //TODO PUT BLKund to
@@ -74,7 +76,7 @@ public class BlackListServiceImp implements BlackListService {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // Skicka JSON-data som en del av förfråganens kropp (body)
-            BlackListPerson data = GreateBlackListPerson(name,email,group);
+            BlackListPerson data = greateBlackListPerson(name,email,group);
 
             // Create an ObjectMapper instance
             ObjectMapper mapper = new ObjectMapper();
@@ -98,13 +100,14 @@ public class BlackListServiceImp implements BlackListService {
         }
     }
 
-    private BlackListPerson GreateBlackListPerson(String name, String email, String group) {
+    //TODO rename createBlackListedCustomer
+    public BlackListPerson greateBlackListPerson(String name, String email, String group) {
         LocalDateTime d = LocalDateTime.now();
         BlackListPerson blp = new BlackListPerson(name,email,group, d, false);
         return blp;
     }
 
-
+    //TODO rename getBlackListCustomerInfo
     public String getAllAvailableBLKundInfo(String name, String email, String group,  Model model) {
         String felmeddelande;
         if (!isCustomerFieldsFilledAndCorrect(name, email,group)){
@@ -116,6 +119,7 @@ public class BlackListServiceImp implements BlackListService {
             return "visablkunder";
     }
 
+    //TODO rename getBlackListCustomer
     @Override
     public BlackListPerson getBlackListPrson(String email) throws IOException {
        List<BlackListPerson> bllist = getAllBLKunder();
@@ -123,13 +127,14 @@ public class BlackListServiceImp implements BlackListService {
        return bl;
     }
 
-    String addModelsAndReturn(String name, String email,String group, Model model){
+    public String addModelsAndReturn(String name, String email,String group, Model model){
         model.addAttribute("name", name);
         model.addAttribute("group", group);
         model.addAttribute("email", email);
         return "visablkunder";
     }
 
+    //TODO rename updateBlackListCustomer
     @Override
     public void updateBlackListPerson(BlackListPerson person) {
         String url = "https://javabl.systementor.se/api/stefan/blacklist/" + person.getEmail();
