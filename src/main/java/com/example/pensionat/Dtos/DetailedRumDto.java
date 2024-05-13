@@ -14,4 +14,5 @@ public class DetailedRumDto {
     protected int rumsnr;
     private boolean dubbelrum;
     private int storlek;
+    private int price;
 }

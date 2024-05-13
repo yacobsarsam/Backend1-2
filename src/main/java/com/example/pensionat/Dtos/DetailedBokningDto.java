@@ -16,4 +16,5 @@ public class DetailedBokningDto {
     protected int numOfBeds;
     protected KundDto kund;
     protected RumDto rum;
+    protected int totalPrice;
 }
