@@ -57,14 +57,9 @@ public class BlackListController {
     }
     @PostMapping("/update")
     public String updateKundinfo(Model model, BlackListPerson k) throws IOException {
-        //System.out.println(k.getNamn() + " " + k.getEmail() + " " + k.getTel() + " " + k.getId());
-        List<BlackListPerson> allaBLKunder=blackListService.getAllBLKunder();
+        blackListService.updateBlackListPerson(k);
+        List<BlackListPerson> allaBLKunder = blackListService.getAllBLKunder();
         model.addAttribute("allakunder", allaBLKunder);
-        return blackListService.UpdateBLKund(k, model);
+        return "updateBLKundDone";
     }
-
-    /*@RequestMapping("https://javabl.systementor.se/api/stefan/blacklist/{email}")
-    public BlackListPerson getAllaKunder(@PathVariable String email){
-        return blackListRepo.findBlackListPeopleByEmail(email);
-    }*/
 }
