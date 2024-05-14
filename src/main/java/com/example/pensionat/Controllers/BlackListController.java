@@ -51,7 +51,7 @@ public class BlackListController {
     }
     @RequestMapping("/editByemail/{email}")
     public String EditKundInfo(@PathVariable String email, Model model) throws IOException {
-        BlackListPerson blp = blackListService.getBlackListPrson(email);
+        BlackListPerson blp = blackListService.getBlackListPersonByEmail(email);
         model.addAttribute("updateblkund",blp);
         return "updateblkund";
     }
