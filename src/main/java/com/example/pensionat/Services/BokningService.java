@@ -2,6 +2,7 @@ package com.example.pensionat.Services;
 
 import com.example.pensionat.Dtos.*;
 import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Models.Kund;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
@@ -24,4 +25,6 @@ public interface BokningService {
     public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId);
 
     public List<Bokning> getAllBokningarAsBokningById(Long id);
+    public int checkBookingsPerCustomer(Kund k);
+    public Bokning checkDiscountPrice(Bokning b);
 }

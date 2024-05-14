@@ -36,7 +36,6 @@ public class Bokning {
     @ManyToOne
     protected Rum rum;
 
-    @Column(nullable = false)
     protected int totalPrice;
 
     public Bokning(Kund kund, Rum rum, LocalDate startdatum, LocalDate slutdatum, int numOfBeds, int totalPrice){
