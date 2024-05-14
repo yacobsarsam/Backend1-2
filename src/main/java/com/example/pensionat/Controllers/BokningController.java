@@ -35,6 +35,9 @@ public class BokningController {
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
         model.addAttribute("kundInfo", b.getKund());
+        int pris = rumService.rumToDetailedRumDto(this.rumService.getRumById(rumId)).getPrice();
+        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
+        model.addAttribute("bookingPris", pris * (int) numOfDays);
         model.addAttribute("bookingDetailText", "Din bokning har blivit ändrad.");
         return "bookingDetails";
     }
@@ -58,7 +61,7 @@ public class BokningController {
         model.addAttribute("kundInfo", b.getKund());
         //hämtar totala priset för bokningen
         int pris = rumService.rumToDetailedRumDto(this.rumService.getRumById(rumId)).getPrice();
-        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate);
         model.addAttribute("bookingPris", pris * (int) numOfDays);
 
         return "bookingDetails";
