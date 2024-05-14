@@ -22,7 +22,11 @@
     </thead>
     <tbody>
     <tr th:each="room : ${allRum}">
-      <td th:text="'Room ' + ${room.rumsnr}"></td>
+      <td>
+        <a th:href="@{'/rooms/' + ${room.id} + '/events'}" class="roomButton">
+          <span th:text="'Room ' + ${room.rumsnr}"></span>
+        </a>
+      </td>
     </tr>
     </tbody>
   </table>

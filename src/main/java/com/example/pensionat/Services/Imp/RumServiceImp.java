@@ -2,6 +2,7 @@ package com.example.pensionat.Services.Imp;
 
 import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Models.RumEvent;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.RumService;
 import jakarta.transaction.Transactional;
@@ -28,6 +29,18 @@ public class RumServiceImp implements RumService {
                 .price(r.getPrice())
                 .build();
     }
+
+    @Override
+    public List<RumEvent> getEventsForRum(Long rumId) {
+        Rum rum = rumRepo.findById(rumId).orElse(null);
+//        if (rum != null) {
+//            return rum.getEvents();
+//        } else {
+//            return null;
+//        }
+        return null;
+    }
+
     @Override
     public List<DetailedRumDto> getAllRum() {
         return rumRepo.findAll().stream().map(rum -> rumToDetailedRumDto(rum)).toList();

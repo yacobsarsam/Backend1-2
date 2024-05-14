@@ -2,6 +2,7 @@ package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Models.RumEvent;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,15 +25,19 @@ public class RumController {
         return rumService.getAllRum();
     }
 
-    @GetMapping("/events")
+    @GetMapping("/allRooms")
     public String showAllRooms(Model model) {
         List<DetailedRumDto> allRum = rumService.getAllRum();
-//        for (DetailedRumDto rumDto : allRum) {
-////            List<RumEvent> events = rumService.getEventsForRum(rumDto.getId());
-////            //rumDto.setEvents(events);
-////        }
         model.addAttribute("allRum", allRum);
-        return "rumListofEvents";
+        return "allRooms";
+    }
+    @GetMapping("/{roomId}/events")
+    public String showRoomEvents(@PathVariable Long roomId, Model model) {
+        Rum room = rumService.getRumById(roomId);
+        List<RumEvent> roomEvents = rumService.getEventsForRum(roomId);
+        model.addAttribute("room", room);
+        model.addAttribute("events", roomEvents);
+        return "rumEvents";
     }
 
     @RequestMapping("/lediga/period")
