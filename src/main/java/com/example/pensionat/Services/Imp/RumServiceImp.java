@@ -7,6 +7,8 @@ import com.example.pensionat.Services.RumService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -18,9 +20,14 @@ public class RumServiceImp implements RumService {
 
     @Override
     public DetailedRumDto rumToDetailedRumDto(Rum r) {
-        return null;
+        return DetailedRumDto.builder()
+                .id(r.getId())
+                .rumsnr(r.getRumsnr())
+                .dubbelrum(r.isDubbelrum())
+                .storlek(r.getStorlek())
+                .price(r.getPrice())
+                .build();
     }
-
     @Override
     public List<DetailedRumDto> getAllRum() {
         return rumRepo.findAll().stream().map(rum -> rumToDetailedRumDto(rum)).toList();

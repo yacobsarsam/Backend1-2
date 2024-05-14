@@ -19,5 +19,6 @@ public interface BlackListService {
 
      BlackListPerson getBlackListPrson(String email) throws IOException;
 
-     String UpdateBLKund(BlackListPerson k, Model model) throws IOException;
+     //String UpdateBLKund(BlackListPerson k, Model model) throws IOException;
+     public void updateBlackListPerson(BlackListPerson person);
 }

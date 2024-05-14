@@ -1,4 +1,4 @@
-package com.example.pensionat;
+package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
@@ -14,45 +14,47 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-@AutoConfigureMockMvc
-public class BokningsViewControllerTest {
+public class BokningServiceTests {
 
     @Mock
     private KundService mockKundService;
-
     @Mock
     private RumService mockRumService;
-
     @Mock
     private RumRepo mockRumRepo;
-
     @Mock
     private BokningRepo mockBokningRepo;
 
     @InjectMocks
-    private BokningServiceImp mockBokningsServiceImp = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundService, mockRumService);
+    private BokningServiceImp mockBokningsServiceImp;
 
     @BeforeEach
-    public void init(){
+    void init(){
+        mockBokningsServiceImp  = new BokningServiceImp(mockBokningRepo, mockRumRepo, mockKundService, mockRumService);
+        assertNotNull(mockKundService);
+        assertNotNull(mockRumService);
+        assertNotNull(mockRumRepo);
+        assertNotNull(mockBokningRepo);
+        assertNotNull(mockBokningsServiceImp);
     }
 
     @Test
-    public void getNonAvailableRoomsIdTest(){
+    void getNonAvailableRoomsIdTest(){
         Kund k1 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
-        Rum r1 = new Rum(1L, 10, false, 1);
-        Rum r2 = new Rum(2L, 11, false, 1);
-        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1);
-        Bokning b2 = new Bokning(2L, LocalDate.parse("2024-05-01"), LocalDate.parse("2024-05-05"), 1, k1, r2);
+        Rum r1 = new Rum(1L, 10, false, 1, 100);
+        Rum r2 = new Rum(2L, 11, false, 1, 100);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        Bokning b2 = new Bokning(2L, LocalDate.parse("2024-05-01"), LocalDate.parse("2024-05-05"), 1, k1, r2, 100);
 
         List<Long> roomIds = mockBokningsServiceImp.getNonAvailableRoomsId(List.of(b1), LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"));
         assertEquals(1, roomIds.get(0));
@@ -94,6 +96,62 @@ public class BokningsViewControllerTest {
         assertEquals(b2.getTotalPrice(), 4876);
         assertEquals(b3.getTotalPrice(), 8756);
         assertEquals(b4.getTotalPrice(), 1000);
+    }
+
+    @Test
+    void isCustomerFieldsFilledAndCorrectTest(){
+        //TODO
+    }
+
+    @Test
+    void addBokningTest(){
+        //TODO
+    }
+
+    @Test
+    void getBookingDetailsByIdTest(){
+        //TODO
+    }
+
+    @Test
+    void getAllBokningarTest(){
+        //TODO
+    }
+
+    @Test
+    void getAllBokningarByIdTest(){
+        //TODO
+    }
+
+    @Test
+    void getAllBokningarAsBokningByIdTest(){
+        //TODO
+    }
+
+    @Test
+    void updateBokningTest(){
+        //TODO
+    }
+
+    @Test
+    void deleteBokningTest(){
+        //TODO
+    }
+
+    @Test
+    void newBokningTest(){
+        //TODO
+    }
+
+    //DTO tester
+    @Test
+    void bokningToBokningDtoTest(){
+        //TODO
+    }
+
+    @Test
+    void bokningToDetailedBokningDtoTest(){
+        //TODO
     }
 
 }

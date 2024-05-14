@@ -3,6 +3,7 @@ package com.example.pensionat.Controllers;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Controller
@@ -19,7 +21,7 @@ public class BokningController {
 
     private final BokningService bokningService;
     private final KundController kundController;
-
+    private final RumService rumService;
     @GetMapping("/updateBokning/{id}")
     public String updateInfo(@PathVariable Long id, Model model) {
         Bokning booking = bokningService.getBookingDetailsById(id);
@@ -54,6 +56,11 @@ public class BokningController {
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
         model.addAttribute("kundInfo", b.getKund());
+        //hämtar totala priset för bokningen
+        int pris = rumService.rumToDetailedRumDto(this.rumService.getRumById(rumId)).getPrice();
+        long numOfDays = ChronoUnit.DAYS.between(startDate, endDate) + 1;
+        model.addAttribute("bookingPris", pris * (int) numOfDays);
+
         return "bookingDetails";
     }
 

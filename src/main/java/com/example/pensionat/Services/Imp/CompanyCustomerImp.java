@@ -29,6 +29,7 @@ public class CompanyCustomerImp implements CompanyCustomerService {
                 .country(c.getCountry()).build();
     }
 
+    //TODO rename getCustomerById, vi hämtar bara kunden
     @Override
     public customers getCustomerDetailsById(Long id) {
         Optional<customers> optionalCustomers = cr.findById(id);

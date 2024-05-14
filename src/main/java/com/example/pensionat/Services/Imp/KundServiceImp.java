@@ -86,6 +86,7 @@ public class KundServiceImp implements KundService {
                 .bokningDtos(k.getBokning().stream().map(b -> bokningToBokningDto(b)).toList()).build();
     }
 
+    //TODO flyttas till bokningsServicen
     public BokningDto bokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
                 slutdatum(String.valueOf(b.getSlutdatum())).numOfBeds(b.getNumOfBeds()).build();
