@@ -1,9 +1,13 @@
 package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Services.BlackListDataProvider;
 import com.example.pensionat.Services.Imp.BlackListServiceImp;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -13,7 +17,7 @@ import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,21 +31,28 @@ public class BlackListServiceTests {
 
     @MockBean
     private BlackListServiceImp mockBlackListServiceImp;
+    @Mock
+    private BlackListDataProvider mockBlackListDataProvider;
+
+    @BeforeEach
+    void init(){
+        mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider);
+        mockBlackListDataProvider = mock(BlackListDataProvider.class);
+
+    }
+
     @Test
     void getAllBlackListCustomers(){
         //IntegrationsTest
     }
 
     @Test
-    void isCustomerBlackListedTest() throws IOException {
-        BlackListPerson b1 = new BlackListPerson(1,"TestEmail","TestName", "TestGroup", LocalDateTime.now().toString(),false);
-        BlackListPerson b2 = new BlackListPerson(2,"TestEmail2","TestName2", "TestGroup2", LocalDateTime.now().plusDays(2).toString(),true);
-        List<BlackListPerson> blackListPersonList = new ArrayList<>();
-        blackListPersonList.add(b1);
-        blackListPersonList.add(b2);
+    void checkIfBLKundExistByEmailUtanAttSkapaTest() throws IOException {
+        BlackListPerson b1 = new BlackListPerson(2, "TestEmail","TestName", "TestGroup", LocalDateTime.now().plusDays(2).toString(), true);
+        BlackListPerson b2 = new BlackListPerson(2, "TestEmail2","TestName2", "TestGroup2", LocalDateTime.now().plusDays(2).toString(), false);
+        when(mockBlackListServiceImp.getAllBLKunder()).thenReturn(Arrays.asList(b1, b2));
 
-        when(mockBlackListServiceImp.getAllBLKunder()).thenReturn(blackListPersonList);
-        assertFalse(mockBlackListServiceImp.checkIfBLKundExistByEmailUtanAttSkapa(b1.email));
+        assertTrue(mockBlackListServiceImp.checkIfBLKundExistByEmailUtanAttSkapa(b1.email));
         assertFalse(mockBlackListServiceImp.checkIfBLKundExistByEmailUtanAttSkapa(b2.email));
         assertFalse(mockBlackListServiceImp.checkIfBLKundExistByEmailUtanAttSkapa("notExistingEmail"));
     }
@@ -53,8 +64,6 @@ public class BlackListServiceTests {
 
     @Test
     void createBlackListedCustomerTest(){
-        when(mockBlackListServiceImp.greateBlackListPerson("TestName", "TestEmail", "TestGroup"))
-                .thenReturn(new BlackListPerson("TestName", "TestEmail", "TestGroup", LocalDateTime.now(), false));
         BlackListPerson b1 = mockBlackListServiceImp.greateBlackListPerson("TestName", "TestEmail", "TestGroup");
         assertEquals("TestName", b1.name);
         assertEquals("TestEmail", b1.email);
@@ -67,8 +76,7 @@ public class BlackListServiceTests {
     @Test
     void getBlackListCustomerInfoTest_withFullValues(){
         Model model = mock(Model.class);
-        when(mockBlackListServiceImp.getAllAvailableBLKundInfo("TestName", "TestEmail", "TestGroup", model)).thenReturn("visablkunder");
-        when(model.addAttribute(eq("felmeddelande"), anyString())).thenReturn(model);
+        //when(model.addAttribute(eq("felmeddelande"), anyString())).thenReturn(model);
 
         assertEquals("visablkunder", mockBlackListServiceImp.getAllAvailableBLKundInfo("TestName", "TestEmail", "TestGroup", model));
         assertNull(model.getAttribute("felmeddelande"));
@@ -77,13 +85,9 @@ public class BlackListServiceTests {
     @Test
     void getBlackListCustomerInfoTest_withFalseValues(){
         Model model = mock(Model.class);
-        when(model.addAttribute(eq("felmeddelande"), anyString())).thenReturn(model);
         when(model.getAttribute("felmeddelande")).thenReturn("Fel i kund-fälten, kontrollera och försök igen");
-        when(mockBlackListServiceImp.getAllAvailableBLKundInfo("TestName", "TestEmail", null, model)).thenReturn("visablkunder");
-        when(mockBlackListServiceImp.addModelsAndReturn("TestName", "TestEmail", null, model)).thenReturn("visablkunder");
-        when(mockBlackListServiceImp.isCustomerFieldsFilledAndCorrect("TestName", "TestEmail", null)).thenReturn(false);
 
-        assertEquals("visablkunder", mockBlackListServiceImp.getAllAvailableBLKundInfo("TestName", "TestEmail", null, model));
+        assertEquals("visablkunder", mockBlackListServiceImp.getAllAvailableBLKundInfo("TestName", "TestEmail", "", model));
         assertNotNull(model.getAttribute("felmeddelande"));
         assertEquals("Fel i kund-fälten, kontrollera och försök igen", model.getAttribute("felmeddelande"));
     }
@@ -91,11 +95,10 @@ public class BlackListServiceTests {
     @Test
     void getBlackListCustomerTest() throws IOException {
         BlackListPerson b1 = new BlackListPerson(1,"TestEmail","TestName", "TestGroup", LocalDateTime.now().toString(),false);
-        when(mockBlackListServiceImp.getBlackListPrson("TestEmail")).thenReturn(b1);
-
-        assertEquals(b1, mockBlackListServiceImp.getBlackListPrson("TestEmail"));
-        assertNotEquals(b1, mockBlackListServiceImp.getBlackListPrson("otherEmail"));
-        assertNotNull(mockBlackListServiceImp.getBlackListPrson("TestEmail"));
+        when(mockBlackListServiceImp.getAllBLKunder()).thenReturn(List.of(b1));
+        assertEquals(b1, mockBlackListServiceImp.getBlackListPersonByEmail("TestEmail"));
+        assertNull(mockBlackListServiceImp.getBlackListPersonByEmail("otherEmail"));
+        assertNotNull(mockBlackListServiceImp.getBlackListPersonByEmail("TestEmail"));
     }
 
     @Test

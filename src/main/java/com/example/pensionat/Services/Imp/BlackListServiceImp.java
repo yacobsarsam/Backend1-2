@@ -1,10 +1,10 @@
 package com.example.pensionat.Services.Imp;
 
 import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Services.BlackListDataProvider;
 import com.example.pensionat.Services.BlackListService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPut;
@@ -20,18 +20,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class BlackListServiceImp implements BlackListService {
 
-    @Override
+    private final BlackListDataProvider blackListDataProvider;
+
     public List<BlackListPerson> getAllBLKunder() throws IOException {
-            JsonMapper jSonMapper = new JsonMapper();
-            BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
-                    ,BlackListPerson[].class);
-            return List.of(blps);
+        return blackListDataProvider.getAllBLKunder();
     }
 
     @Override
@@ -44,12 +41,15 @@ public class BlackListServiceImp implements BlackListService {
     //TODO rename isCustomerBlackListed
     @Override //Kolla 'ok' värde, om true så är den blacklistad
     public boolean checkIfBLKundExistByEmailUtanAttSkapa(String email) throws IOException {
+
         List<BlackListPerson> blacklist = getAllBLKunder();
+
         return blacklist.stream()
-                .filter(person -> person.getEmail().equals(email))
+                .filter(person -> person.email.equalsIgnoreCase(email))
                 .findFirst()
                 .map(BlackListPerson::isOk)
                 .orElse(false);
+
     }
 
     //TODO rename addBlackListCustomer
@@ -119,12 +119,9 @@ public class BlackListServiceImp implements BlackListService {
             return "visablkunder";
     }
 
-    //TODO rename getBlackListCustomer
     @Override
-    public BlackListPerson getBlackListPrson(String email) throws IOException {
-       List<BlackListPerson> bllist = getAllBLKunder();
-       BlackListPerson bl = bllist.stream().filter(k->k.email.equals(email)).findFirst().get();
-       return bl;
+    public BlackListPerson getBlackListPersonByEmail(String email) throws IOException {
+        return getAllBLKunder().stream().filter(k->k.email.equals(email)).findFirst().orElse(null);
     }
 
     public String addModelsAndReturn(String name, String email,String group, Model model){
@@ -134,7 +131,6 @@ public class BlackListServiceImp implements BlackListService {
         return "visablkunder";
     }
 
-    //TODO rename updateBlackListCustomer
     @Override
     public void updateBlackListPerson(BlackListPerson person) {
         String url = "https://javabl.systementor.se/api/stefan/blacklist/" + person.getEmail();
