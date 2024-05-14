@@ -13,17 +13,16 @@
   <nav class="navbar">
     <button class="navButton"><a th:href="@{/index}" >Home</a> </button>
   </nav>
-  <h1>Room events</h1>
   <table>
     <thead>
     <tr>
-      <th>Rum nummer</th>
+      <h2>Rum events</h2>
     </tr>
     </thead>
     <tbody>
     <tr th:each="room : ${allRum}">
       <td>
-        <a th:href="@{'/rooms/' + ${room.id} + '/events'}" class="roomButton">
+        <a th:href="@{'/rum/' + ${room.id} + '/events'}" class="roomButton">
           <span th:text="'Room ' + ${room.rumsnr}"></span>
         </a>
       </td>
