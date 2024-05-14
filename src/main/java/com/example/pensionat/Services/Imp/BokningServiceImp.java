@@ -20,10 +20,16 @@ import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -241,6 +247,49 @@ public class BokningServiceImp implements BokningService {
         model.addAttribute("endDate", endDate);
         model.addAttribute("antalPersoner", antalPersoner);
         return "addBokning";
+    }
+    
+    public int checkBookingsPerCustomer(Kund k){
+        Long totalNights = 0L;
+        List <Bokning> bokningsList = k.getBokning().stream().filter(bokning -> bokning.getStartdatum().isAfter(LocalDate.now().minusYears(1))).toList();
+        for (Bokning b: bokningsList) {
+            LocalDate start = b.getStartdatum();
+            LocalDate end   = b.getSlutdatum();
+            totalNights += ChronoUnit.DAYS.between(start, end);
+        }
+        return Math.toIntExact(totalNights);
+    }
+
+    public Bokning checkDiscountPrice(Bokning b){
+        double totalPrice = 0;
+        int pricePerNight = b.getRum().getPrice();
+
+        //hur många nätter är bokningen
+        long nightsNow = ChronoUnit.DAYS.between(b.getStartdatum(), b.getSlutdatum()) ;
+
+        LocalDate date = b.getStartdatum();
+
+        for (int i = 0; i < nightsNow; i++) {
+            // Kolla om natten är söndag till måndag
+            if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+                totalPrice = totalPrice + (pricePerNight * 0.98);
+            } else {
+                totalPrice = totalPrice + pricePerNight;
+            }
+            date = date.plusDays(1);
+        }
+
+        // bokat mer än två nätter
+        if (nightsNow > 2) {
+            totalPrice *= 0.995;
+        }
+
+        // bokat minst 10 nätter senaste året
+        if (checkBookingsPerCustomer(b.getKund()) >= 10) {
+            totalPrice *= 0.98;
+        }
+        b.setTotalPrice((int) Math.round(totalPrice));
+        return b;
     }
 
 }
