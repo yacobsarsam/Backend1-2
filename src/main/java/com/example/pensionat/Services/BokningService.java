@@ -25,6 +25,6 @@ public interface BokningService {
     public Bokning updateBokning(Long id, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId);
 
     public List<Bokning> getAllBokningarAsBokningById(Long id);
-    public int checkBookingsPerCustomer(Kund k);
-    public Bokning checkDiscountPrice(Bokning b);
+    public int checkBookingsPerCustomer(Long id);
+    public int checkDiscountPrice(Bokning b);
 }
