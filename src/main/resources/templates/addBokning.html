@@ -40,7 +40,7 @@
             <div class="room-container" th:each="room : ${allRooms}">
                 <div class="room-inner-container">
                     <div class="text-container">
-                        <p th:text="'Rum ' + ${room.rumsnr} +' ' + ${roomType}"></p>
+                        <p th:text="'Rum ' + ${room.rumsnr} + ' ' + ${roomType} + ' ' + ${room.price} + ' SEK/natt'"></p>
                     </div>
                     <div class="button-container">
                         <form action="#" th:action="@{/bokningar/add}" method="post">
