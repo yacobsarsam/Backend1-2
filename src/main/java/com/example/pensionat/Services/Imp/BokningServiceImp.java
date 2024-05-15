@@ -153,8 +153,7 @@ public class BokningServiceImp implements BokningService {
         String felmeddelande;
         if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
             felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
-            model.addAttribute("felmeddelande", felmeddelande);
-            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, felmeddelande);
         }
 
         Bokning booking = new Bokning();
@@ -240,13 +239,14 @@ public class BokningServiceImp implements BokningService {
         } else return !email.trim().isEmpty();
     }
 
-    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model) {
+    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model, String felmeddelande) {
         model.addAttribute("name", name);
         model.addAttribute("telNr", telnr);
         model.addAttribute("email", email);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("antalPersoner", antalPersoner);
+        model.addAttribute("felmeddelande", felmeddelande);
         return "addBokning";
     }
     
