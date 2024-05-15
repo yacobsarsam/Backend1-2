@@ -81,14 +81,14 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public List<Bokning> getAllBokningarAsBokningById(Long id){
+    public List<Bokning> getAllBokningarAsBokningById(Long id) {
         return br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
     }
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
         int roomTypeSize;
-        if (rumService.getRumById(rumId).isDubbelrum()){
+        if (rumService.getRumById(rumId).isDubbelrum()) {
             roomTypeSize = 2;
         } else {
             roomTypeSize = 1;
@@ -99,6 +99,8 @@ public class BokningServiceImp implements BokningService {
         b.setStartdatum(startDate);
         b.setSlutdatum(endDate);
         b.setNumOfBeds(numOfBeds + roomTypeSize);
+        int price = checkDiscountPrice(b);
+        b.setTotalPrice(price);
         br.save(b);
         return b;
     }
@@ -118,7 +120,7 @@ public class BokningServiceImp implements BokningService {
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) throws IOException {
         int roomTypeSize;
-        if (rumService.getRumById(rumId).isDubbelrum()){
+        if (rumService.getRumById(rumId).isDubbelrum()) {
             roomTypeSize = 2;
         } else {
             roomTypeSize = 1;
@@ -128,18 +130,21 @@ public class BokningServiceImp implements BokningService {
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds + roomTypeSize);
+        int price = checkDiscountPrice(b);
+        b.setTotalPrice(price);
         br.save(b);
         return b;
-   }
+    }
 
-   //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
-   //Kollar om epost är blacklistad eller ej
-   //Om ok = fale --> epost är blacklistad
+
+    //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
+    //Kollar om epost är blacklistad eller ej
+    //Om ok = fale --> epost är blacklistad
     //TODO ska denna flyttas till blacklistService?
-   private boolean CustomerIsBlackList(String email) throws IOException {
+    private boolean CustomerIsBlackList(String email) throws IOException {
         JsonMapper jSonMapper = new JsonMapper();
         BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
-                ,BlackListPerson[].class);
+                , BlackListPerson[].class);
         for (BlackListPerson bl : blps) {
             if (bl.email.equals(email) && !bl.ok)
                 return true;
@@ -249,29 +254,35 @@ public class BokningServiceImp implements BokningService {
         model.addAttribute("antalPersoner", antalPersoner);
         return "addBokning";
     }
-    
-    public int checkBookingsPerCustomer(Kund k){
+
+    @Override
+    public int checkBookingsPerCustomer(Long id) {
+        //hitta alla bokningar med kundens ID och filtrera så bara senaste året är med
+        List<Bokning> bl = br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
+        List <Bokning> bokningsList = bl.stream().filter(bokning -> bokning.getStartdatum().isAfter(LocalDate.now().minusYears(1))).toList();
+
         Long totalNights = 0L;
-        List <Bokning> bokningsList = k.getBokning().stream().filter(bokning -> bokning.getStartdatum().isAfter(LocalDate.now().minusYears(1))).toList();
-        for (Bokning b: bokningsList) {
+
+        for (Bokning b : bokningsList) {
             LocalDate start = b.getStartdatum();
-            LocalDate end   = b.getSlutdatum();
+            LocalDate end = b.getSlutdatum();
             totalNights += ChronoUnit.DAYS.between(start, end);
         }
         return Math.toIntExact(totalNights);
     }
 
-    public Bokning checkDiscountPrice(Bokning b){
+    @Override
+    public int checkDiscountPrice(Bokning b) {
         double totalPrice = 0;
         int pricePerNight = b.getRum().getPrice();
 
         //hur många nätter är bokningen
-        long nightsNow = ChronoUnit.DAYS.between(b.getStartdatum(), b.getSlutdatum()) ;
+        long nightsNow = ChronoUnit.DAYS.between(b.getStartdatum(), b.getSlutdatum());
 
         LocalDate date = b.getStartdatum();
 
         for (int i = 0; i < nightsNow; i++) {
-            // Kolla om natten är söndag till måndag
+            //kolla om natten är söndag till måndag
             if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 totalPrice = totalPrice + (pricePerNight * 0.98);
             } else {
@@ -281,16 +292,16 @@ public class BokningServiceImp implements BokningService {
         }
 
         // bokat mer än två nätter
-        if (nightsNow > 2) {
+        if (nightsNow >= 2) {
             totalPrice *= 0.995;
         }
 
         // bokat minst 10 nätter senaste året
-        if (checkBookingsPerCustomer(b.getKund()) >= 10) {
+        if (checkBookingsPerCustomer(b.getKund().getId()) >= 10) {
             totalPrice *= 0.98;
         }
         b.setTotalPrice((int) Math.round(totalPrice));
-        return b;
+        return (int) Math.round(totalPrice);
     }
 
 }
