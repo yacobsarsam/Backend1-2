@@ -45,6 +45,12 @@ public class BokningServiceImp implements BokningService {
         return "addBokning";
     }
 
+    //TODO
+    @Override
+    public String getAllAvailableRooms(Long bokId, Long rumId, String namn, String telNr, String email, String startDate, String endDate, int antalPersoner, Model model) {
+        return null;
+    }
+
     @Override
     public BokningDto BokningToBokningDto(Bokning b) {
         return BokningDto.builder().id(b.getId()).startdatum(String.valueOf(b.getStartdatum())).
@@ -147,6 +153,7 @@ public class BokningServiceImp implements BokningService {
         return false;
     }
 
+    /*
     @Override
     public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
                                        String startDate, String endDate, int antalPersoner, Model model) {
@@ -219,6 +226,8 @@ public class BokningServiceImp implements BokningService {
         }
 
     }
+
+     */
 
     public List<Long> getNonAvailableRoomsId(List<Bokning> bokningar, LocalDate startDate, LocalDate endDate) {
         List<Long> nonAvailableRooms = new ArrayList<>();
