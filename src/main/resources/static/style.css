@@ -275,9 +275,26 @@ table a:visited{
 }
 
 .customer-table tbody tr:nth-child(odd) {
-    background-color: lightgrey; /* Light gray background for odd rows */
+    background-color: lightgrey;
 }
 
 .customer-table tbody tr:nth-child(even) {
-    background-color: #ffffff; /* White background for even rows */
+    background-color: #ffffff;
+}
+
+.roomButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: dimgrey;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    outline: grey;
+}
+
+.roomButton:hover {
+    background-color: #808080;
 }
