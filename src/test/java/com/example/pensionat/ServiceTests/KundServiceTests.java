@@ -93,7 +93,7 @@ public class KundServiceTests {
     public void checkIfKundHasBokningarTest_pass(){
         List<Bokning> fylldBokningsLista = new ArrayList<>();
         Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", fylldBokningsLista);
-        Rum r1 = new Rum(1L, 10, false, 1, 100);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
         Bokning b1 = new Bokning(1L, LocalDate.now(), LocalDate.now().plusDays(1), 1, k1, r1, 100);
         fylldBokningsLista.add(b1);
         when(mockKundRepo.findById(1L)).thenReturn(Optional.of(k1));
@@ -159,7 +159,7 @@ public class KundServiceTests {
     public void bokningToBokningDtoTest(){
         List<Bokning> fylldBokningsLista = new ArrayList<>();
         Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", fylldBokningsLista);
-        Rum r1 = new Rum(1L, 10, false, 1, 100);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
         Bokning b1 = new Bokning(1L, LocalDate.now(), LocalDate.now().plusDays(1), 1, k1, r1, 100);
         BokningDto bDto1 = mockKundServiceImp.bokningToBokningDto(b1);
 
