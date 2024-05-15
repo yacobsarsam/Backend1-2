@@ -51,8 +51,8 @@ public class BokningServiceTests {
     @Test
     void getNonAvailableRoomsIdTest(){
         Kund k1 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
-        Rum r1 = new Rum(1L, 10, false, 1, 100);
-        Rum r2 = new Rum(2L, 11, false, 1, 100);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Rum r2 = new Rum(2L, 11, false, 1, 100, null);
         Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
         Bokning b2 = new Bokning(2L, LocalDate.parse("2024-05-01"), LocalDate.parse("2024-05-05"), 1, k1, r2, 100);
 

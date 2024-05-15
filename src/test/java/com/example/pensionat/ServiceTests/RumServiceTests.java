@@ -67,9 +67,9 @@ public class RumServiceTests {
 
     @Test
     void getAllrum2Test(){
-        Rum r1 = new Rum(1L, 10, false, 1, 100);
-        Rum r2 = new Rum(2L, 21, true, 2, 100);
-        Rum r3 = new Rum(3L, 31, true, 3, 100);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Rum r2 = new Rum(2L, 21, true, 2, 100, null);
+        Rum r3 = new Rum(3L, 31, true, 3, 100, null);
         when(mockRumServiceImp.getAllRum2()).thenReturn(Arrays.asList(r1, r2, r3));
         List<Rum> result = mockRumServiceImp.getAllRum2();
         assertEquals(3, result.size());
@@ -79,11 +79,11 @@ public class RumServiceTests {
 
     @Test
     public void deleteRumTest(){
-        Rum r1 = new Rum(1L, 10, false, 1, 100);
-        Rum r2 = new Rum(2L, 21, true, 2, 100);
-        Rum r3 = new Rum(3L, 31, true, 3, 100);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Rum r2 = new Rum(2L, 21, true, 2, 100, null);
+        Rum r3 = new Rum(3L, 31, true, 3, 100, null);
         when(mockRumServiceImp.getAllRum2()).thenReturn(Arrays.asList(r1, r2, r3));
-        when(mockRumRepo.findById(1L)).thenReturn(Optional.of(new Rum(1L, 10, false, 1, 100)));
+        when(mockRumRepo.findById(1L)).thenReturn(Optional.of(new Rum(1L, 10, false, 1, 100, null)));
         doNothing().when(mockRumRepo).deleteById(1L);
 
         List<Rum> result = mockRumServiceImp.getAllRum2();
