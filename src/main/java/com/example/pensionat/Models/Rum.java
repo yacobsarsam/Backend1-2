@@ -1,13 +1,12 @@
 package com.example.pensionat.Models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -27,6 +26,9 @@ public class Rum {
     protected int storlek;
     @Column(nullable = false)
     protected int price;
+
+    @OneToMany(mappedBy = "rum")
+    protected List<RumEvent> roomEvent; //gick inte att använda EventBase här (Borde inte EventBase och RumEvent vara samma klass?)
     public Rum(boolean dubbelrum, int storlek, int rumsnr, int price) {
         this.rumsnr = rumsnr;
         this.dubbelrum = dubbelrum;
