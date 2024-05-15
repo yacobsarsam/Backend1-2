@@ -28,6 +28,10 @@ public class PensionatApplication {
             SpringApplication application = new SpringApplication(ShippersConsoleApplication.class);
             application.setWebApplicationType(WebApplicationType.NONE);
             application.run(args);
+        } else if (Objects.equals(args[0], "fetchRoomEvents")) {
+            SpringApplication application = new SpringApplication(RoomEventApplication.class);
+            application.setWebApplicationType(WebApplicationType.NONE);
+            application.run(args);
         }
     }
 
