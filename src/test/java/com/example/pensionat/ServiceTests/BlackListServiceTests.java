@@ -38,7 +38,6 @@ public class BlackListServiceTests {
     void init(){
         mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider);
         mockBlackListDataProvider = mock(BlackListDataProvider.class);
-
     }
 
     @Test
