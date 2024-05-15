@@ -3,6 +3,8 @@ package com.example.pensionat.Services.Imp;
 import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Services.BlackListDataProvider;
 import com.example.pensionat.Services.BlackListService;
+import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.KundService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,8 @@ import java.util.List;
 public class BlackListServiceImp implements BlackListService {
 
     private final BlackListDataProvider blackListDataProvider;
+    private final BokningService bokningService;
+    private final KundService kundService;
 
     public List<BlackListPerson> getAllBLKunder() throws IOException {
         return blackListDataProvider.getAllBLKunder();
@@ -153,10 +157,22 @@ public class BlackListServiceImp implements BlackListService {
             try (CloseableHttpResponse response = httpClient.execute(httpPut)) {
                 System.out.println("Response: " + response.getStatusLine().getStatusCode());
             }
+            if (person.isOk()) {
+                removeBookingsForBlacklistedPerson(person.email);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+    private void removeBookingsForBlacklistedPerson(String email) {
+        try {
+            bokningService.removeBookingByEmail(email);
+            kundService.deleteKundByEmail(email);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
 
 /*
     @Override

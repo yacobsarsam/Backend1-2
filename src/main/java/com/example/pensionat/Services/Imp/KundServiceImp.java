@@ -139,4 +139,18 @@ public class KundServiceImp implements KundService {
         model.addAttribute("email", email);
         return "visakunder";
     }
+    @Override
+    public void deleteKundByEmail(String email) {
+        Kund kundToDelete = kr.findAll().stream()
+                .filter(kund -> kund.getEmail().equals(email))
+                .findFirst()
+                .orElse(null);
+        if (kundToDelete != null) {
+            try {
+                kr.delete(kundToDelete);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 }

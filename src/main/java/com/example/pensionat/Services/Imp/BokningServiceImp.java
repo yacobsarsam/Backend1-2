@@ -304,4 +304,14 @@ public class BokningServiceImp implements BokningService {
         return (int) Math.round(totalPrice);
     }
 
+    @Override
+    public void removeBookingByEmail(String email) {
+        List<Bokning> bookingsToRemove = br.findAll().stream()
+                .filter(bokning -> bokning.getKund().getEmail().equals(email))
+                .collect(Collectors.toList());
+        for (Bokning booking : bookingsToRemove) {
+            br.delete(booking);
+        }
+    }
+
 }

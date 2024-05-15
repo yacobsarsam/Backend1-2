@@ -27,4 +27,5 @@ public interface BokningService {
     public List<Bokning> getAllBokningarAsBokningById(Long id);
     public int checkBookingsPerCustomer(Long id);
     public int checkDiscountPrice(Bokning b);
+    public void removeBookingByEmail(String email);
 }
