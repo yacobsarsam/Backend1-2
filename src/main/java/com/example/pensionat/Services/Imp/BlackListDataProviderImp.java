@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -16,7 +17,11 @@ public class BlackListDataProviderImp implements BlackListDataProvider {
     @Override
     public List<BlackListPerson> getAllBLKunder() throws IOException {
         JsonMapper jSonMapper = new JsonMapper();
-        BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist"), BlackListPerson[].class);
+        BlackListPerson[] blps = jSonMapper.readValue(GetBlackListPersonURL(), BlackListPerson[].class);
         return List.of(blps);
+    }
+
+    public URL GetBlackListPersonURL() throws MalformedURLException {
+        return new URL("https://javabl.systementor.se/api/stefan/blacklist");
     }
 }

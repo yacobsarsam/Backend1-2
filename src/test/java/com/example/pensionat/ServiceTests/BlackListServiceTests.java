@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.ui.Model;
@@ -36,6 +37,7 @@ public class BlackListServiceTests {
 
     @BeforeEach
     void init(){
+
         mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider);
         mockBlackListDataProvider = mock(BlackListDataProvider.class);
     }
