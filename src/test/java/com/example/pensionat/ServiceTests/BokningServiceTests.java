@@ -1,5 +1,6 @@
 package com.example.pensionat.ServiceTests;
 
+import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -14,16 +15,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -37,7 +42,6 @@ public class BokningServiceTests {
     private RumRepo mockRumRepo;
     @Mock
     private BokningRepo mockBokningRepo;
-
     @Mock
     private BokningService mockBokningService;
     @InjectMocks
@@ -51,6 +55,7 @@ public class BokningServiceTests {
         assertNotNull(mockRumRepo);
         assertNotNull(mockBokningRepo);
         assertNotNull(mockBokningsServiceImp);
+        //MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -108,7 +113,9 @@ public class BokningServiceTests {
 
     @Test
     void isCustomerFieldsFilledAndCorrectTest(){
-        //TODO
+        assertTrue(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "1234567890", "test@test.se"));
+        assertFalse(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "10", "test@test.se"));
+        assertFalse(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "1234567890", ""));
     }
 
     @Test
@@ -118,32 +125,91 @@ public class BokningServiceTests {
 
     @Test
     void getBookingDetailsByIdTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
+        Kund k2 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        when(mockBokningRepo.findById(1L)).thenReturn(Optional.of(b1));
+        assertTrue(mockBokningsServiceImp.getBookingDetailsById(1L).getKund()== k1);
+        assertFalse(mockBokningsServiceImp.getBookingDetailsById(1L).getKund()== k2);
+
     }
 
     @Test
     void getAllBokningarTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        Bokning b2 = new Bokning(1L, LocalDate.parse("2024-04-02"), LocalDate.parse("2024-04-06"), 1,  k1, r1, 100);
+        Bokning b3 = new Bokning(1L, LocalDate.parse("2024-04-03"), LocalDate.parse("2024-04-07"), 1,  k1, r1, 100);
+        when(mockBokningRepo.findAll()).thenReturn(List.of(b1, b2, b3));
+        assertEquals(mockBokningsServiceImp.getAllBokningar().size(),3);
+        assertEquals(mockBokningsServiceImp.getAllBokningar().get(0).getStartdatum(),"2024-04-01");
+        assertFalse(mockBokningsServiceImp.getAllBokningar().size() == 2);
     }
 
     @Test
     void getAllBokningarByIdTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        Kund k2 = new Kund(2L, "Test2", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        Bokning b2 = new Bokning(1L, LocalDate.parse("2024-04-02"), LocalDate.parse("2024-04-06"), 1,  k2, r1, 100);
+        Bokning b3 = new Bokning(1L, LocalDate.parse("2024-04-03"), LocalDate.parse("2024-04-07"), 1,  k1, r1, 100);
+        when(mockBokningRepo.findAll()).thenReturn(List.of(b1, b2, b3));
+        assertEquals(mockBokningsServiceImp.getAllBokningarbyId(1L).size(),2);
+        assertEquals(mockBokningsServiceImp.getAllBokningarbyId(1L).get(1).getStartdatum(),"2024-04-03");
+        assertFalse(mockBokningsServiceImp.getAllBokningarbyId(2L).size() == 2);
     }
 
     @Test
     void getAllBokningarAsBokningByIdTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        Kund k2 = new Kund(2L, "Test2", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        Bokning b2 = new Bokning(1L, LocalDate.parse("2024-04-02"), LocalDate.parse("2024-04-06"), 1,  k2, r1, 100);
+        Bokning b3 = new Bokning(1L, LocalDate.parse("2024-04-03"), LocalDate.parse("2024-04-07"), 1,  k1, r1, 100);
+        when(mockBokningRepo.findAll()).thenReturn(List.of(b1, b2, b3));
+        assertEquals(mockBokningsServiceImp.getAllBokningarbyId(1L).size(),2);
+        assertEquals(mockBokningsServiceImp.getAllBokningarbyId(1L).get(1).getStartdatum(),"2024-04-03");
+        assertFalse(mockBokningsServiceImp.getAllBokningarbyId(2L).size() == 2);
     }
 
     @Test
     void updateBokningTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        Bokning b2 = new Bokning(1L, LocalDate.parse("2024-04-02"), LocalDate.parse("2024-04-06"), 1,  k1, r1, 100);
+
+        when(mockBokningRepo.findById(anyLong())).thenReturn(Optional.of(b2));
+        when(mockRumService.getRumById(anyLong())).thenReturn(r1);
+        when(mockBokningRepo.save(any(Bokning.class))).thenReturn(b1);
+        Bokning updatedBokning = mockBokningsServiceImp.updateBokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 0, 1L);
+
+        assertNotNull(updatedBokning);
+        assertEquals(r1, updatedBokning.getRum());
+        assertEquals(LocalDate.parse("2024-04-01"), updatedBokning.getStartdatum());
+        assertEquals(LocalDate.parse("2024-04-05"), updatedBokning.getSlutdatum());
+        assertEquals(1, updatedBokning.getNumOfBeds());
+        verify(mockBokningRepo, times(1)).save(updatedBokning);
     }
+
+
 
     @Test
     void deleteBokningTest(){
-        //TODO
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, null, null, 100);
+
+        when(mockBokningRepo.findById(1L)).thenReturn(Optional.of(b1));
+        when(mockBokningRepo.findById(2L)).thenReturn(Optional.empty()); // bokning som inte finns
+
+        assertEquals(mockBokningsServiceImp.deleteBokning(1L), "Bokningen borttagen");
+        assertEquals(mockBokningsServiceImp.deleteBokning(2L),"Bokningen hittas inte");
+        verify(mockBokningRepo, times(1)).findById(1L);
+        verify(mockBokningRepo, times(1)).delete(b1);
+        verify(mockBokningRepo, times(1)).findById(2L);
     }
 
     @Test
