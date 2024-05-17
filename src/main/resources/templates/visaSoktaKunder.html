@@ -14,14 +14,12 @@
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/index}" >Home</a></button>
     </nav>
-    <h2 class="text-align-center">Sökresultat</h2>
+    <h2 class="text-align-center">Alla registrerade avtals-kunder</h2>
     <hr class="divider">
-
     <form th:action="@{/company/search}" method="get">
         <input type="text" name="searchWord" placeholder="Sök efter kunder">
         <button type="submit">Sök</button>
     </form>
-
     <div class="room-container">
         <table class="customer-table">
             <thead>
@@ -72,29 +70,18 @@
         </table>
     </div>
     <div class="pagination">
-
-        <span>Page
-            <strong th:text="${clientsPage.number + 1}"></strong>
-            of
-            <strong th:text="${clientsPage.totalPages}"></strong>
-        </span>
+        <span>Page <strong th:text="${clientsPage.number + 1}"></strong> of <strong th:text="${clientsPage.totalPages}"></strong></span>
         <span th:if="${clientsPage.hasPrevious()}">
-
-        <a th:href="@{${'/company/search?page=' + (clientsPage.number) + '&size=' + clientsPage.size + '&sort='
-        + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">Previous</a>
-    </span>
+            <a th:href="@{${'/company/search?searchWord=' + searchWord + '&sortField=' + sortField + '&sortOrder=' + sortOrder + '&page=' + (clientsPage.number) + '&size=' + clientsPage.size}}">Previous</a>
+        </span>
         <span th:each="pageNum : ${#numbers.sequence(1, clientsPage.totalPages)}">
-        <a th:href="@{${'/company/search?page=' + pageNum + '&size=' + clientsPage.size + '&sort='
-        + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">
-
-            <button th:text="${pageNum}" th:class="${pageNum == clientsPage.number + 1 ? 'active' : ''}"></button>
-        </a>
-    </span>
+            <a th:href="@{${'/company/search?searchWord=' + searchWord + '&sortField=' + sortField + '&sortOrder=' + sortOrder + '&page=' + pageNum + '&size=' + clientsPage.size}}">
+                <button th:text="${pageNum}" th:class="${pageNum == clientsPage.number + 1 ? 'active' : ''}"></button>
+            </a>
+        </span>
         <span th:if="${clientsPage.hasNext()}">
-        <a th:href="@{${'/company/search?page=' + (clientsPage.number + 2) + '&size=' + clientsPage.size
-        + '&sort=' + sortField + ',' + sortOrder + '&searchWord=' + searchWord}}">Next</a>
-    </span>
-
+            <a th:href="@{${'/company/search?searchWord=' + searchWord + '&sortField=' + sortField + '&sortOrder=' + sortOrder + '&page=' + (clientsPage.number + 2) + '&size=' + clientsPage.size}}">Next</a>
+        </span>
     </div>
 </div>
 </body>
