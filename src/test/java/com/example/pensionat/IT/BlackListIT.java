@@ -1,11 +1,7 @@
 package com.example.pensionat.IT;
 
-import com.example.pensionat.Repositories.CustomerRepo;
-import com.example.pensionat.Services.CompanyCustomerService;
 import com.example.pensionat.Services.Imp.BlackListDataProviderImp;
-import com.example.pensionat.Services.XMLCompanyCustomerProvider;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
@@ -15,10 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class BlackListIT {
-    @Autowired
-    private CustomerRepo customerRepo;
-    CompanyCustomerService companyCustomerService;
-    XMLCompanyCustomerProvider sut;
+
     BlackListDataProviderImp blackListDataProviderImp =new BlackListDataProviderImp();
     @Test
     void GetBlackListPersonsWillFetch() throws IOException {
