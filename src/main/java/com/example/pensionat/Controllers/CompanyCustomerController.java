@@ -1,9 +1,5 @@
 package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Dtos.BokningDto;
-import com.example.pensionat.Dtos.CustomerDto;
-import com.example.pensionat.Dtos.DetailedBokningDto;
-import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.customers;
 import com.example.pensionat.Repositories.CustomerRepo;
 import com.example.pensionat.Services.CompanyCustomerService;

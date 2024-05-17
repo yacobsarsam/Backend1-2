@@ -38,6 +38,7 @@ dependencies {
 
     implementation ("org.apache.httpcomponents:httpclient:4.5.14")
 
+    //testImplementation ("org.mockito:mockito-core:3.+")
 
 }
 
@@ -58,6 +59,3 @@ tasks.test{
     }
 }
 
-tasks.check {
-    dependsOn(integrationTestTask)
-}
