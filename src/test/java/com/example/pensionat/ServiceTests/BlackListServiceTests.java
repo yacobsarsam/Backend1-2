@@ -2,7 +2,9 @@ package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Services.BlackListDataProvider;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.Imp.BlackListServiceImp;
+import com.example.pensionat.Services.KundService;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.ui.Model;
@@ -33,12 +36,16 @@ public class BlackListServiceTests {
     private BlackListServiceImp mockBlackListServiceImp;
     @Mock
     private BlackListDataProvider mockBlackListDataProvider;
+    @Mock
+    private KundService mockKundService;
+    @Mock
+    private BokningService mockBokningsService;
 
     @BeforeEach
     void init(){
-        mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider);
-        mockBlackListDataProvider = mock(BlackListDataProvider.class);
 
+        mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider, mockBokningsService, mockKundService);
+        mockBlackListDataProvider = mock(BlackListDataProvider.class);
     }
 
     @Test

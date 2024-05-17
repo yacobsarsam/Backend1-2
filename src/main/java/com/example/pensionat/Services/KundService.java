@@ -24,4 +24,5 @@ public interface KundService {
     public boolean checkIfKundExistByEmailUtanAttSkapa(String namn, String email, String tel);
     public String getAllAvailableKundInfo(String name, String telNr, String email, Model model);
     public boolean isCustomerFieldsFilledAndCorrect(String namn, String tel, String email);
+    public void deleteKundByEmail(String email);
 }

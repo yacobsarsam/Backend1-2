@@ -24,10 +24,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -81,14 +78,14 @@ public class BokningServiceImp implements BokningService {
     }
 
     @Override
-    public List<Bokning> getAllBokningarAsBokningById(Long id){
+    public List<Bokning> getAllBokningarAsBokningById(Long id) {
         return br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
     }
 
     @Override
     public Bokning updateBokning(Long bokId, LocalDate startDate, LocalDate endDate, int numOfBeds, Long rumId) {
         int roomTypeSize;
-        if (rumService.getRumById(rumId).isDubbelrum()){
+        if (rumService.getRumById(rumId).isDubbelrum()) {
             roomTypeSize = 2;
         } else {
             roomTypeSize = 1;
@@ -99,6 +96,8 @@ public class BokningServiceImp implements BokningService {
         b.setStartdatum(startDate);
         b.setSlutdatum(endDate);
         b.setNumOfBeds(numOfBeds + roomTypeSize);
+        int price = checkDiscountPrice(b);
+        b.setTotalPrice(price);
         br.save(b);
         return b;
     }
@@ -118,7 +117,7 @@ public class BokningServiceImp implements BokningService {
     @Override
     public Bokning newBokning(String namn, String tel, String email, LocalDate startdatum, LocalDate slutdatum, Long rumId, int numOfBeds) throws IOException {
         int roomTypeSize;
-        if (rumService.getRumById(rumId).isDubbelrum()){
+        if (rumService.getRumById(rumId).isDubbelrum()) {
             roomTypeSize = 2;
         } else {
             roomTypeSize = 1;
@@ -128,18 +127,21 @@ public class BokningServiceImp implements BokningService {
         Kund kund = kundService.kundDtoToKund(kundDto);
         Rum rum = rumService.getRumById(rumId);
         Bokning b = new Bokning(kund, rum, startdatum, slutdatum, numOfBeds + roomTypeSize);
+        int price = checkDiscountPrice(b);
+        b.setTotalPrice(price);
         br.save(b);
         return b;
-   }
+    }
 
-   //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
-   //Kollar om epost är blacklistad eller ej
-   //Om ok = fale --> epost är blacklistad
+
+    //TODO Anropa metoden från rätt plats i koden för att avbryta bokningen.
+    //Kollar om epost är blacklistad eller ej
+    //Om ok = fale --> epost är blacklistad
     //TODO ska denna flyttas till blacklistService?
-   private boolean CustomerIsBlackList(String email) throws IOException {
+    private boolean CustomerIsBlackList(String email) throws IOException {
         JsonMapper jSonMapper = new JsonMapper();
         BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
-                ,BlackListPerson[].class);
+                , BlackListPerson[].class);
         for (BlackListPerson bl : blps) {
             if (bl.email.equals(email) && !bl.ok)
                 return true;
@@ -147,70 +149,28 @@ public class BokningServiceImp implements BokningService {
         return false;
     }
 
+
     @Override
-    public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email,
-                                       String startDate, String endDate, int antalPersoner, Model model) {
+    public String getAllAvailableRooms(Long bokId, Long rumId, String name, String telNr, String email, String startDate, String endDate, int antalPersoner, Model model) {
         String felmeddelande;
+        //Kontrollera kundfälten
         if (!isCustomerFieldsFilledAndCorrect(name, telNr, email)) {
             felmeddelande = "Fel i kund-fälten, kontrollera och försök igen";
-            model.addAttribute("felmeddelande", felmeddelande);
-            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
+            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, felmeddelande, "addBokning");
         }
-
-        Bokning booking = new Bokning();
-        if (bokId != 0) {
-            booking = getBookingDetailsById(bokId);
-        }
-
-        Kund kund = kundService.kundDtoToKund(kundService.checkIfKundExistByEmail(name, email, telNr));
         //Kolla vilken storlek på rum som kan visas
-        boolean needsDouble = antalPersoner > 1;
+        boolean needsDoubleRoom = getNeedsDoubleRoom(getRequiredRoomType(antalPersoner));
         int neededSize = antalPersoner - 1;
-        String roomType;
-        if (needsDouble) {
-            roomType = "Dubbelrum";
-        } else {
-            roomType = "Enkelrum";
-        }
-        //get the dates:
-        List<Long> ledigaRumsId = new ArrayList<>();
-        List<Rum> sortedRooms = new ArrayList<>();
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
-            LocalDate from = LocalDate.parse(startDate);
-            LocalDate until = LocalDate.parse(endDate);
-            //kontroll för att slut datum är EFTER startdatum
-            if (!from.isBefore(until)) {
-                felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
-                model.addAttribute("felmeddelande", felmeddelande);
-                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
-            } else if (from.isBefore(LocalDate.now())) {
-                //kontroll att start datumet inte has passerat redan
-                felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
-                model.addAttribute("felmeddelande", felmeddelande);
-                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model);
-            }
-
-            //Hämta ut alla rums-id som inte är bokade under det spannet som angets
-            List<Long> notAva = getNonAvailableRoomsId(br.findAll(), from, until);
-            sortedRooms = rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDouble)
-                    .filter(rum -> rum.getStorlek() >= neededSize)
-                    .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
-
-            model.addAttribute("allRooms", sortedRooms);
-            model.addAttribute("booking", booking);
-            model.addAttribute("rubrik", "Lediga rum");
-            model.addAttribute("roomType", roomType);
-            model.addAttribute("name", name);
-            model.addAttribute("telNr", telNr);
-            model.addAttribute("email", email);
-            model.addAttribute("startDate", startDate);
-            model.addAttribute("endDate", endDate);
-            model.addAttribute("antalPersoner", antalPersoner);
-
+            if (validateRequestedBookingDates(name, telNr, email, startDate, endDate, antalPersoner, model) != null){
+                return validateRequestedBookingDates(name, telNr, email, startDate, endDate, antalPersoner, model);
+            };
+            addRoomModels(getFilteredRooms(needsDoubleRoom, neededSize, getValidatedBookingDateList(startDate, endDate)), getBookingDetailsById(bokId), getRequiredRoomType(antalPersoner), model);
+            System.out.println(telNr);
             if (bokId != 0) {
-                return "updateBooking";
+                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, "", "updateBooking");
             } else {
-                return "addBokning";
+                return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, "", "addBokning");
             }
 
         } else {
@@ -240,38 +200,45 @@ public class BokningServiceImp implements BokningService {
         } else return !email.trim().isEmpty();
     }
 
-    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model) {
+    String addModelsAndReturn(String name, String telnr, String email, String startDate, String endDate, int antalPersoner, Model model, String felmeddelande, String template) {
         model.addAttribute("name", name);
         model.addAttribute("telNr", telnr);
         model.addAttribute("email", email);
         model.addAttribute("startDate", startDate);
         model.addAttribute("endDate", endDate);
         model.addAttribute("antalPersoner", antalPersoner);
-        return "addBokning";
+        model.addAttribute("felmeddelande", felmeddelande);
+        return template;
     }
-    
-    public int checkBookingsPerCustomer(Kund k){
+
+    @Override
+    public int checkBookingsPerCustomer(Long id) {
+        //hitta alla bokningar med kundens ID och filtrera så bara senaste året är med
+        List<Bokning> bl = br.findAll().stream().filter(bokning -> bokning.getKund().getId() == id).toList();
+        List <Bokning> bokningsList = bl.stream().filter(bokning -> bokning.getStartdatum().isAfter(LocalDate.now().minusYears(1))).toList();
+
         Long totalNights = 0L;
-        List <Bokning> bokningsList = k.getBokning().stream().filter(bokning -> bokning.getStartdatum().isAfter(LocalDate.now().minusYears(1))).toList();
-        for (Bokning b: bokningsList) {
+
+        for (Bokning b : bokningsList) {
             LocalDate start = b.getStartdatum();
-            LocalDate end   = b.getSlutdatum();
+            LocalDate end = b.getSlutdatum();
             totalNights += ChronoUnit.DAYS.between(start, end);
         }
         return Math.toIntExact(totalNights);
     }
 
-    public Bokning checkDiscountPrice(Bokning b){
+    @Override
+    public int checkDiscountPrice(Bokning b) {
         double totalPrice = 0;
         int pricePerNight = b.getRum().getPrice();
 
         //hur många nätter är bokningen
-        long nightsNow = ChronoUnit.DAYS.between(b.getStartdatum(), b.getSlutdatum()) ;
+        long nightsNow = ChronoUnit.DAYS.between(b.getStartdatum(), b.getSlutdatum());
 
         LocalDate date = b.getStartdatum();
 
         for (int i = 0; i < nightsNow; i++) {
-            // Kolla om natten är söndag till måndag
+            //kolla om natten är söndag till måndag
             if (date.getDayOfWeek() == DayOfWeek.SUNDAY) {
                 totalPrice = totalPrice + (pricePerNight * 0.98);
             } else {
@@ -281,16 +248,76 @@ public class BokningServiceImp implements BokningService {
         }
 
         // bokat mer än två nätter
-        if (nightsNow > 2) {
+        if (nightsNow >= 2) {
             totalPrice *= 0.995;
         }
 
         // bokat minst 10 nätter senaste året
-        if (checkBookingsPerCustomer(b.getKund()) >= 10) {
+        if (checkBookingsPerCustomer(b.getKund().getId()) >= 10) {
             totalPrice *= 0.98;
         }
         b.setTotalPrice((int) Math.round(totalPrice));
-        return b;
+        return (int) Math.round(totalPrice);
     }
 
+    @Override
+    public void removeBookingByEmail(String email) {
+        List<Bokning> bookingsToRemove = br.findAll().stream()
+                .filter(bokning -> bokning.getKund().getEmail().equals(email))
+                .collect(Collectors.toList());
+        for (Bokning booking : bookingsToRemove) {
+            br.delete(booking);
+        }
+    }
+
+    private String getRequiredRoomType(int antalPersoner){
+        boolean needsDouble = antalPersoner > 1;
+        if (needsDouble) {
+            return  "Dubbelrum";
+        } else {
+            return "Enkelrum";
+        }
+    }
+
+    private String validateRequestedBookingDates(String name, String telNr, String email, String startDate, String endDate, int antalPersoner, Model model){
+        String felmeddelande;
+        LocalDate from = LocalDate.parse(startDate);
+        LocalDate until = LocalDate.parse(endDate);
+        //kontroll för att slut datum är EFTER startdatum
+        if (!from.isBefore(until)) {
+            felmeddelande = "Fel i datumen, du har valt ett till-datum som är före från-datum";
+            model.addAttribute("felmeddelande", felmeddelande);
+            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, felmeddelande, "addBokning");
+        } else if (from.isBefore(LocalDate.now())) {
+            //kontroll att start datumet inte has passerat redan
+            felmeddelande = "Fel i datumen, du har valt ett datum som redan passerat";
+            model.addAttribute("felmeddelande", felmeddelande);
+            return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, felmeddelande, "addBokning");
+        }
+        return null;
+    }
+
+    private List<LocalDate> getValidatedBookingDateList(String startDate, String endDate){
+        LocalDate from = LocalDate.parse(startDate);
+        LocalDate until = LocalDate.parse(endDate);
+        return Arrays.asList(from, until);
+    }
+
+    private boolean getNeedsDoubleRoom(String roomType){
+        return roomType.trim().equalsIgnoreCase("dubbelrum");
+    }
+
+    private void addRoomModels(List<Rum> sortedRooms, Bokning booking, String roomType, Model model){
+        model.addAttribute("allRooms", sortedRooms);
+        model.addAttribute("booking", booking);
+        model.addAttribute("rubrik", "Lediga rum");
+        model.addAttribute("roomType", roomType);
+    }
+
+    private List<Rum> getFilteredRooms(boolean needsDoubleRoom, int neededSize, List<LocalDate> bookingDates){
+        List<Long> notAva = getNonAvailableRoomsId(br.findAll(), bookingDates.get(0), bookingDates.get(1));
+        return rumRepo.findAll().stream().filter(rum -> rum.isDubbelrum() == needsDoubleRoom)
+                .filter(rum -> rum.getStorlek() >= neededSize)
+                .filter(rum -> notAva.stream().noneMatch(notAvaRum -> notAvaRum.equals(rum.getId()))).toList();
+    }
 }
