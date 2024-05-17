@@ -1,4 +1,4 @@
-package com.example.pensionat;
+package com.example.pensionat.IntergrationTests;
 
 import com.example.pensionat.Services.Imp.BlackListDataProviderImp;
 import org.apache.http.HttpEntity;

@@ -2,7 +2,9 @@ package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Services.BlackListDataProvider;
+import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.Imp.BlackListServiceImp;
+import com.example.pensionat.Services.KundService;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,11 +36,15 @@ public class BlackListServiceTests {
     private BlackListServiceImp mockBlackListServiceImp;
     @Mock
     private BlackListDataProvider mockBlackListDataProvider;
+    @Mock
+    private KundService mockKundService;
+    @Mock
+    private BokningService mockBokningsService;
 
     @BeforeEach
     void init(){
 
-        mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider);
+        mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider, mockBokningsService, mockKundService);
         mockBlackListDataProvider = mock(BlackListDataProvider.class);
     }
 
