@@ -104,13 +104,27 @@ public class BokningsViewControllerTests {
     }
 
     @Test
-    void addBokningSite2Test_withoutCustomer(){
-        //TODO
-    }
+    void addBokningSite2Test_withoutCustomer() throws Exception {
+        String expectedResponse = "error";
+        when(mockKundService.getKundById(anyLong())).thenReturn(null);;
 
+        mockMvc.perform(get("/nyBokning")
+                .param("id", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andExpect(view().name(expectedResponse));
+    }
     @Test
-    void addBokningSite2Test_withCustomer(){
-        //TODO
+    void addBokningSite2Test_withCustomer() throws Exception {
+        String expectedResponse = "makeBookingWithCustomer";
+        Kund kund = mock(Kund.class);
+        Bokning bokning = mock(Bokning.class);
+        when(mockKundService.getKundById(anyLong())).thenReturn(kund);
+        when(kund.getBokning()).thenReturn(List.of(bokning));
+
+        mockMvc.perform(get("/nyBokning")
+                .param("id", String.valueOf(1L)))
+                .andExpect(status().isOk())
+                .andExpect(view().name(expectedResponse));
     }
 
 
