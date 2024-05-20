@@ -166,7 +166,6 @@ public class BokningServiceImp implements BokningService {
                 return validateRequestedBookingDates(name, telNr, email, startDate, endDate, antalPersoner, model);
             };
             addRoomModels(getFilteredRooms(needsDoubleRoom, neededSize, getValidatedBookingDateList(startDate, endDate)), getBookingDetailsById(bokId), getRequiredRoomType(antalPersoner), model);
-            System.out.println(telNr);
             if (bokId != 0) {
                 return addModelsAndReturn(name, telNr, email, startDate, endDate, antalPersoner, model, "", "updateBooking");
             } else {
@@ -307,7 +306,7 @@ public class BokningServiceImp implements BokningService {
         return roomType.trim().equalsIgnoreCase("dubbelrum");
     }
 
-    private void addRoomModels(List<Rum> sortedRooms, Bokning booking, String roomType, Model model){
+    public void addRoomModels(List<Rum> sortedRooms, Bokning booking, String roomType, Model model){
         model.addAttribute("allRooms", sortedRooms);
         model.addAttribute("booking", booking);
         model.addAttribute("rubrik", "Lediga rum");

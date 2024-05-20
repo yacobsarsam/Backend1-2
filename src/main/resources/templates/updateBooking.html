@@ -17,7 +17,7 @@
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/kunder/showBokingarById/{customerId}(customerId=${booking.kund.id})}" >Gå tillbaka</a></button>
     </nav>
-    <form id="bookingForm" action="/book/update/viewRooms" method="get" class="form-container">
+    <form id="bookingForm" action="/book/viewRooms" method="get" class="form-container">
         <h4>Ändra bokning</h4>
         <div class="date-container">
             <input type="date" id="startDate" name="startDate">
