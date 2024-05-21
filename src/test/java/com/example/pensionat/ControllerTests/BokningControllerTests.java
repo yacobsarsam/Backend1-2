@@ -1,6 +1,7 @@
 package com.example.pensionat.ControllerTests;
 
 import com.example.pensionat.Controllers.BokningController;
+import com.example.pensionat.Controllers.KundController;
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Dtos.RumDto;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -22,8 +24,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,6 +35,8 @@ public class BokningControllerTests {
 
     @Autowired
     private BokningController mockBokningController;
+    @Autowired
+    private KundController mockKundController;
     @Autowired
     private MockMvc mockMvc;
 
@@ -170,7 +173,7 @@ public class BokningControllerTests {
 
 
     @Test
-    void deleteBokningTest(){
+    void deleteBokningTest() throws Exception {
         //TODO
     }
 }
