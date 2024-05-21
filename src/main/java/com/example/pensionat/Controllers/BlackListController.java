@@ -49,6 +49,7 @@ public class BlackListController {
         }
         return getAllBlKunder(model);
     }
+    //TODO, får vi tillbaka null här från getBlackListPersonByEmail så går det sönder. Behöver nån sorts null-hantering. //Jocke
     @RequestMapping("/editByemail/{email}")
     public String EditKundInfo(@PathVariable String email, Model model) throws IOException {
         BlackListPerson blp = blackListService.getBlackListPersonByEmail(email);

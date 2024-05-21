@@ -40,23 +40,22 @@ public class BokningsViewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("antalpersoner" + antalPersoner);
         return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
     }
 
-    @GetMapping("book/update/viewRooms")
-    public String showAllRooms2(@RequestParam Long bokId, Long rumId, @RequestParam String namn, @RequestParam String telNr,
-                                @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
-                                @RequestParam int antalPersoner, Model model){
-        System.out.println("antalpersoner" + antalPersoner);
-        return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
-    }
+    //behövs inte, kan städas bort då viewRooms ovan gör samma sak
+//    @GetMapping("book/update/viewRooms")
+//    public String showAllRooms2(@RequestParam Long bokId, Long rumId, @RequestParam String namn, @RequestParam String telNr,
+//                                @RequestParam String email, @RequestParam String startDate, @RequestParam String endDate,
+//                                @RequestParam int antalPersoner, Model model){
+//        return bokningService.getAllAvailableRooms(bokId, rumId, namn, telNr, email, startDate, endDate, antalPersoner, model);
+//    }
 
     @RequestMapping("/nyBokning{id}")
     public String addBokningSite2(@RequestParam Long id, Model model) {
         Kund kund = kundService.getKundById(id);
         if (kund == null) {
-            return "customerNotFound";
+            return "error";
         }
         model.addAttribute("id", id);
         model.addAttribute("name", kund.getNamn());
@@ -73,6 +72,6 @@ public class BokningsViewController {
             model.addAttribute("endDate", idag);
         }
         bokningService.addBokning();
-        return "makeBookingWithCustomer.html";
+        return "makeBookingWithCustomer";
     }
 }

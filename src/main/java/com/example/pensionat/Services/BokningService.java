@@ -3,6 +3,7 @@ package com.example.pensionat.Services;
 import com.example.pensionat.Dtos.*;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Models.Rum;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
@@ -28,4 +29,5 @@ public interface BokningService {
     public int checkBookingsPerCustomer(Long id);
     public int checkDiscountPrice(Bokning b);
     public void removeBookingByEmail(String email);
+    public void addRoomModels(List<Rum> sortedRooms, Bokning booking, String roomType, Model model);
 }
