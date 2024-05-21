@@ -1,0 +1,456 @@
+
+/* General body styling */
+body {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+}
+
+/* Navbar styling */
+.navbar {
+    padding: 10px;
+    background-color: #333;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navButton {
+    margin-left: 4px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.navButton a {
+    text-decoration: none;
+    color: white;
+}
+
+.navButton:hover {
+    background-color: #0056b3;
+}
+
+.indexContainer {
+    width: 70%;
+    height: 80%;
+    margin: 20px auto;
+    border-top: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.indexContainer button {
+    padding: 12px 25px;
+    margin: 8px 0;
+    background: linear-gradient(135deg, #007BFF, dimgray);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.indexContainer button:hover {
+    background: linear-gradient(135deg, #0056b3, silver);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.indexContainer button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5), 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.indexContainer button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #004080, #002c60);
+}
+
+.indexContainer button a {
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    text-decoration: none;
+}
+
+
+
+.container, .table-container {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container {
+    max-width: 1018px;
+    display: compact;
+}
+
+.containerKunder form {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.containerKunder .all_customers{
+    background-color: #28a745;
+}
+.detailContainer{
+    text-align: center;
+    font-size: 18px;
+}
+
+.table-container {
+    max-width: 1000px;
+}
+
+h1, h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    margin: 0 auto;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form input[type="text"], form input[type="email"], form input[type="tel"], form button[type="submit"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: #218838;
+}
+
+/* Pagination styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.pagination span, .pagination a {
+    margin: 0 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.pagination button {
+    background-color: #f8f9fa;
+    color: #007BFF;
+    border: 1px solid #007BFF;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.pagination button.active {
+    background-color: #007BFF;
+    color: white;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+/* Table styling */
+.customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.customer-table th, .customer-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.customer-table th {
+    background-color: #f2f2f2;
+}
+
+.customer-table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.customer-table tbody tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+.customer-table a {
+    color: dodgerblue;
+    text-decoration: none;
+}
+
+.customer-table a:hover {
+    text-decoration: underline;
+}
+
+.divider {
+    width: 90%;
+    margin: 20px auto;
+    border-top: 1px solid #ddd;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+.num-input {
+    margin-top: 10px;
+    display: block;
+    width: 95%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.num-input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+.containerBlackList form{
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.roomButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: dimgrey;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.roomButton:hover {
+    background-color: #808080;
+}
+.top-text-container .fa-solid.fa-right-long {
+    margin-left: 10px;
+    margin-top: 20px;
+    margin-right: 10px;
+}
+.book-button{
+    margin-left: 4px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-button a {
+    text-decoration: none;
+    color: white;
+}
+
+.book-button:hover {
+    background-color: #0056b3;
+}
+
+.date-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.date-container input[type="date"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.all_customers {
+    margin-bottom: 20px;
+}
+
+.room-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.room-inner-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-container {
+    flex: 1;
+}
+
+.text-container p {
+    margin: 0;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+.button-container .navButton {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.button-container .navButton:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.button-container .navButton:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.button-container .navButton:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.alla_bokningar{
+    text-align: center;
+}
+
+
+
+.date-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.date-container label {
+    font-weight: bold;
+}
+
+.date-container input[type="date"] {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.form-container {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.text-input, .num-input {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-input:focus, .num-input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+.book-button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.book-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
