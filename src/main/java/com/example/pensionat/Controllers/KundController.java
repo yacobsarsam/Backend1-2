@@ -42,7 +42,7 @@ public class KundController {
         model.addAttribute("id",id);
         model.addAttribute("bokningarAsBokning", bokningar);
         model.addAttribute("allaDetailedBokningar", bok);
-        return "visabokningperkund.html";
+        return "visabokningperkund";
     }
 
     @PostMapping("/registreraNyKund")
