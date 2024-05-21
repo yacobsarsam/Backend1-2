@@ -26,7 +26,7 @@ public class BokningController {
     public String updateInfo(@PathVariable Long id, Model model) {
         Bokning booking = bokningService.getBookingDetailsById(id);
         model.addAttribute("booking", booking);
-        return "updateBooking.html";
+        return "updateBooking";
     }
 
     @PostMapping("/update")
@@ -44,7 +44,7 @@ public class BokningController {
     public String getAllBokningar(Model model){
         List<DetailedBokningDto> allBookings = bokningService.getAllBokningar();
         model.addAttribute("allBookings", allBookings);
-        return "visaBokningar.html";
+        return "visaBokningar";
     }
 
     @PostMapping("/add")
