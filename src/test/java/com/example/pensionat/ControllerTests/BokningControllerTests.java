@@ -174,6 +174,10 @@ public class BokningControllerTests {
 
     @Test
     void deleteBokningTest() throws Exception {
-        //TODO
+        String expectedResponse = "visabokningperkund";
+
+        mockMvc.perform(post("/bokningar/delete/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(view().name(expectedResponse));
     }
 }
