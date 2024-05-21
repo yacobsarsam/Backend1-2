@@ -15,11 +15,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -51,17 +52,69 @@ public class BlackListControllerTests {
     }
 
     @Test
-    void createKundTest(){
+    void createKundTest_noExistingCustomer() throws Exception {
+        String expectedResponse = "visablkunder";
+        when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
+        when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(false);
+
+        mockMvc.perform(post("/blacklist/addtoblacklist")
+                .param("name", "test")
+                .param("email", "test")
+                .param("group", "test")
+                .param("model", "test"))
+                .andExpect(view().name(expectedResponse));
+    }
+
+    @Test
+    void createKundTest_withExistingCustomer() throws Exception {
+        String expectedResponse = "visablkunder";
+        when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
+        when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(true);
+
+        mockMvc.perform(post("/blacklist/addtoblacklist")
+                .param("name", "test")
+                .param("email", "test")
+                .param("group", "test")
+                .param("model", "test"))
+                .andExpect(view().name(expectedResponse));
+    }
+
+    @Test
+    void editKundInfoTest_noExistingCustomer() throws Exception {
         //TODO
     }
 
     @Test
-    void editKundInfoTest(){
-        //TODO
+    void editKundInfoTest_withExistingCustomer() throws Exception {
+        String expectedResponse = "updateblkund";
+        BlackListPerson blackListPerson = new BlackListPerson();
+        blackListPerson.setName("name");
+        blackListPerson.setEmail("email");
+        blackListPerson.setGroup("group");
+        blackListPerson.setId(1);
+
+        when(mockBlackListService.getBlackListPersonByEmail(anyString())).thenReturn(blackListPerson);
+
+        mockMvc.perform(get("/blacklist/editByemail/{email}", "test")
+                .flashAttr("updateblkund", blackListPerson)
+                .param("model", "test"))
+                .andExpect(status().isOk())
+                .andExpect(view().name(expectedResponse))
+                .andExpect(model().attributeExists("updateblkund"))
+                .andExpect(model().attribute("updateblkund", blackListPerson));
     }
 
     @Test
-    void updateKundInfoTest(){
-        //TODO
+    void updateKundInfoTest() throws Exception {
+        String expectedResponse = "updateBLKundDone";
+        BlackListPerson blackListPerson = mock(BlackListPerson.class);
+        when(mockBlackListService.getAllBLKunder()).thenReturn(List.of(blackListPerson));
+
+        mockMvc.perform(post("/blacklist/update")
+                .flashAttr("allakunder", List.of(blackListPerson)))
+                .andExpect(status().isOk())
+                .andExpect(view().name(expectedResponse))
+                .andExpect(model().attributeExists("allakunder"))
+                .andExpect(model().attribute("allakunder", List.of(blackListPerson)));
     }
 }
