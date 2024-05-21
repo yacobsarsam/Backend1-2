@@ -51,8 +51,7 @@ public class BokningController {
     public String addBokning(String namn, String telNr, String email, LocalDate startDate,
                              LocalDate endDate, Long rumId,
                              @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner,
-                             Model model) throws IOException
-    {
+                             Model model) throws IOException {
         Bokning b = bokningService.newBokning(namn, telNr, email, startDate, endDate, rumId, extraBeds);
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
