@@ -1,6 +1,7 @@
 package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -18,9 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.ui.Model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -46,12 +45,24 @@ public class KundServiceTests {
 
     @Test
     void getAllKunderTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        Kund k2 = new Kund(2L, "Test2", "1234567890", "test@test.se", null);
+        when(mockKundRepo.findAll()).thenReturn(List.of(k1, k2));
+
+        List<KundDto> kundList = mockKundServiceImp.getAllKunder();
+        assertEquals(kundList.size(), 2);
+        assertEquals(kundList.get(1).getNamn(), k2.getNamn());
     }
 
     @Test
     void getAllKunder2Test(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        Kund k2 = new Kund(2L, "Test2", "1234567890", "test@test.se", null);
+        when(mockKundRepo.findAll()).thenReturn(List.of(k1, k2));
+
+        List<KundDto> kundList = mockKundServiceImp.getAllKunder();
+        assertEquals(kundList.size(), 2);
+        assertEquals(kundList.get(1).getNamn(), k2.getNamn());
     }
 
     @Test
@@ -76,17 +87,29 @@ public class KundServiceTests {
 
     @Test
     void updateKundTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test", "12345", "test@test.com", null);
+        when(mockKundRepo.findById(anyLong())).thenReturn(Optional.of(k1));
+        assertEquals(mockKundServiceImp.updateKund(1L), k1);
     }
 
     @Test
-    void checkIfKundExistByEmailTest_pass(){
-        //TODO
+    void checkIfKundExistByEmailTest_exist(){
+        KundDto k1 = new KundDto(1L, "Test", "12345", "test@test.com");
+        Kund k2 = new Kund(1L, "Test", "12345", "test@test.com", null);
+        when(mockKundServiceImp.getAllKunder()).thenReturn(List.of(k1));
+        when(mockKundRepo.findAll()).thenReturn(List.of(k2));
+        KundDto hittadKund = mockKundServiceImp.checkIfKundExistByEmail("Test", "test@test.com", "12345");
+        assertEquals(hittadKund.getNamn(), k1.getNamn());
+        assertEquals(hittadKund.getEmail(), k1.getEmail());
     }
 
     @Test
-    void checkIfKundExistByEmail_fail(){
-        //TODO
+    void checkIfKundExistByEmail_notExisting(){
+        when(mockKundServiceImp.getAllKunder()).thenReturn(Collections.EMPTY_LIST);
+        when(mockKundRepo.findAll()).thenReturn(Collections.EMPTY_LIST);
+        KundDto sparadKund = mockKundServiceImp.checkIfKundExistByEmail("Test", "test@test.com", "12345");
+        assertEquals(sparadKund.getNamn(), "Test");
+        assertEquals(sparadKund.getEmail(), "test@test.com");
     }
 
     @Test

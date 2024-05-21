@@ -70,7 +70,6 @@ public class KundServiceImp implements KundService {
             return kundDto;
         }
     }
-
     @Override
     public Kund kundDtoToKund(KundDto k) {
         return Kund.builder().id(k.getId()).namn(k.getNamn()).tel(k.getTel()).email(k.getEmail()).build();
