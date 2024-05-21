@@ -1,5 +1,7 @@
 package com.example.pensionat.ServiceTests;
 
+import com.example.pensionat.Dtos.BokningDto;
+import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
@@ -213,19 +215,60 @@ public class BokningServiceTests {
     }
 
     @Test
-    void newBokningTest(){
+    void newBokningTest() throws IOException {
+        // följande test funkar inte..
+
+/*        Kund k1 = new Kund(1L, "Test1", "1234567890", "test@test.se", null);
+        KundDto kdto = new KundDto(1L, "Test1", "1234567890", "test@test.se");
+        Rum r1 = new Rum(3L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+
+        when(mockBokningRepo.findById(anyLong())).thenReturn(Optional.of(b1));
+        when(mockRumService.getRumById(anyLong())).thenReturn(r1);
+        //when(mockRumRepo.findById(anyLong())).thenReturn(Optional.of(r1));
+        //when(mockKundService.checkIfKundExistByEmail("Test1", "1234567890", "test@test.se")).thenReturn(kdto);
+        //doReturn(kdto).when(mockKundService.checkIfKundExistByEmail("Test1", "1234567890", "test@test.se"));
+        when(mockKundService.kundDtoToKund(kdto)).thenReturn(k1);
+        //when(mockBokningsServiceImp.checkDiscountPrice(any(Bokning.class))).thenReturn(100);
+        doReturn(100).when(mockBokningService).checkDiscountPrice(any(Bokning.class));
+        when(mockBokningRepo.save(any(Bokning.class))).thenReturn(b1);
+
+        Bokning newBokning = mockBokningsServiceImp.newBokning("Test1","1234567890","test@test.se", LocalDate.parse("2024-04-01"),
+                LocalDate.parse("2024-04-05"), 3L, 0);
+
+        assertNotNull(newBokning);
+        assertEquals(r1, newBokning.getRum());
+        assertEquals(k1, newBokning.getKund());
+        assertEquals(LocalDate.parse("2024-04-01"), newBokning.getStartdatum());
+        assertEquals(LocalDate.parse("2024-04-05"), newBokning.getSlutdatum());
+        assertEquals(1, newBokning.getNumOfBeds());
+        assertEquals(100, newBokning.getTotalPrice());
+        verify(mockBokningRepo, times(1)).save(b1);*/
         //TODO
     }
 
     //DTO tester
     @Test
     void bokningToBokningDtoTest(){
-        //TODO
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, null, null, 100);
+        BokningDto bdto = mockBokningsServiceImp.BokningToBokningDto(b1);
+        assertEquals(bdto.getStartdatum().toString(), b1.getStartdatum().toString());
+        assertEquals(bdto.getSlutdatum().toString(), b1.getSlutdatum().toString());
+        assertEquals(bdto.getNumOfBeds(), b1.getNumOfBeds());
     }
 
     @Test
     void bokningToDetailedBokningDtoTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test", "1234567890", "test@test.se", null);
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Bokning b1 = new Bokning(1L, LocalDate.parse("2024-04-01"), LocalDate.parse("2024-04-05"), 1, k1, r1, 100);
+        DetailedBokningDto dbdto = mockBokningsServiceImp.bokningToDetailedBokningDto(b1);
+        assertEquals(dbdto.getStartdatum().toString(), b1.getStartdatum().toString());
+        assertEquals(dbdto.getSlutdatum().toString(), b1.getSlutdatum().toString());
+        assertEquals(dbdto.getNumOfBeds(), b1.getNumOfBeds());
+        assertEquals(dbdto.getTotalPrice(), b1.getTotalPrice());
+        assertEquals(dbdto.getKund().getEmail(), k1.getEmail());
+        assertEquals(dbdto.getRum().getRumsnr(), r1.getRumsnr());
     }
 
 }
