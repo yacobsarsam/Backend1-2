@@ -1,4 +1,4 @@
-package com.example.pensionat.IT;
+package com.example.pensionat.IntergrationTests;
 
 import com.example.pensionat.Services.XmlURLProvider;
 import org.junit.jupiter.api.Test;

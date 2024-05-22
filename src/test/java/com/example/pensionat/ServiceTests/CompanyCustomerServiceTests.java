@@ -53,7 +53,7 @@ public class CompanyCustomerServiceTests {
     }
 
     @Test
-    void addCustomerToDBTestPass(){
+    void addCustomerToDB_passTest(){
         customers c1 = new customers(1L, "Företaget ab", "Ernst Ek", "VD", "Gatan 1", "Smögen", 12345, "Sverige", "1234567890", "111222333");
         customers c2 = new customers(2L, "Företaget2 ab", "Egon Ek", "VD", "Gatan 2", "Smögen", 12345, "Sverige", "9876543210", "111222333");
         when(mockCustomerRepo.findAll()).thenReturn(List.of(c1));
@@ -64,7 +64,7 @@ public class CompanyCustomerServiceTests {
     }
 
     @Test
-    void addCustomerToDBTestFail(){
+    void addCustomerToDB_failTest(){
         customers c1 = new customers(1L, "Företaget ab", "Ernst Ek", "VD", "Gatan 1", "Smögen", 12345, "Sverige", "1234567890", "111222333");
         when(mockCustomerRepo.findAll()).thenReturn(List.of(c1));
 

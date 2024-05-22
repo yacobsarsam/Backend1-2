@@ -52,7 +52,7 @@ public class BlackListControllerTests {
     }
 
     @Test
-    void createKundTest_noExistingCustomer() throws Exception {
+    void createKund_noExistingCustomerTest() throws Exception {
         String expectedResponse = "visablkunder";
         when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
         when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(false);
@@ -66,7 +66,7 @@ public class BlackListControllerTests {
     }
 
     @Test
-    void createKundTest_withExistingCustomer() throws Exception {
+    void createKund_withExistingCustomerTest() throws Exception {
         String expectedResponse = "visablkunder";
         when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
         when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(true);
@@ -80,12 +80,12 @@ public class BlackListControllerTests {
     }
 
     @Test
-    void editKundInfoTest_noExistingCustomer() throws Exception {
+    void editKundInfo_noExistingCustomerTest() throws Exception {
         //TODO
     }
 
     @Test
-    void editKundInfoTest_withExistingCustomer() throws Exception {
+    void editKundInfo_withExistingCustomerTest() throws Exception {
         String expectedResponse = "updateblkund";
         BlackListPerson blackListPerson = new BlackListPerson();
         blackListPerson.setName("name");

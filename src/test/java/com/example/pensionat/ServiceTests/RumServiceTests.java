@@ -54,7 +54,7 @@ public class RumServiceTests {
     }
 
     @Test
-    public void isCustomerFieldsFilledAndCorrectTest_passAndFail(){
+    public void isCustomerFieldsFilledAndCorrect_passAndFailTest(){
         //korrekt
         assertTrue(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "test@test.test"));
         //saknar name
@@ -100,12 +100,12 @@ public class RumServiceTests {
     }
 
     @Test
-    void addRum(){
+    void addRumTest(){
         //TODO
     }
 
     @Test
-    void getRumById(){
+    void getRumByIdTest(){
         //TODO
     }
 

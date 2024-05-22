@@ -43,13 +43,12 @@ public class BlackListServiceTests {
 
     @BeforeEach
     void init(){
-
         mockBlackListServiceImp = new BlackListServiceImp(mockBlackListDataProvider, mockBokningsService, mockKundService);
         mockBlackListDataProvider = mock(BlackListDataProvider.class);
     }
 
     @Test
-    void getAllBlackListCustomers(){
+    void getAllBlackListCustomersTest(){
         //IntegrationsTest
     }
 
@@ -81,7 +80,7 @@ public class BlackListServiceTests {
     }
 
     @Test
-    void getBlackListCustomerInfoTest_withFullValues(){
+    void getBlackListCustomerInfo_withFullValuesTest(){
         Model model = mock(Model.class);
         //when(model.addAttribute(eq("felmeddelande"), anyString())).thenReturn(model);
 
@@ -90,7 +89,7 @@ public class BlackListServiceTests {
     }
 
     @Test
-    void getBlackListCustomerInfoTest_withFalseValues(){
+    void getBlackListCustomerInfo_withFalseValuesTest(){
         Model model = mock(Model.class);
         when(model.getAttribute("felmeddelande")).thenReturn("Fel i kund-fälten, kontrollera och försök igen");
 
