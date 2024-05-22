@@ -62,7 +62,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
-    void showAllRoomsTest_withBlackListedCustomer() throws Exception {
+    void showAllRooms_withBlackListedCustomerTest() throws Exception {
         String expectedResponse = "blockedUserTemplate";
         String blackListedEmail = "test@email.com";
         when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(blackListedEmail))
@@ -78,7 +78,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
-    void showAllRoomsTest_withoutBlackListedCustomer_noPreviousBooking() throws Exception {
+    void showAllRooms_withoutBlackListedCustomer_noPreviousBookingTest() throws Exception {
         String expectedResponse = "addBokning";
         String notBlackListedEmail = "test@email.com";
         Model model = mock(Model.class);
@@ -99,12 +99,12 @@ public class BokningsViewControllerTests {
     }
 
     @Test
-    void showAllRoomsTest_withoutBlackListedCustomer_withPreviousBooking() throws Exception {
+    void showAllRooms_withoutBlackListedCustomer_withPreviousBookingTest() throws Exception {
         //TODO
     }
 
     @Test
-    void addBokningSite2Test_withoutCustomer() throws Exception {
+    void addBokningSite2_withoutCustomerTest() throws Exception {
         String expectedResponse = "error";
         when(mockKundService.getKundById(anyLong())).thenReturn(null);;
 
@@ -114,7 +114,7 @@ public class BokningsViewControllerTests {
                 .andExpect(view().name(expectedResponse));
     }
     @Test
-    void addBokningSite2Test_withCustomer() throws Exception {
+    void addBokningSite2_withCustomerTest() throws Exception {
         String expectedResponse = "makeBookingWithCustomer";
         Kund kund = mock(Kund.class);
         Bokning bokning = mock(Bokning.class);
@@ -126,9 +126,5 @@ public class BokningsViewControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(view().name(expectedResponse));
     }
-
-
-
-
 
 }

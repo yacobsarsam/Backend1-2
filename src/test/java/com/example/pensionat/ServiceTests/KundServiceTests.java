@@ -66,7 +66,7 @@ public class KundServiceTests {
     }
 
     @Test
-    public void addKundTest_pass(){
+    public void addKund_passTest(){
         Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", null);
         Model model = mock(Model.class);
 
@@ -76,7 +76,7 @@ public class KundServiceTests {
     }
 
     @Test
-    public void addKundTest_fail(){
+    public void addKund_failTest(){
         Kund k1 = new Kund(1L, "Test", "12345", "test@test.com", null);
         Model model = mock(Model.class);
 
@@ -93,7 +93,7 @@ public class KundServiceTests {
     }
 
     @Test
-    void checkIfKundExistByEmailTest_exist(){
+    void checkIfKundExistByEmail_existsTest(){
         KundDto k1 = new KundDto(1L, "Test", "12345", "test@test.com");
         Kund k2 = new Kund(1L, "Test", "12345", "test@test.com", null);
         when(mockKundServiceImp.getAllKunder()).thenReturn(List.of(k1));
@@ -104,7 +104,7 @@ public class KundServiceTests {
     }
 
     @Test
-    void checkIfKundExistByEmail_notExisting(){
+    void checkIfKundExistByEmail_notExistingTest(){
         when(mockKundServiceImp.getAllKunder()).thenReturn(Collections.EMPTY_LIST);
         when(mockKundRepo.findAll()).thenReturn(Collections.EMPTY_LIST);
         KundDto sparadKund = mockKundServiceImp.checkIfKundExistByEmail("Test", "test@test.com", "12345");
@@ -113,7 +113,7 @@ public class KundServiceTests {
     }
 
     @Test
-    public void checkIfKundHasBokningarTest_pass(){
+    public void checkIfKundHasBokningar_passTest(){
         List<Bokning> fylldBokningsLista = new ArrayList<>();
         Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", fylldBokningsLista);
         Rum r1 = new Rum(1L, 10, false, 1, 100, null);
@@ -126,7 +126,7 @@ public class KundServiceTests {
     }
 
     @Test
-    public void checkIfKundHasBokningarTest_fail(){
+    public void checkIfKundHasBokningar_failTest(){
         List<Bokning> tomBokningsLista = new ArrayList<>();
         Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", tomBokningsLista);
         when(mockKundRepo.findById(1L)).thenReturn(Optional.of(k1));
@@ -152,12 +152,12 @@ public class KundServiceTests {
 
     //Nedan kanske inte behövs då den testas på andra ställen
     @Test
-    void isCustomerFieldsFilledAndCorrect_pass(){
+    void isCustomerFieldsFilledAndCorrect_passTest(){
         //TODO
     }
     //Nedan kanske inte behövs då den testas på andra ställen
     @Test
-    void isCustomerFieldsFilledAndCorrect_fail(){
+    void isCustomerFieldsFilledAndCorrect_failTest(){
         //TODO
     }
 

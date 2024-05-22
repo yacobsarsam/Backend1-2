@@ -26,6 +26,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.rabbitmq:amqp-client:5.14.0")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.mysql:mysql-connector-j")
@@ -49,6 +51,13 @@ val integrationTestTask = tasks.register<Test>("integrationTest") {
     group = "verification"
     filter {
         includeTestsMatching("*IT")
+    }
+}
+
+val unitTestTask = tasks.register<Test>("unitTests"){
+    group = "verification"
+    filter{
+        includeTestsMatching("*Test")
     }
 }
 
