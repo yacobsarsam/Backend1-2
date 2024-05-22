@@ -6,6 +6,10 @@ import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Security.Role;
+import com.example.pensionat.Security.RoleRepository;
+import com.example.pensionat.Security.User;
+import com.example.pensionat.Security.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.WebApplicationType;
@@ -13,6 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @SpringBootApplication
@@ -36,7 +41,7 @@ public class PensionatApplication {
     }
 
     @Bean
-    public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo) {
+    public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo, RoleRepository roleRepository, UserRepository userRepository) {
         return args -> {
 
             if ((rr.findAll().stream().findFirst().orElse(null)) == null) {
@@ -65,6 +70,15 @@ public class PensionatApplication {
                 rr.save(r10);
                 rr.save(r11);
                 rr.save(r12);
+
+                Role role1 = new Role("Admin", 2);
+                Role role2 = new Role("Receptionist", 1);
+                roleRepository.save(role1);
+                roleRepository.save(role2);
+                User user1 = new User("admin", "password", List.of(role1, role2));
+                User user2 = new User("receptionist", "password", List.of(role2));
+                userRepository.save(user1);
+                userRepository.save(user2);
             }
         };
     }
