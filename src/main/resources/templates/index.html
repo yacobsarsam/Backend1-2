@@ -22,16 +22,13 @@
     <button class="button"><a th:href="@{/company}">Visa avtalskunder</a></button>
     <button class="button"><a th:href="@{/blacklist}">Hantera blacklist</a></button>
     <button class="button"><a th:href="@{/rum/allRooms}">Rum events</a></button>
-    <button class="button"><a th:href="@{/login}">Login</a></button>
-    <button class="button"><a th:href="@{/logout}">Log out</a></button>
+
+    <div th:if="${#authorization.expression('isAuthenticated()')}">
+        <button class="button"><a th:href="@{/logout}">Log out</a></button>
+    </div>
+    <div th:if="${#authorization.expression('isAnonymous()')}">
+        <button class="button"><a th:href="@{/login}">Login</a></button>
+    </div>
 </div>
 </body>
 </html>
-
-<!--<div class="indexContainer">-->
-<!--    <button class="button"><a th:href="@{/book}">Boka Vistelse</a></button>-->
-<!--    <button class="button"><a th:href="@{/kunder}">Hantera kunder och bokningar</a></button>-->
-<!--    <button class="button"><a th:href="@{/company}">Visa avtalskunder</a></button>-->
-<!--    <button class="button"><a th:href="@{/blacklist}">Hantera blacklist</a></button>-->
-<!--    <button class="button"><a th:href="@{/rum/allRooms}">Rum events</a></button>-->
-<!--</div>-->
