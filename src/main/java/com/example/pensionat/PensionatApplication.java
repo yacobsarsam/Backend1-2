@@ -71,8 +71,8 @@ public class PensionatApplication {
                 rr.save(r11);
                 rr.save(r12);
 
-                Role role1 = new Role("Admin", 2);
-                Role role2 = new Role("Receptionist", 1);
+                Role role1 = new Role("Admin");
+                Role role2 = new Role("Receptionist");
                 roleRepository.save(role1);
                 roleRepository.save(role2);
                 User user1 = new User("admin", "password", List.of(role1, role2));

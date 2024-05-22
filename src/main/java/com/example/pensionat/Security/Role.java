@@ -19,13 +19,10 @@ public class Role {
     private UUID id;
     @Column(nullable = false, unique = true)
     private String roleName;
-    @Column(nullable = false, unique = false)
-    private int accessLevel;
 
     @ManyToMany(mappedBy = "roles")
     protected List<User> users;
-    public Role(String roleName, int accessLevel){
+    public Role(String roleName){
         this.roleName = roleName;
-        this.accessLevel = accessLevel;
     }
 }
