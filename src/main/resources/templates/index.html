@@ -9,12 +9,26 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<style>
+    myButtons {
+        display: flex;
+        align-items: center;
+    }
+</style>
 </head>
 <body>
 
 <div class="container">
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/index}" >Home</a> </button>
+
+        <div class="myButtons">
+            <div th:if="${#authorization.expression('isAuthenticated()')}">
+                <button class="navButton"><a th:href="@{/logout}">Log out</a></button>
+            </div>
+            <div th:if="${#authorization.expression('isAnonymous()')}">
+                <button class="navButton"><a th:href="@{/login}">Login</a></button>
+            </div>
     </nav>
     <h1>Välkommen till Pensionatet!</h1>
     <button class="button"><a th:href="@{/book}">Boka Vistelse</a></button>
@@ -22,13 +36,6 @@
     <button class="button"><a th:href="@{/company}">Visa avtalskunder</a></button>
     <button class="button"><a th:href="@{/blacklist}">Hantera blacklist</a></button>
     <button class="button"><a th:href="@{/rum/allRooms}">Rum events</a></button>
-
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <button class="button"><a th:href="@{/logout}">Log out</a></button>
-    </div>
-    <div th:if="${#authorization.expression('isAnonymous()')}">
-        <button class="button"><a th:href="@{/login}">Login</a></button>
-    </div>
 </div>
 </body>
 </html>
