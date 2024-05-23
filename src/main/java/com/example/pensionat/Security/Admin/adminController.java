@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/admin")
@@ -21,5 +22,11 @@ public class adminController {
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
         return "admin/users";
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") UUID id) {
+        userService.deleteUserById(id);
+        return "redirect:/admin/users";
     }
 }
