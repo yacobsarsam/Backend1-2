@@ -6,10 +6,9 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
     <style>
-        .container {
+        .container{
             width: fit-content;
         }
     </style>
@@ -37,8 +36,10 @@
                 <td th:text="${user.email}">Email</td>
                 <td>
                     <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Ändra</a>
-                    <a th:href="@{/admin/users/delete/{id}(id=${user.id})}"
-                       onclick="return confirm('Är du säker på att du vill ta bort användare?')">Ta bort</a>
+<!--                    <a th:href="@{/admin/deleteUser/{id}(id=${user.id})}" onclick="return confirm('Är du säker på att du vill ta bort användare?')">Ta bort</a>-->
+                    <form th:action="@{/admin/deleteUser/{id}(id=${user.id})}" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Är du säker på att du vill ta bort användaren?')">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>

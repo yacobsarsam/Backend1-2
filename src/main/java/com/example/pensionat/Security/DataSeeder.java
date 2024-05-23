@@ -37,10 +37,11 @@ public class DataSeeder implements CommandLineRunner {
                 .build();
         userRepository.save(receptionist);
 
-        Role adminRole = Role.builder().role("ADMIN").user(admin).build();
-        Role receptionistRole = Role.builder().role("RECEPTIONIST").user(receptionist).build();
 
+        Role adminRole = Role.builder().role("ADMIN").build();
         roleRepository.save(adminRole);
+
+        Role receptionistRole = Role.builder().role("RECEPTIONIST").build();
         roleRepository.save(receptionistRole);
 
         admin.setRoles(new HashSet<>(List.of(adminRole)));
