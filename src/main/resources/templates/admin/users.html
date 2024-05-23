@@ -16,7 +16,7 @@
 <body>
 <div class="container">
     <nav class="navbar">
-        <button class="navButton"><a th:href="@{/index}" >Home</a></button>
+        <button class="navButton"><a th:href="@{/index}">Home</a></button>
     </nav>
     <div>
         <h2 class="text-align-center">Hantera konton</h2>
@@ -44,7 +44,28 @@
             </tr>
             </tbody>
         </table>
-        <button class="book-button mt-10"><a th:href="@{/admin/users/add}">Lägg till konto</a></button>
+        <div class="button-container" th:unless="${addUser}">
+            <button class="book-button mt-10"><a th:href="@{/admin/users/add}">Lägg till konto</a></button>
+        </div>
+    </div>
+    <div class="userform-container" th:if="${addUser}">
+        <h3>Lägg till användare</h3>
+        <form class="form-container"><!--action="#" th:action="@{/admin/users}" method="post"-->
+            <label for="username">Namn:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Lösenord:</label>
+            <input type="password" name="password" id="password">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <label for="role-form">Roller:</label>
+            <form id="role-form">
+                <input type="checkbox" name="admin" id="admin">
+                <label for="admin">Admin </label><br>
+                <input type="checkbox" name="receptionist" id="receptionist">
+                <label for="receptionist">Receptionist </label>
+            </form>
+            <button class="navButton" type="submit">Lägg till användare</button>
+        </form>
     </div>
 </div>
 </body>

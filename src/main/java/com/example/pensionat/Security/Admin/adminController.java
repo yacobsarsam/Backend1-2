@@ -24,9 +24,20 @@ public class adminController {
     @GetMapping("/users")
     public String listUsers(Model model) {
         List<User> users = userService.findAllUsers();
+        model.addAttribute("addUser", false);
         model.addAttribute("users", users);
         return "admin/users";
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/users/add")
+    public String addUser(Model model) {
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("addUser", true);
+        return "admin/users";
+    }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") UUID id) {
@@ -40,6 +51,7 @@ public class adminController {
         model.addAttribute("user", u);
         return "admin/edituser";
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/done")
     public String doneUser() {
