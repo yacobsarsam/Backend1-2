@@ -2,6 +2,8 @@ package com.example.pensionat.Security;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -10,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude = "user")
+@EqualsAndHashCode(exclude = "users")
 public class Role {
 
     @Id
@@ -19,7 +21,6 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String role;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 }

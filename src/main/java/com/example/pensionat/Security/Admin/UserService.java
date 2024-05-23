@@ -6,6 +6,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import com.example.pensionat.Models.Kund;
+import com.example.pensionat.Security.User;
+import com.example.pensionat.Security.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -56,5 +64,29 @@ public class UserService {
             String resetUrl = "http://localhost:8080/reset-password?token=" + token;
             emailService.sendEmail(email, "Password Reset Request", "To reset your password, click the link below:\n" + resetUrl);
         }
+
+    public User findUserById(UUID id) {
+        return userRepository.findById(id).get();
+    }
+
+    public String updateUser(User u, Model model) {
+        if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())){
+            userRepository.save(u);
+            return "admin/updateUserDone";
+        } else {
+            model.addAttribute("felmeddelande", "Fel i fälten, kontrollera och försök igen");
+            model.addAttribute("user", u);
+            return "admin/edituser";
+        }
+    }
+
+    public boolean isUserFieldsFilledAndCorrect(String username, String password, String email){
+        if (username.trim().isEmpty() || password.trim().isEmpty() || email.trim().isEmpty())
+            return false;
+    return true;
+    }
+    public void deleteUserById(UUID id) {
+        userRepository.deleteById(id);
+
     }
 }
