@@ -34,18 +34,21 @@ public class adminController {
         return "redirect:/admin/users";
     }
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/users/edit/{email}")
-    public String editUser(@PathVariable String email, Model model){
-        User u = userService.updateUser(email);
+    @GetMapping("/users/edit/{id}")
+    public String editUser(@PathVariable ("id") UUID id, Model model){
+        User u = userService.findUserById(id);
         model.addAttribute("user", u);
         return "admin/edituser";
     }
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/admin/done")
+    public String doneUser() {
+        return "redirect:/admin/users";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public String updateUserInfo(Model model, User u){
-
-        List<User> allaUsers=userService.findAllUsers();//getAllCustomers();
-        model.addAttribute("allaUsers", allaUsers);
-        return userService.addUser(u, model);
+        return userService.updateUser(u, model);
     }
 }

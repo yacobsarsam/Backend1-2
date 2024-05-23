@@ -23,27 +23,18 @@ public class UserService {
     public List<User> findAllUsers() {
         return userRepository.findAll();
     }
-    public User findUserById(Long id) {
+    public User findUserById(UUID id) {
         return userRepository.findById(id).get();
     }
 
-    public User updateUser(String email){
-        User user = findUserByEmail(email);
-        return user;
-    }
-
-    private User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    public String addUser(User u, Model model) {
+    public String updateUser(User u, Model model) {
         if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())){
             userRepository.save(u);
-            return "updateKundDone";
+            return "admin/updateUserDone";
         } else {
-            model.addAttribute("felmeddelande", "Fel i kundfälten, kontrollera och försök igen");
-            model.addAttribute("updateuser", u);
-            return "updateuser";
+            model.addAttribute("felmeddelande", "Fel i fälten, kontrollera och försök igen");
+            model.addAttribute("user", u);
+            return "admin/edituser";
         }
     }
 
