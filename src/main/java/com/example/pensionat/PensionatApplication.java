@@ -71,14 +71,14 @@ public class PensionatApplication {
                 rr.save(r11);
                 rr.save(r12);
 
-                Role role1 = new Role("Admin");
-                Role role2 = new Role("Receptionist");
-                roleRepository.save(role1);
-                roleRepository.save(role2);
-                User user1 = new User("admin", "password", List.of(role1, role2));
-                User user2 = new User("receptionist", "password", List.of(role2));
-                userRepository.save(user1);
-                userRepository.save(user2);
+//                Role role1 = new Role("Admin");
+//                Role role2 = new Role("Receptionist");
+//                roleRepository.save(role1);
+//                roleRepository.save(role2);
+//                User user1 = new User("admin", "password", List.of(role1, role2));
+//                User user2 = new User("receptionist", "password", List.of(role2));
+//                userRepository.save(user1);
+//                userRepository.save(user2);
             }
         };
     }

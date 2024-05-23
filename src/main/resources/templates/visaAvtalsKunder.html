@@ -8,6 +8,72 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/e381b12111.js" crossorigin="anonymous"></script>
+  <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .table-container {
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .navbar {
+            padding: 10px;
+            background-color: #333;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .divider {
+            width: 90%;
+            margin: 20px auto;
+            border-top: 1px solid #ddd;
+        }
+        .room-container {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pagination span, .pagination a {
+            margin: 0 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .pagination button {
+            background-color: #f8f9fa;
+            color: #007BFF;
+            border: 1px solid #007BFF;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button.active {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .pagination button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        form input[type="text"], form input[type="email"], form input[type="tel"], form button[type="submit"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
 <div class="table-container">
@@ -62,10 +128,26 @@
                         <span th:text="${customer.fax}">Fax</span>
                     </a>
                 </td>
-                <td th:text="${customer.companyName}">Company Name</td>
-                <td th:text="${customer.contactName}">Contact Name</td>
-                <td th:text="${customer.city}">City</td>
-                <td th:text="${customer.country}">Country</td>
+                <td>
+                    <a th:href="@{/company/customers/{id}(id=${customer.id})}">
+                        <span th:text="${customer.companyName}">Company Name</span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/company/customers/{id}(id=${customer.id})}">
+                        <span th:text="${customer.contactName}">Contact Name</span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/company/customers/{id}(id=${customer.id})}">
+                        <span th:text="${customer.city}">City</span>
+                    </a>
+                </td>
+                <td>
+                    <a th:href="@{/company/customers/{id}(id=${customer.id})}">
+                        <span th:text="${customer.country}">Country</span>
+                    </a>
+                </td>
             </tr>
             </tbody>
 

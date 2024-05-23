@@ -34,14 +34,21 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("com.h2database:h2")
-
     implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
-// https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
-
     implementation ("org.apache.httpcomponents:httpclient:4.5.14")
-
-    //testImplementation ("org.mockito:mockito-core:3.+")
-
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("com.mysql:mysql-connector-j")
+    annotationProcessor("org.projectlombok:lombok")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("com.h2database:h2")
+    implementation ("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
+    implementation ("org.apache.httpcomponents:httpclient:4.5.14")
+    implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
+    implementation("org.springframework.security:spring-security-oauth2-client")
+    implementation("org.springframework.security:spring-security-oauth2-core")
+    implementation("org.springframework.security:spring-security-config")
 }
 
 tasks.withType<Test> {

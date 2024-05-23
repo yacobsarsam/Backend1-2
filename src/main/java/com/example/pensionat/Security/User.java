@@ -1,17 +1,19 @@
 package com.example.pensionat.Security;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = "roles")
 public class User {
 
     @Id
@@ -21,14 +23,14 @@ public class User {
     private String username;
     @Column(nullable = false, unique = false)
     private String password;
+    @Column(nullable = false, unique = false)
+    private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles")
-    private List<Role> roles;
-
-    public User(String username, String password, List<Role> roles){
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
 }
