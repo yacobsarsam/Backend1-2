@@ -4,16 +4,9 @@ import com.example.pensionat.Security.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Security.User;
-import com.example.pensionat.Security.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,7 +56,7 @@ public class UserService {
             createPasswordResetTokenForUser(user, token);
             String resetUrl = "http://localhost:8080/reset-password?token=" + token;
             emailService.sendEmail(email, "Password Reset Request", "To reset your password, click the link below:\n" + resetUrl);
-        }
+        }        }
 
     public User findUserById(UUID id) {
         return userRepository.findById(id).get();
@@ -89,4 +82,7 @@ public class UserService {
         userRepository.deleteById(id);
 
     }
+
+
 }
+
