@@ -454,3 +454,18 @@ form button[type="submit"]:hover {
     transform: translateY(0);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
+
+.userform-container {
+    display: block;
+    font-size:11px;
+    padding:4px 2px;
+    border:solid 1px #aacfe4;
+    width:70px;
+    margin:2px 0 20px 10px;
+}
+
+.checkbox-form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}

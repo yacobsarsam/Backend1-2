@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+          rel="stylesheet">
     <style>
-        .container{
+        .container {
             width: fit-content;
         }
     </style>
@@ -16,7 +17,7 @@
 <body>
 <div class="container">
     <nav class="navbar">
-        <button class="navButton"><a th:href="@{/index}" >Home</a></button>
+        <button class="navButton"><a th:href="@{/index}">Home</a></button>
     </nav>
     <div>
         <h2 class="text-align-center">Hantera konton</h2>
@@ -36,12 +37,34 @@
                 <td th:text="${user.email}">Email</td>
                 <td>
                     <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Ändra</a>
-                    <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" onclick="return confirm('Är du säker på att du vill ta bort användare?')">Ta bort</a>
+                    <a th:href="@{/admin/users/delete/{id}(id=${user.id})}"
+                       onclick="return confirm('Är du säker på att du vill ta bort användare?')">Ta bort</a>
                 </td>
             </tr>
             </tbody>
         </table>
-        <button class="book-button mt-10"><a th:href="@{/admin/users/add}">Lägg till konto</a></button>
+        <div class="button-container" th:unless="${addUser}">
+            <button class="book-button mt-10"><a th:href="@{/admin/users/add}">Lägg till konto</a></button>
+        </div>
+    </div>
+    <div class="userform-container" th:if="${addUser}">
+        <h3>Lägg till användare</h3>
+        <form class="form-container"><!--action="#" th:action="@{/admin/users}" method="post"-->
+            <label for="username">Namn:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Lösenord:</label>
+            <input type="password" name="password" id="password">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+            <label for="role-form">Roller:</label>
+            <form id="role-form">
+                <input type="checkbox" name="admin" id="admin">
+                <label for="admin">Admin </label><br>
+                <input type="checkbox" name="receptionist" id="receptionist">
+                <label for="receptionist">Receptionist </label>
+            </form>
+            <button class="navButton" type="submit">Lägg till användare</button>
+        </form>
     </div>
 </div>
 </body>
