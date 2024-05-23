@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Pensionat</title>
@@ -13,6 +13,12 @@
     myButtons {
         display: flex;
         align-items: center;
+    }
+    .menyContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: auto;
     }
 </style>
 </head>
@@ -31,12 +37,26 @@
             </div>
     </nav>
     <h1>Välkommen till Pensionatet!</h1>
-    <button class="button"><a th:href="@{/book}">Boka Vistelse</a></button>
-    <button class="button"><a th:href="@{/kunder}">Hantera kunder och bokningar</a></button>
-    <button class="button"><a th:href="@{/company}">Visa avtalskunder</a></button>
-    <button class="button"><a th:href="@{/blacklist}">Hantera blacklist</a></button>
-    <button class="button"><a th:href="@{/rum/allRooms}">Rum events</a></button>
-    <button class="button"><a th:href="@{/admin/users}">Ändra/skapa konton</a></button>
+    <div class="menyContainer">
+        <button class="button" sec:authorize="hasRole('ROLE_RECEPTIONIST')">
+            <a th:href="@{/book}">Boka Vistelse</a>
+        </button>
+        <button class="button" sec:authorize="hasRole('ROLE_RECEPTIONIST')">
+            <a th:href="@{/kunder}">Hantera kunder och bokningar</a>
+        </button>
+        <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/company}">Visa avtalskunder</a>
+        </button>
+        <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/blacklist}">Hantera blacklist</a>
+        </button>
+        <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/rum/allRooms}">Rum events</a>
+        </button>
+        <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/users}">Ändra/skapa konton</a>
+        </button>
+    </div>
 </div>
 </body>
 </html>
