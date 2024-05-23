@@ -35,7 +35,7 @@
                 <td th:text="${user.username}">Username</td>
                 <td th:text="${user.email}">Email</td>
                 <td>
-                    <a th:href="@{/admin/users/edit/{id}(id=${user.id})}">Ändra</a>
+                    <a th:href="@{/admin/users/edit/{email}(email=${user.email})}">Ändra</a>
                     <a th:href="@{/admin/users/delete/{id}(id=${user.id})}" onclick="return confirm('Är du säker på att du vill ta bort användare?')">Ta bort</a>
                 </td>
             </tr>
