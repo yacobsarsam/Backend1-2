@@ -15,6 +15,7 @@ public class LoginControllers {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private UserService userService;
 
     @GetMapping("login")
@@ -57,7 +58,8 @@ public class LoginControllers {
                                            @RequestParam("password") String password, Model model) {
         userService.resetPassword(token, password);
         model.addAttribute("message", "Password has been reset successfully.");
-        return "login";
+        return "reset-password";
+    //return "login";
     }
 
     /*@GetMapping("/forgot-password")
