@@ -28,6 +28,12 @@ public class adminController {
         return "admin/users";
     }
     @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") UUID id) {
+        userService.deleteUserById(id);
+        return "redirect:/admin/users";
+    }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users/edit/{email}")
     public String editUser(@PathVariable String email, Model model){
         User u = userService.updateUser(email);

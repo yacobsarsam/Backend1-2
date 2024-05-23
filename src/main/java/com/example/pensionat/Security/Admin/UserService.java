@@ -52,4 +52,7 @@ public class UserService {
             return false;
     return true;
     }
+    public void deleteUserById(UUID id) {
+        userRepository.deleteById(id);
+    }
 }
