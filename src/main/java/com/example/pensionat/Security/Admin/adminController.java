@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -61,6 +63,8 @@ public class adminController {
     public String editUser(@PathVariable ("id") UUID id, Model model){
         User u = userService.findUserById(id);
         model.addAttribute("user", u);
+        model.addAttribute("roles", Arrays.asList("ADMIN", "RECEPTIONIST"));
+        model.addAttribute("userRoles", u.getRoles().stream().map(role -> role.getRole()).collect(Collectors.toList()));
         return "admin/edituser";
     }
 

@@ -76,14 +76,18 @@ public class UserService {
     }
 
     public String updateUser(User u, Model model) {
-        if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())){
-            userRepository.save(u);
-            return "admin/updateUserDone";
-        } else {
-            model.addAttribute("felmeddelande", "Fel i fälten, kontrollera och försök igen");
-            model.addAttribute("user", u);
-            return "admin/edituser";
-        }
+        if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())) {
+            User existingUser = userRepository.findById(u.getId()).orElse(null);
+            if (existingUser != null) {
+                u.setRoles(existingUser.getRoles());
+                userRepository.save(u);
+                return "admin/updateUserDone";
+            } else {
+                model.addAttribute("felmeddelande", "Användaren kunde inte hittas.");
+                model.addAttribute("user", u);
+                return "admin/edituser";
+            }
+        }return "admin/edituser";
     }
 
     public boolean isUserFieldsFilledAndCorrect(String username, String password, String email){
