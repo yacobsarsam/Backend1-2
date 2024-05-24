@@ -1,14 +1,10 @@
 package com.example.pensionat;
 
-import com.example.pensionat.Models.Bokning;
-import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.KundRepo;
 import com.example.pensionat.Repositories.RumRepo;
-import com.example.pensionat.Security.Role;
 import com.example.pensionat.Security.RoleRepository;
-import com.example.pensionat.Security.User;
 import com.example.pensionat.Security.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,8 +12,6 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @SpringBootApplication

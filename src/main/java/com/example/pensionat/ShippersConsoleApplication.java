@@ -11,19 +11,9 @@ import org.springframework.stereotype.Component;
 public class ShippersConsoleApplication implements CommandLineRunner {
 
     private final ShippersService shippersService;
-
+    private final XMLShippersProvider xmlShippersProvider;
     @Override
     public void run(String... args) throws Exception {
-
-
-        XMLShippersProvider xmlShippersProvider =new XMLShippersProvider(shippersService);
-xmlShippersProvider.GetShippersAsXMLAndSaveToDatabase();
-        /*JsonMapper jSonMapper = new JsonMapper();
-        Shippers[] shippers = jSonMapper.readValue(new URL("https://javaintegration.systementor.se/shippers"), Shippers[].class);
-
-        for (Shippers s : shippers) {
-            shippersService.addShippersToDB(s);
-        }*/
-
+        xmlShippersProvider.GetShippersAsXMLAndSaveToDatabase();
     }
 }

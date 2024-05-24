@@ -4,17 +4,17 @@ import com.example.pensionat.Services.CompanyCustomerService;
 import com.example.pensionat.Services.XMLCompanyCustomerProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class CustomersConsoleApplication implements CommandLineRunner {
 
-    private final CompanyCustomerService companyCustomerService;
+    private final XMLCompanyCustomerProvider xmlCompanyCustomerProvider;
 
     @Override
     public void run(String... args) throws Exception {
-        XMLCompanyCustomerProvider xmlCompanyCustomerProvider=new XMLCompanyCustomerProvider(companyCustomerService);
         xmlCompanyCustomerProvider.GetCompanyCustomersAsXMLAndSaveToDatabase();
     /*    XmlURLProvider xmlURLProvider = new XmlURLProvider();
     //     final CompanyCustomerService companyCustomerService;
