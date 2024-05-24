@@ -1,4 +1,4 @@
-package com.example.pensionat.Models;
+package com.example.pensionat.Dtos;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BlackListPerson {
+public class BlackListPersonDto {
     @Id
     @GeneratedValue
     public int id;
@@ -25,7 +25,7 @@ public class BlackListPerson {
     public boolean ok;
 
 
-    public BlackListPerson(String name, String email, String group, LocalDateTime created, boolean ok) {
+    public BlackListPersonDto(String name, String email, String group, LocalDateTime created, boolean ok) {
         this.email = email;
         this.name = name;
         this.group = group;

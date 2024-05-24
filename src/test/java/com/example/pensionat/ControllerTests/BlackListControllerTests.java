@@ -1,18 +1,17 @@
 package com.example.pensionat.ControllerTests;
 
 import com.example.pensionat.Controllers.BlackListController;
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.BlackListPersonDto;
 import com.example.pensionat.Services.BlackListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import java.io.IOException;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -46,7 +45,7 @@ public class BlackListControllerTests {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void getAllBlKunderTest() throws Exception {
         String expectedResponse = "visablkunder";
-        BlackListPerson blackListPerson = mock(BlackListPerson.class);
+        BlackListPersonDto blackListPerson = mock(BlackListPersonDto.class);
         when(mockBlackListService.getAllBLKunder()).thenReturn(List.of(blackListPerson));
 
         mockMvc.perform(get("/blacklist"))
@@ -93,7 +92,7 @@ public class BlackListControllerTests {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void editKundInfo_withExistingCustomerTest() throws Exception {
         String expectedResponse = "updateblkund";
-        BlackListPerson blackListPerson = new BlackListPerson();
+        BlackListPersonDto blackListPerson = new BlackListPersonDto();
         blackListPerson.setName("name");
         blackListPerson.setEmail("email");
         blackListPerson.setGroup("group");
@@ -114,7 +113,7 @@ public class BlackListControllerTests {
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     void updateKundInfoTest() throws Exception {
         String expectedResponse = "updateBLKundDone";
-        BlackListPerson blackListPerson = mock(BlackListPerson.class);
+        BlackListPersonDto blackListPerson = mock(BlackListPersonDto.class);
         when(mockBlackListService.getAllBLKunder()).thenReturn(List.of(blackListPerson));
 
         mockMvc.perform(post("/blacklist/update")
