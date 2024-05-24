@@ -1,5 +1,6 @@
 package com.example.pensionat.Security.Admin;
 
+import com.example.pensionat.Security.Models.Role;
 import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.PasswordResetToken;
 import com.example.pensionat.Security.Repositories.PasswordResetTokenRepository;
@@ -13,9 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -96,12 +95,15 @@ public class UserService {
 
     public User addUser(UserDTO userDTO) {
         User newUser = User.builder().username(userDTO.getUsername()).password(passwordEncoder.encode(userDTO.getPassword())).email(userDTO.getEmail()).build();
-//        userRepository.save(newUser);
 
-        if (userDTO.getRoles().contains("ADMIN"))
-            newUser.setRoles(roleRepository.findByRole("ADMIN"));
-        if (userDTO.getRoles().contains("RECEPTIONIST"))
-            newUser.setRoles(roleRepository.findByRole("RECEPTIONIST"));
+        Set<Role> roles = new HashSet<>();
+        if (userDTO.getRoles().contains("ADMIN")) {
+            roles.addAll(roleRepository.findByRole("ADMIN"));
+        }
+        if (userDTO.getRoles().contains("RECEPTIONIST")) {
+            roles.addAll(roleRepository.findByRole("RECEPTIONIST"));
+        }
+        newUser.setRoles(roles);
 
         userRepository.save(newUser);
 
