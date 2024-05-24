@@ -1,5 +1,6 @@
 package com.example.pensionat.Security.Admin;
 
+import com.example.pensionat.Security.Models.Role;
 import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.PasswordResetToken;
 import com.example.pensionat.Security.Repositories.PasswordResetTokenRepository;
@@ -15,6 +16,7 @@ import org.springframework.ui.Model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -98,12 +100,14 @@ public class UserService {
 
     public User addUser(UserDTO userDTO) {
         User newUser = User.builder().username(userDTO.getUsername()).password(passwordEncoder.encode(userDTO.getPassword())).email(userDTO.getEmail()).build();
-//        userRepository.save(newUser);
+        Set<Role> roleList = new java.util.HashSet<>(Set.of());
 
         if (userDTO.getRoles().contains("ADMIN"))
-            newUser.setRoles(roleRepository.findByRole("ADMIN"));
+            roleList.add(roleRepository.findByRole("ADMIN"));
         if (userDTO.getRoles().contains("RECEPTIONIST"))
-            newUser.setRoles(roleRepository.findByRole("RECEPTIONIST"));
+            roleList.add(roleRepository.findByRole("RECEPTIONIST"));
+
+        newUser.setRoles(roleList);
 
         userRepository.save(newUser);
 
