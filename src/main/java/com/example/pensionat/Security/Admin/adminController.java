@@ -1,8 +1,6 @@
 package com.example.pensionat.Security.Admin;
 
-import com.example.pensionat.Dtos.KundDto;
-import com.example.pensionat.Models.Kund;
-import com.example.pensionat.Security.User;
+import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 

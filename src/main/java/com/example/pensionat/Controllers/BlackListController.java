@@ -56,6 +56,7 @@ public class BlackListController {
         return "updateblkund";
     }
     @PostMapping("/update")
+
     public String updateKundinfo(Model model, BlackListPerson k) throws IOException {
         blackListService.updateBlackListPerson(k);
         List<BlackListPerson> allaBLKunder = blackListService.getAllBLKunder();
