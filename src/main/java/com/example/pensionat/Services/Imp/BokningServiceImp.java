@@ -1,10 +1,6 @@
 package com.example.pensionat.Services.Imp;
 
-import com.example.pensionat.Dtos.BokningDto;
-import com.example.pensionat.Dtos.DetailedBokningDto;
-import com.example.pensionat.Dtos.KundDto;
-import com.example.pensionat.Dtos.RumDto;
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.*;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -22,11 +18,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -140,9 +137,9 @@ public class BokningServiceImp implements BokningService {
     //TODO ska denna flyttas till blacklistService?
     private boolean CustomerIsBlackList(String email) throws IOException {
         JsonMapper jSonMapper = new JsonMapper();
-        BlackListPerson[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
-                , BlackListPerson[].class);
-        for (BlackListPerson bl : blps) {
+        BlackListPersonDto[] blps = jSonMapper.readValue(new URL("https://javabl.systementor.se/api/stefan/blacklist")
+                , BlackListPersonDto[].class);
+        for (BlackListPersonDto bl : blps) {
             if (bl.email.equals(email) && !bl.ok)
                 return true;
         }

@@ -1,13 +1,13 @@
 package com.example.pensionat.Services;
 
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.BlackListPersonDto;
 import org.springframework.ui.Model;
 
 import java.io.IOException;
 import java.util.List;
 
 public interface BlackListService {
-     public List<BlackListPerson> getAllBLKunder() throws IOException;
+     public List<BlackListPersonDto> getAllBLKunder() throws IOException;
 
      boolean isCustomerFieldsFilledAndCorrect(String name, String email, String group);
 
@@ -17,8 +17,8 @@ public interface BlackListService {
 
      String getAllAvailableBLKundInfo(String name, String email, String group, Model model);
 
-     BlackListPerson getBlackListPersonByEmail(String email) throws IOException;
+     BlackListPersonDto getBlackListPersonByEmail(String email) throws IOException;
 
      //String UpdateBLKund(BlackListPerson k, Model model) throws IOException;
-     public void updateBlackListPerson(BlackListPerson person);
+     public void updateBlackListPerson(BlackListPersonDto person);
 }

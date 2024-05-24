@@ -1,7 +1,7 @@
 package com.example.pensionat.Controllers;
 
 
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.BlackListPersonDto;
 import com.example.pensionat.Services.BlackListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,7 +22,7 @@ public class BlackListController {
     private final BlackListService blackListService;
     @RequestMapping("")
     public String getAllBlKunder(Model model) throws IOException {
-        List<BlackListPerson> allaBLKunder= blackListService.getAllBLKunder();
+        List<BlackListPersonDto> allaBLKunder= blackListService.getAllBLKunder();
         model.addAttribute("allablkunder", allaBLKunder);
         return "visablkunder";
     }
@@ -51,15 +51,15 @@ public class BlackListController {
     //TODO, får vi tillbaka null här från getBlackListPersonByEmail så går det sönder. Behöver nån sorts null-hantering. //Jocke
     @RequestMapping("/editByemail/{email}")
     public String EditKundInfo(@PathVariable String email, Model model) throws IOException {
-        BlackListPerson blp = blackListService.getBlackListPersonByEmail(email);
+        BlackListPersonDto blp = blackListService.getBlackListPersonByEmail(email);
         model.addAttribute("updateblkund",blp);
         return "updateblkund";
     }
     @PostMapping("/update")
 
-    public String updateKundinfo(Model model, BlackListPerson k) throws IOException {
+    public String updateKundinfo(Model model, BlackListPersonDto k) throws IOException {
         blackListService.updateBlackListPerson(k);
-        List<BlackListPerson> allaBLKunder = blackListService.getAllBLKunder();
+        List<BlackListPersonDto> allaBLKunder = blackListService.getAllBLKunder();
         model.addAttribute("allakunder", allaBLKunder);
         return "updateBLKundDone";
     }
