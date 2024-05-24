@@ -6,15 +6,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -81,6 +82,20 @@ public class UserService {
     public void deleteUserById(UUID id) {
         userRepository.deleteById(id);
 
+    }
+
+    public User addUser(UserDTO userDTO) {
+        User newUser = User.builder().username(userDTO.getUsername()).password(passwordEncoder.encode(userDTO.getPassword())).email(userDTO.getEmail()).build();
+//        userRepository.save(newUser);
+
+        if (userDTO.getRoles().contains("ADMIN"))
+            newUser.setRoles(roleRepository.findByRole("ADMIN"));
+        if (userDTO.getRoles().contains("RECEPTIONIST"))
+            newUser.setRoles(roleRepository.findByRole("RECEPTIONIST"));
+
+        userRepository.save(newUser);
+
+        return newUser;
     }
 
 

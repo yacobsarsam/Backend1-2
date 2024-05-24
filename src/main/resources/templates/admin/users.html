@@ -50,20 +50,20 @@
     </div>
     <div class="userform-container" th:if="${addUser}">
         <h3>Lägg till användare</h3>
-        <form class="form-container"><!--action="#" th:action="@{/admin/users}" method="post"-->
-            <label for="username">Namn:</label>
+        <form class="form-container" action="#" th:action="@{/admin/users/adduser}" method="post">
+            <label for="username">Användarnamn:</label>
             <input type="text" name="username" id="username">
             <label for="password">Lösenord:</label>
             <input type="password" name="password" id="password">
             <label for="email">Email:</label>
             <input type="email" name="email" id="email">
             <label for="role-form">Roller:</label>
-            <form id="role-form">
-                <input type="checkbox" name="admin" id="admin">
+            <div id="role-form" class="checkbox-form">
+                <input type="checkbox" name="roles" id="admin" value="ADMIN">
                 <label for="admin">Admin </label><br>
-                <input type="checkbox" name="receptionist" id="receptionist">
+                <input type="checkbox" name="roles" id="receptionist" value="RECEPTIONIST">
                 <label for="receptionist">Receptionist </label>
-            </form>
+            </div>
             <button class="navButton" type="submit">Lägg till användare</button>
         </form>
     </div>
