@@ -3,6 +3,7 @@ package com.example.pensionat.Security.Admin;
 import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Security.User;
+import com.example.pensionat.Security.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -31,10 +32,24 @@ public class adminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users/add")
-    public String addUser(Model model) {
+    public String getAddUserForm(Model model) {
         List<User> users = userService.findAllUsers();
         model.addAttribute("users", users);
         model.addAttribute("addUser", true);
+        return "admin/users";
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/users/adduser")
+    public String addUser(Model model, @ModelAttribute UserDTO userDTO) {
+
+        User newUser = userService.addUser(userDTO);
+        System.out.println("Added new user: " + newUser.getUsername());
+
+        List<User> users = userService.findAllUsers();
+        model.addAttribute("users", users);
+        model.addAttribute("addUser", false);
+
         return "admin/users";
     }
 
