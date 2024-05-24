@@ -1,9 +1,13 @@
 package com.example.pensionat.Security.Admin;
 
 import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.UserRepository;
 import com.example.pensionat.Security.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,8 @@ public class adminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
@@ -51,12 +57,6 @@ public class adminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable("id") UUID id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin/users";
-    }
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users/edit/{id}")
     public String editUser(@PathVariable ("id") UUID id, Model model){
         User u = userService.findUserById(id);
@@ -74,5 +74,21 @@ public class adminController {
     @PostMapping("/update")
     public String updateUserInfo(Model model, User u){
         return userService.updateUser(u, model);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/deleteUser/{id}")
+    public String deleteUser(@PathVariable("id") UUID id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UUID currentUserId = getUserID(authentication);
+        if (currentUserId.equals(id)) {
+            return "redirect:/error";
+        } else {
+            userService.deleteUserById(id);
+        }
+        return "redirect:/admin/users";
+    }
+    private UUID getUserID(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return userRepository.findByUsername(userDetails.getUsername()).getId();
     }
 }
