@@ -7,8 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.io.IOException;
 import java.util.List;
@@ -41,6 +43,7 @@ public class BlackListControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void getAllBlKunderTest() throws Exception {
         String expectedResponse = "visablkunder";
         BlackListPerson blackListPerson = mock(BlackListPerson.class);
@@ -52,6 +55,7 @@ public class BlackListControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void createKund_noExistingCustomerTest() throws Exception {
         String expectedResponse = "visablkunder";
         when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
@@ -66,6 +70,7 @@ public class BlackListControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void createKund_withExistingCustomerTest() throws Exception {
         String expectedResponse = "visablkunder";
         when(mockBlackListService.getAllAvailableBLKundInfo(anyString(), anyString(), anyString(), any())).thenReturn("visablkunder");
@@ -85,6 +90,7 @@ public class BlackListControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void editKundInfo_withExistingCustomerTest() throws Exception {
         String expectedResponse = "updateblkund";
         BlackListPerson blackListPerson = new BlackListPerson();
@@ -105,6 +111,7 @@ public class BlackListControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "admin", roles = {"ADMIN"})
     void updateKundInfoTest() throws Exception {
         String expectedResponse = "updateBLKundDone";
         BlackListPerson blackListPerson = mock(BlackListPerson.class);

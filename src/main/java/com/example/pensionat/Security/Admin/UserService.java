@@ -1,7 +1,13 @@
 package com.example.pensionat.Security.Admin;
 
 import com.example.pensionat.Security.*;
+import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.PasswordResetTokenRepository;
+import com.example.pensionat.Security.Repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -11,19 +17,20 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordResetTokenRepository tokenRepository;
 
-    @Autowired
-    private EmailService emailService;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+
+    private final PasswordResetTokenRepository tokenRepository;
+
+
+    private final JavaMailSender mailSender;
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -55,8 +62,9 @@ public class UserService {
             String token = UUID.randomUUID().toString();
             createPasswordResetTokenForUser(user, token);
             String resetUrl = "http://localhost:8080/reset-password?token=" + token;
-            emailService.sendEmail(email, "Password Reset Request", "To reset your password, click the link below:\n" + resetUrl);
-        }        }
+            sendEmail(email, "Password Reset Request", "To reset your password, click the link below:\n" + resetUrl);
+        }
+    }
 
     public User findUserById(UUID id) {
         return userRepository.findById(id).get();
@@ -81,6 +89,16 @@ public class UserService {
     public void deleteUserById(UUID id) {
         userRepository.deleteById(id);
 
+    }
+
+    public void sendEmail(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        message.setFrom("noreply@example.com");
+
+        mailSender.send(message);
     }
 
 

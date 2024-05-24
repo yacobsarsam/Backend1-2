@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
 
@@ -50,6 +51,7 @@ public class BokningControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void updateInfoTest() throws Exception {
         String expectedResponse = "updateBooking";
         Kund kund = new Kund();
@@ -74,6 +76,7 @@ public class BokningControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void makeBookingUpdateTest() throws Exception {
         String expectedResponse = "bookingDetails";
         Kund kund = new Kund();
@@ -109,6 +112,7 @@ public class BokningControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void getAllBokningarTest() throws Exception {
         String expectedResponse = "visaBokningar";
         KundDto kund = new KundDto();
@@ -133,6 +137,7 @@ public class BokningControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void addBokningTest() throws Exception {
         String expectedResponse = "bookingDetails";
         Bokning bokning = mock(Bokning.class);
@@ -173,6 +178,7 @@ public class BokningControllerTests {
 
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void deleteBokningTest() throws Exception {
         String expectedResponse = "visabokningperkund";
 
