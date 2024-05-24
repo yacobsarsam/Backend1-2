@@ -11,12 +11,18 @@
         .container{
             width: fit-content;
         }
+        .loggningInfo {
+            color: white;
+            font-size: 0.7em;
+            margin-left: auto;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <nav class="navbar">
         <button class="navButton"><a th:href="@{/index}">Home</a></button>
+        <span class="loggningInfo"> Inloggad som: <span th:text="${#authentication.principal.username}"></span></span>
     </nav>
     <div>
         <h2 class="text-align-center">Hantera konton</h2>
