@@ -20,6 +20,11 @@
         justify-content: center;
         height: auto;
     }
+    .loggningInfo {
+        color: white;
+        font-size: 0.7em;
+        margin-left: auto;
+    }
 </style>
 </head>
 <body>
@@ -30,6 +35,7 @@
         <div class="myButtons">
             <div th:if="${#authorization.expression('isAuthenticated()')}" onclick="return confirm('Är du säker på att du vill logga ut?')">
                 <button class="navButton"><a th:href="@{/logout}">Log out</a></button>
+                <span class="loggningInfo"> Inloggad som: <span th:text="${#authentication.principal.username}"></span></span>
             </div>
             <div th:if="${#authorization.expression('isAnonymous()')}">
                 <button class="navButton"><a th:href="@{/login}">Login</a></button>
