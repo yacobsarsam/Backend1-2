@@ -2,6 +2,9 @@ package com.example.pensionat.Security.Admin;
 
 import com.example.pensionat.Security.*;
 import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.PasswordResetTokenRepository;
+import com.example.pensionat.Security.Repositories.RoleRepository;
+import com.example.pensionat.Security.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -85,8 +88,10 @@ public class UserService {
     return true;
     }
     public void deleteUserById(UUID id) {
+        User user = findUserById(id);
+        user.setRoles(null);
+        userRepository.save(user);
         userRepository.deleteById(id);
-
     }
 
     public User addUser(UserDTO userDTO) {
