@@ -22,7 +22,6 @@ public class BlackListController {
     private final BlackListService blackListService;
     @RequestMapping("")
     public String getAllBlKunder(Model model) throws IOException {
-        //TODO inväntar service-klassens funktion
         List<BlackListPerson> allaBLKunder= blackListService.getAllBLKunder();
         model.addAttribute("allablkunder", allaBLKunder);
         return "visablkunder";

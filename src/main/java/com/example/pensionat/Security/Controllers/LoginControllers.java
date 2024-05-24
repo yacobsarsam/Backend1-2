@@ -1,6 +1,8 @@
-package com.example.pensionat.Security;
+package com.example.pensionat.Security.Controllers;
 
 import com.example.pensionat.Security.Admin.UserService;
+import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

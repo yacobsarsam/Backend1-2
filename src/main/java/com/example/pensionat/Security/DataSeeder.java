@@ -1,5 +1,9 @@
 package com.example.pensionat.Security;
 
+import com.example.pensionat.Security.Models.Role;
+import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.RoleRepository;
+import com.example.pensionat.Security.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

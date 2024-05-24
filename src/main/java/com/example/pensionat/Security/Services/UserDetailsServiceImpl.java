@@ -1,5 +1,8 @@
-package com.example.pensionat.Security;
+package com.example.pensionat.Security.Services;
 
+import com.example.pensionat.Security.Models.Role;
+import com.example.pensionat.Security.Models.User;
+import com.example.pensionat.Security.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

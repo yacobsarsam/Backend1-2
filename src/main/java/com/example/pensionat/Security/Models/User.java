@@ -1,9 +1,8 @@
-package com.example.pensionat.Security;
+package com.example.pensionat.Security.Models;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
 
@@ -53,6 +54,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void addBokningSiteTest() throws Exception {
         String expectedResponse = "addBokning";
         when(mockBokningService.addBokning()).thenReturn(expectedResponse);
@@ -62,6 +64,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void showAllRooms_withBlackListedCustomerTest() throws Exception {
         String expectedResponse = "blockedUserTemplate";
         String blackListedEmail = "test@email.com";
@@ -78,6 +81,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void showAllRooms_withoutBlackListedCustomer_noPreviousBookingTest() throws Exception {
         String expectedResponse = "addBokning";
         String notBlackListedEmail = "test@email.com";
@@ -104,6 +108,7 @@ public class BokningsViewControllerTests {
     }
 
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void addBokningSite2_withoutCustomerTest() throws Exception {
         String expectedResponse = "error";
         when(mockKundService.getKundById(anyLong())).thenReturn(null);;
@@ -114,6 +119,7 @@ public class BokningsViewControllerTests {
                 .andExpect(view().name(expectedResponse));
     }
     @Test
+    @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void addBokningSite2_withCustomerTest() throws Exception {
         String expectedResponse = "makeBookingWithCustomer";
         Kund kund = mock(Kund.class);

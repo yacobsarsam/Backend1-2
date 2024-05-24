@@ -1,5 +1,6 @@
 package com.example.pensionat.Security;
 
+import com.example.pensionat.Security.Models.User;
 import jakarta.persistence.*;
 import lombok.Data;
 
