@@ -90,8 +90,10 @@ public class UserService {
     return true;
     }
     public void deleteUserById(UUID id) {
+        User user = findUserById(id);
+        user.setRoles(null);
+        userRepository.save(user);
         userRepository.deleteById(id);
-
     }
 
     public User addUser(UserDTO userDTO) {
