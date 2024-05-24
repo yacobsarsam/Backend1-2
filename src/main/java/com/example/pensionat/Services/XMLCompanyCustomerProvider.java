@@ -13,10 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class XMLCompanyCustomerProvider  {
     private final CompanyCustomerService companyCustomerService;
+    private final XmlURLProvider xmlURLProvider;
 
 
     public void GetCompanyCustomersAsXMLAndSaveToDatabase() throws Exception {
-        XmlURLProvider xmlURLProvider = new XmlURLProvider();
+
         //final CompanyCustomerService companyCustomerService;
 
         JacksonXmlModule module = new JacksonXmlModule();

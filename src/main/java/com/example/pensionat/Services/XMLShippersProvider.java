@@ -11,13 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class XMLShippersProvider {
     private final ShippersService shippersService;
-
+    private final XmlURLProvider xmlURLProvider;
 
     //private final ShippersService shippersService;
 
 
     public void GetShippersAsXMLAndSaveToDatabase() throws Exception {
-        XmlURLProvider xmlURLProvider = new XmlURLProvider();
+
 
         JsonMapper jSonMapper = new JsonMapper();
         Shippers[] shippers = jSonMapper.readValue(xmlURLProvider.GetShippersURL(), Shippers[].class);
