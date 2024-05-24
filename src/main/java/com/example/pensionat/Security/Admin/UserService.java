@@ -14,7 +14,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -89,21 +92,22 @@ public class UserService {
     return true;
     }
     public void deleteUserById(UUID id) {
+        User user = findUserById(id);
+        user.setRoles(null);
+        userRepository.save(user);
         userRepository.deleteById(id);
-
     }
 
     public User addUser(UserDTO userDTO) {
         User newUser = User.builder().username(userDTO.getUsername()).password(passwordEncoder.encode(userDTO.getPassword())).email(userDTO.getEmail()).build();
+        Set<Role> roleList = new java.util.HashSet<>(Set.of());
 
-        Set<Role> roles = new HashSet<>();
-        if (userDTO.getRoles().contains("ADMIN")) {
-            roles.addAll(roleRepository.findByRole("ADMIN"));
-        }
-        if (userDTO.getRoles().contains("RECEPTIONIST")) {
-            roles.addAll(roleRepository.findByRole("RECEPTIONIST"));
-        }
-        newUser.setRoles(roles);
+        if (userDTO.getRoles().contains("ADMIN"))
+            roleList.add(roleRepository.findByRole("ADMIN"));
+        if (userDTO.getRoles().contains("RECEPTIONIST"))
+            roleList.add(roleRepository.findByRole("RECEPTIONIST"));
+
+        newUser.setRoles(roleList);
 
         userRepository.save(newUser);
 
