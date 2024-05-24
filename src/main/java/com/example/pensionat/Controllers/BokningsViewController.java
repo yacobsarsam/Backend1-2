@@ -1,6 +1,5 @@
 package com.example.pensionat.Controllers;
 
-import com.example.pensionat.Models.BlackListPerson;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Services.BlackListService;

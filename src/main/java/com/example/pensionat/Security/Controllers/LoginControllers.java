@@ -44,8 +44,15 @@ public class LoginControllers {
 
     @PostMapping("/forgot-password")
     public String processForgotPasswordForm(@RequestParam("email") String email, Model model) {
-        userService.sendPasswordResetEmail(email);
-        model.addAttribute("message", "Password reset link has been sent to your email.");
+
+        if(userRepository.findByEmail(email)!=null) {
+            userService.sendPasswordResetEmail(email);
+            model.addAttribute("message", "Password reset link has been sent to your email.");
+        }
+        else{
+            model.addAttribute("message", "Email finns inte registrerad, Password reset link has not been sent.");
+        }
+
         return "forgot-password";
     }
 

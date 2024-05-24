@@ -1,6 +1,6 @@
 package com.example.pensionat.Services.Imp;
 
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.BlackListPersonDto;
 import com.example.pensionat.Services.BlackListDataProvider;
 import com.example.pensionat.Services.BlackListService;
 import com.example.pensionat.Services.BokningService;
@@ -31,7 +31,7 @@ public class BlackListServiceImp implements BlackListService {
     private final BokningService bokningService;
     private final KundService kundService;
 
-    public List<BlackListPerson> getAllBLKunder() throws IOException {
+    public List<BlackListPersonDto> getAllBLKunder() throws IOException {
         return blackListDataProvider.getAllBLKunder();
     }
 
@@ -46,12 +46,12 @@ public class BlackListServiceImp implements BlackListService {
     @Override //Kolla 'ok' värde, om true så är den blacklistad
     public boolean checkIfBLKundExistByEmailUtanAttSkapa(String email) throws IOException {
 
-        List<BlackListPerson> blacklist = getAllBLKunder();
+        List<BlackListPersonDto> blacklist = getAllBLKunder();
 
         return blacklist.stream()
                 .filter(person -> person.email.equalsIgnoreCase(email))
                 .findFirst()
-                .map(BlackListPerson::isOk)
+                .map(BlackListPersonDto::isOk)
                 .orElse(false);
 
     }
@@ -80,7 +80,7 @@ public class BlackListServiceImp implements BlackListService {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // Skicka JSON-data som en del av förfråganens kropp (body)
-            BlackListPerson data = greateBlackListPerson(name,email,group);
+            BlackListPersonDto data = greateBlackListPerson(name,email,group);
 
             // Create an ObjectMapper instance
             ObjectMapper mapper = new ObjectMapper();
@@ -105,9 +105,9 @@ public class BlackListServiceImp implements BlackListService {
     }
 
     //TODO rename createBlackListedCustomer
-    public BlackListPerson greateBlackListPerson(String name, String email, String group) {
+    public BlackListPersonDto greateBlackListPerson(String name, String email, String group) {
         LocalDateTime d = LocalDateTime.now();
-        BlackListPerson blp = new BlackListPerson(name,email,group, d, false);
+        BlackListPersonDto blp = new BlackListPersonDto(name,email,group, d, false);
         return blp;
     }
 
@@ -124,7 +124,7 @@ public class BlackListServiceImp implements BlackListService {
     }
 
     @Override
-    public BlackListPerson getBlackListPersonByEmail(String email) throws IOException {
+    public BlackListPersonDto getBlackListPersonByEmail(String email) throws IOException {
         return getAllBLKunder().stream().filter(k->k.email.equals(email)).findFirst().orElse(null);
     }
 
@@ -136,7 +136,7 @@ public class BlackListServiceImp implements BlackListService {
     }
 
     @Override
-    public void updateBlackListPerson(BlackListPerson person) {
+    public void updateBlackListPerson(BlackListPersonDto person) {
         String url = "https://javabl.systementor.se/api/stefan/blacklist/" + person.getEmail();
 
         ObjectMapper mapper = new ObjectMapper();

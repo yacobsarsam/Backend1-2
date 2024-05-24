@@ -1,11 +1,10 @@
 package com.example.pensionat.ServiceTests;
 
-import com.example.pensionat.Models.BlackListPerson;
+import com.example.pensionat.Dtos.BlackListPersonDto;
 import com.example.pensionat.Services.BlackListDataProvider;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.Imp.BlackListServiceImp;
 import com.example.pensionat.Services.KundService;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.ui.Model;
@@ -24,8 +22,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -54,8 +52,8 @@ public class BlackListServiceTests {
 
     @Test
     void checkIfBLKundExistByEmailUtanAttSkapaTest() throws IOException {
-        BlackListPerson b1 = new BlackListPerson(2, "TestEmail","TestName", "TestGroup", LocalDateTime.now().plusDays(2).toString(), true);
-        BlackListPerson b2 = new BlackListPerson(2, "TestEmail2","TestName2", "TestGroup2", LocalDateTime.now().plusDays(2).toString(), false);
+        BlackListPersonDto b1 = new BlackListPersonDto(2, "TestEmail","TestName", "TestGroup", LocalDateTime.now().plusDays(2).toString(), true);
+        BlackListPersonDto b2 = new BlackListPersonDto(2, "TestEmail2","TestName2", "TestGroup2", LocalDateTime.now().plusDays(2).toString(), false);
         when(mockBlackListServiceImp.getAllBLKunder()).thenReturn(Arrays.asList(b1, b2));
 
         assertTrue(mockBlackListServiceImp.checkIfBLKundExistByEmailUtanAttSkapa(b1.email));
@@ -70,7 +68,7 @@ public class BlackListServiceTests {
 
     @Test
     void createBlackListedCustomerTest(){
-        BlackListPerson b1 = mockBlackListServiceImp.greateBlackListPerson("TestName", "TestEmail", "TestGroup");
+        BlackListPersonDto b1 = mockBlackListServiceImp.greateBlackListPerson("TestName", "TestEmail", "TestGroup");
         assertEquals("TestName", b1.name);
         assertEquals("TestEmail", b1.email);
         assertEquals("TestGroup", b1.group);
@@ -100,7 +98,7 @@ public class BlackListServiceTests {
 
     @Test
     void getBlackListCustomerTest() throws IOException {
-        BlackListPerson b1 = new BlackListPerson(1,"TestEmail","TestName", "TestGroup", LocalDateTime.now().toString(),false);
+        BlackListPersonDto b1 = new BlackListPersonDto(1,"TestEmail","TestName", "TestGroup", LocalDateTime.now().toString(),false);
         when(mockBlackListServiceImp.getAllBLKunder()).thenReturn(List.of(b1));
         assertEquals(b1, mockBlackListServiceImp.getBlackListPersonByEmail("TestEmail"));
         assertNull(mockBlackListServiceImp.getBlackListPersonByEmail("otherEmail"));
