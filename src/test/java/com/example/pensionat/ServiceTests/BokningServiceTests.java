@@ -2,7 +2,6 @@ package com.example.pensionat.ServiceTests;
 
 import com.example.pensionat.Dtos.BokningDto;
 import com.example.pensionat.Dtos.DetailedBokningDto;
-import com.example.pensionat.Dtos.KundDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
@@ -17,7 +16,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -118,6 +116,8 @@ public class BokningServiceTests {
         assertTrue(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "1234567890", "test@test.se"));
         assertFalse(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "10", "test@test.se"));
         assertFalse(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("Test", "1234567890", ""));
+
+        assertFalse(mockBokningsServiceImp.isCustomerFieldsFilledAndCorrect("", "1234567890", "test@test.test"));
     }
 
     @Test

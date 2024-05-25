@@ -137,12 +137,18 @@ public class KundServiceTests {
 
     @Test
     void deleteKundTest(){
-        //TODO
+        List<Bokning> tomBokningsLista = new ArrayList<>();
+        Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", tomBokningsLista);
+        when(mockKundRepo.findById(1L)).thenReturn(Optional.of(k1));
+        mockKundServiceImp.deleteKund(1L);
+        verify(mockKundRepo, times(1)).deleteById(1L);
     }
 
     @Test
     void getKundByIdTest(){
-        //TODO
+        Kund k1 = new Kund(1L, "Test", "1234567891", "test@test.com", null);
+        when(mockKundRepo.findById(1L)).thenReturn(Optional.of(k1));
+        assertEquals(mockKundServiceImp.getKundById(1L).getNamn(), "Test");
     }
 
     @Test

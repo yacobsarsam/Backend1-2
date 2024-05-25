@@ -54,18 +54,6 @@ public class RumServiceTests {
     }
 
     @Test
-    public void isCustomerFieldsFilledAndCorrect_passAndFailTest(){
-        //korrekt
-        assertTrue(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "test@test.test"));
-        //saknar name
-        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect(" ", "070-1234567", "test@test.test"));
-        //för kort telNr
-        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234", "test@test.test"));
-        //saknar email
-        assertFalse(mockBokningServiceImp.isCustomerFieldsFilledAndCorrect("test", "070-1234567", "  "));
-    }
-
-    @Test
     void getAllrum2Test(){
         Rum r1 = new Rum(1L, 10, false, 1, 100, null);
         Rum r2 = new Rum(2L, 21, true, 2, 100, null);
@@ -96,17 +84,26 @@ public class RumServiceTests {
 
     @Test
     void getAllRumTest(){
-        //TODO
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        Rum r2 = new Rum(2L, 21, true, 2, 100, null);
+        when(mockRumRepo.findAll()).thenReturn(Arrays.asList(r1, r2));
+        assertTrue(mockRumServiceImp.getAllRum2().size() == 2);
+        assertTrue(mockRumServiceImp.getAllRum2().get(1).getRumsnr() == 21);
     }
 
     @Test
     void addRumTest(){
-        //TODO
+        Rum r1 = new Rum(1L, 10, false, 1, 100, null);
+        mockRumServiceImp.addRum(r1);
+        verify(mockRumRepo, times(1)).save(r1);
     }
 
     @Test
     void getRumByIdTest(){
-        //TODO
+        when(mockRumRepo.findById(anyLong())).thenReturn(Optional.of(new Rum(1L, 10, false, 1, 100, null)));
+        Rum r1 = mockRumServiceImp.getRumById(1L);
+        assertTrue(r1.getRumsnr() == 10);
+        assertTrue(r1.getStorlek() == 1);
     }
 
     //DTO tester
