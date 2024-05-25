@@ -11,7 +11,7 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-public class ShppersIT {
+public class ShippersIT {
     @Autowired
     XmlURLProvider xmlURLProvider;
     @Test
