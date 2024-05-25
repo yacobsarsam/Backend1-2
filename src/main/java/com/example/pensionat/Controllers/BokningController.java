@@ -2,8 +2,10 @@ package com.example.pensionat.Controllers;
 
 import com.example.pensionat.Dtos.DetailedBokningDto;
 import com.example.pensionat.Models.Bokning;
+import com.example.pensionat.Security.Services.CustomerMailService;
 import com.example.pensionat.Services.BokningService;
 import com.example.pensionat.Services.RumService;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,7 @@ public class BokningController {
 
     private final BokningService bokningService;
     private final KundController kundController;
+    private final CustomerMailService customerMailService;
     private final RumService rumService;
     @GetMapping("/updateBokning/{id}")
     public String updateInfo(@PathVariable Long id, Model model) {
@@ -51,8 +54,11 @@ public class BokningController {
     public String addBokning(String namn, String telNr, String email, LocalDate startDate,
                              LocalDate endDate, Long rumId,
                              @RequestParam(defaultValue = "0") int extraBeds, @RequestParam int antalPersoner,
-                             Model model) throws IOException {
+                             Model model) throws IOException, MessagingException {
         Bokning b = bokningService.newBokning(namn, telNr, email, startDate, endDate, rumId, extraBeds);
+
+        customerMailService.sendConfirmationMail(b);
+
         model.addAttribute("booking", b);
         model.addAttribute("rumInfo", b.getRum());
         model.addAttribute("kundInfo", b.getKund());
