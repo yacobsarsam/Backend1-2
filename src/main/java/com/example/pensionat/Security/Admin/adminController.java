@@ -71,7 +71,7 @@ public class adminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/done")
     public String doneUser() {
-        return "redirect:/admin/users";
+        return "admin/done";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -85,7 +85,7 @@ public class adminController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UUID currentUserId = getUserID(authentication);
         if (currentUserId.equals(id)) {
-            return "redirect:/error";
+            return "redirect:/admin/users";
         } else {
             userService.deleteUserById(id);
         }
