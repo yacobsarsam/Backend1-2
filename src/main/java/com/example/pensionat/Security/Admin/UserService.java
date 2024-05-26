@@ -90,7 +90,7 @@ public class UserService {
         }return "admin/edituser";
     }
 
-    public boolean isUserFieldsFilledAndCorrect(String username, String password, String email){
+    private boolean isUserFieldsFilledAndCorrect(String username, String password, String email){
         if (username.trim().isEmpty() || password.trim().isEmpty() || email.trim().isEmpty())
             return false;
     return true;
