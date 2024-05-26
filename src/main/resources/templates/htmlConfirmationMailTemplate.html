@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Details</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            font-size: 20px;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <p>Hej <span th:text="${name}"></span>, här är bokningsbekräftelsen för ditt rum på Pensionatet.</p>
+
+    <h2>Bokningsinformation</h2>
+    <hr class="divider">
+    <h4 th:text="${bookingDetailText}" ></h4>
+    <p>Rum <span th:text="${roomNumber}"></span></p>
+    <p>Från: <span th:text="${startDate}"></span></p>
+    <p>Till: <span th:text="${endDate}"></span></p>
+    <p>Sängplatser: <span th:text="${numOfBeds}"></span></p>
+    <p>Pris: <span th:text="${price}"></span> kr</p>
+    <hr class="divider">
+    <h2>Gäst information</h2>
+    <hr class="divider">
+    <p th:text="${name}"></p>
+    <p th:text="${phoneNumber}"></p>
+    <p th:text="${email}"></p>
+</div>
+</body>
+</html>
