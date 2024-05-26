@@ -8,6 +8,8 @@ import com.example.pensionat.Dtos.RumDto;
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Security.Services.CustomerMailService;
+import com.example.pensionat.Security.Services.Imp.CustomerMailServiceImp;
 import com.example.pensionat.Services.BokningService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -43,6 +45,8 @@ public class BokningControllerTests {
 
     @MockBean
     private BokningService mockBokningService;
+    @MockBean
+    private CustomerMailService mockCustomerMailService;
 
     @Test
     void init(){
@@ -153,11 +157,12 @@ public class BokningControllerTests {
         when(bokning.getTotalPrice()).thenReturn(1);
         when(mockBokningService.newBokning(anyString(), anyString(), anyString(), any(LocalDate.class), any(LocalDate.class), anyLong(), anyInt()))
                 .thenReturn(bokning);
+        doNothing().when(mockCustomerMailService).sendConfirmationMail(any(Bokning.class));
 
         mockMvc.perform(post("/bokningar/add")
                 .param("namn", "Test")
                 .param("telNr", "Test")
-                .param("email", "Test")
+                .param("email", "Test@email.com")
                 .param("startDate", "2023-01-01")
                 .param("endDate", "2023-01-10")
                 .param("rumId", "1")
