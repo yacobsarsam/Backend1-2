@@ -57,13 +57,14 @@ public class CompanyCustomerImp implements CompanyCustomerService {
 
     public List<customers> searchCompanyClients(String searchWord, Sort sort) {
 
+        String lowerCaseSearchWord = searchWord;
         List<customers> companyClients = cr.findAll(sort); // sorterar sökt kunder
         List<customers> companyClientMatch = companyClients.stream()
 
-                .filter(cc -> cc.getCompanyName().contains(searchWord) ||
-                        cc.getContactName().contains(searchWord) ||
-                        cc.getCity().contains(searchWord) ||
-                        cc.getCountry().contains(searchWord))
+                .filter(cc -> cc.getCompanyName().toLowerCase().contains(lowerCaseSearchWord) ||
+                        cc.getContactName().toLowerCase().contains(lowerCaseSearchWord) ||
+                        cc.getCity().toLowerCase().contains(lowerCaseSearchWord) ||
+                        cc.getCountry().toLowerCase().contains(lowerCaseSearchWord))
                 .collect(Collectors.toList());
         return companyClientMatch;
     }
