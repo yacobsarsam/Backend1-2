@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/admin/users","/addUser","/company", "/login", "/rum/allRooms", "/blacklist").hasRole("ADMIN")
                         .requestMatchers("/book", "/kunder").hasRole("RECEPTIONIST")
-                        .requestMatchers("/style.css","/register", "/login", "/forgot-password", "/reset-password").permitAll()
+                        .requestMatchers("/style.css","/register", "/login", "/forgot-password", "/reset-password", "/error", "/404").permitAll()
                         .anyRequest().authenticated()
                 )
 //                                .oauth2Login(oauth2 -> oauth2
