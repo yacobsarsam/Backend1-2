@@ -46,8 +46,10 @@ public class CustomerMailServiceImp implements CustomerMailService {
         variables.put("title", "Bokningsbekräftelse");
         variables.put("name", b.getKund().getNamn());
         variables.put("email", b.getKund().getEmail());
-        variables.put("phone-number", b.getKund().getTel());
+        variables.put("phoneNumber", b.getKund().getTel());
         variables.put("doubleRoom", b.getRum().isDubbelrum());
+        variables.put("roomNumber", b.getRum().getRumsnr());
+        variables.put("price", b.getRum().getPrice());
         variables.put("startDate", b.getStartdatum());
         variables.put("endDate", b.getSlutdatum());
         variables.put("totalPrice", b.getTotalPrice());
