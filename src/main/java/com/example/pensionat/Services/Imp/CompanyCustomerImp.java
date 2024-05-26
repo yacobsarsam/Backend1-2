@@ -57,7 +57,7 @@ public class CompanyCustomerImp implements CompanyCustomerService {
 
     public List<customers> searchCompanyClients(String searchWord, Sort sort) {
 
-        String lowerCaseSearchWord = searchWord;
+        String lowerCaseSearchWord = searchWord.toLowerCase();
         List<customers> companyClients = cr.findAll(sort); // sorterar sökt kunder
         List<customers> companyClientMatch = companyClients.stream()
 
