@@ -1,8 +1,10 @@
 package com.example.pensionat;
 
 import com.example.pensionat.Models.Rum;
+import com.example.pensionat.Models.RumEvent;
 import com.example.pensionat.Repositories.BokningRepo;
 import com.example.pensionat.Repositories.KundRepo;
+import com.example.pensionat.Repositories.RumEventRepository;
 import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Security.Repositories.RoleRepository;
 import com.example.pensionat.Security.Repositories.UserRepository;
@@ -12,7 +14,10 @@ import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 @SpringBootApplication
 public class PensionatApplication {
@@ -73,6 +78,35 @@ public class PensionatApplication {
 //                User user2 = new User("receptionist", "password", List.of(role2));
 //                userRepository.save(user1);
 //                userRepository.save(user2);
+            }
+        };
+    }
+    @Bean
+    public CommandLineRunner seedEvents(RumEventRepository rumEventRepository, RumRepo rumRepo) {
+        return args -> {
+            if (rumEventRepository.count() == 0) {
+                List<Rum> rooms = rumRepo.findAll();
+                if (!rooms.isEmpty()) {
+                    String[] events = {
+                            "Dörren öppnad",
+                            "Dörren stängd",
+                            "Städning påbörjat av Per Persson",
+                            "Städning avslutat av Per Persson"
+                    };
+
+                    Random random = new Random();
+
+                    for (Rum room : rooms) {
+                        for (int i = 0; i < 5; i++) {
+                            RumEvent event = new RumEvent();
+                            event.setRum(room);
+                            event.setEventText(events[random.nextInt(events.length)]);
+                            event.setDatum(LocalDate.now().minusDays(random.nextInt(30)));
+
+                            rumEventRepository.save(event);
+                        }
+                    }
+                }
             }
         };
     }

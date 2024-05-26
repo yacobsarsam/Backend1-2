@@ -18,8 +18,11 @@ public class RumEvent {
     @Id
     @GeneratedValue
     protected long id;
-    @ManyToOne
-    protected Rum rum;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rum_id", nullable = false)
+    private Rum rum;
+
     protected LocalDate datum;
     protected String eventText;
 }

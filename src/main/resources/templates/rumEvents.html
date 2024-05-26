@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>All Rooms</title>
+    <title>Room Events</title>
     <link rel="stylesheet" type="text/css" href="/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,13 +11,17 @@
 <body>
 <div class="container">
     <nav class="navbar">
-        <button class="navButton"><a th:href="@{/rum/allRooms}">Gå tillbaka</a> </button>
+        <button class="navButton"><a href="/rum/allRooms">Gå tillbaka</a> </button>
     </nav>
-    <h2>Rum events</h2>
-    <table>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="content">
+        <h1 th:text="${'Rum ' + room.rumsnr}">Rum</h1>
+        <ul class="event-list">
+            <li th:each="event : ${events}">
+                <span class="event-text" th:text="${event.eventText}">Event Text</span>
+                <span class="event-date" th:text="${event.datum}">Datum</span>
+            </li>
+        </ul>
+    </div>
 </div>
 </body>
 </html>

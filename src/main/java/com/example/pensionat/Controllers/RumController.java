@@ -3,6 +3,7 @@ package com.example.pensionat.Controllers;
 import com.example.pensionat.Dtos.DetailedRumDto;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Models.RumEvent;
+import com.example.pensionat.Repositories.RumRepo;
 import com.example.pensionat.Services.RumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -18,6 +19,7 @@ public class RumController {
 
 
     private final RumService rumService;
+    private final RumRepo rumRepo;
 
 
     @RequestMapping("")
@@ -26,11 +28,12 @@ public class RumController {
     }
 
     @GetMapping("/allRooms")
-    public String showAllRooms(Model model) {
-        List<DetailedRumDto> allRum = rumService.getAllRum();
-        model.addAttribute("allRum", allRum);
+    public String getAllRooms(Model model) {
+        List<Rum> rooms = rumRepo.findAll();
+        model.addAttribute("rooms", rooms);
         return "allRooms";
     }
+
     @GetMapping("/{roomId}/events")
     public String showRoomEvents(@PathVariable Long roomId, Model model) {
         Rum room = rumService.getRumById(roomId);

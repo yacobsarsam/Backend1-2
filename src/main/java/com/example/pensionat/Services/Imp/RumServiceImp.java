@@ -33,12 +33,11 @@ public class RumServiceImp implements RumService {
     @Override
     public List<RumEvent> getEventsForRum(Long rumId) {
         Rum rum = rumRepo.findById(rumId).orElse(null);
-//        if (rum != null) {
-//            return rum.getEvents();
-//        } else {
-//            return null;
-//        }
-        return null;
+        if (rum != null) {
+            return rum.getRoomEvent();
+        } else {
+            return null;
+        }
     }
 
     @Override

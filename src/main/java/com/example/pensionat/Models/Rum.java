@@ -27,13 +27,12 @@ public class Rum {
     @Column(nullable = false)
     protected int price;
 
-    @OneToMany(mappedBy = "rum")
-    protected List<RumEvent> roomEvent; //gick inte att använda EventBase här (Borde inte EventBase och RumEvent vara samma klass?)
+    @OneToMany(mappedBy = "rum", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RumEvent> roomEvent;
     public Rum(boolean dubbelrum, int storlek, int rumsnr, int price) {
         this.rumsnr = rumsnr;
         this.dubbelrum = dubbelrum;
         this.storlek = storlek;
         this.price = price;
     }
-
 }
