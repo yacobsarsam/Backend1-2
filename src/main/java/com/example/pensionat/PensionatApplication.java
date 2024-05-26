@@ -39,8 +39,9 @@ public class PensionatApplication {
         }
     }
 
+
     @Bean
-    public CommandLineRunner enter(RumRepo rr, KundRepo kundRepo, BokningRepo bokningRepo, RoleRepository roleRepository, UserRepository userRepository) {
+    public CommandLineRunner enter(RumRepo rr, RumEventRepository rumEventRepository) {
         return args -> {
 
             if ((rr.findAll().stream().findFirst().orElse(null)) == null) {
@@ -69,6 +70,32 @@ public class PensionatApplication {
                 rr.save(r10);
                 rr.save(r11);
                 rr.save(r12);
+            }
+
+                if (rumEventRepository.count() == 0) {
+                    List<Rum> rooms = rr.findAll();
+                    if (!rooms.isEmpty()) {
+                        String[] events = {
+                                "Dörren öppnad",
+                                "Dörren stängd",
+                                "Städning påbörjat av Per Persson",
+                                "Städning avslutat av Per Persson"
+                        };
+
+                        Random random = new Random();
+
+                        for (Rum room : rooms) {
+                            for (int i = 0; i < 5; i++) {
+                                RumEvent event = new RumEvent();
+                                event.setRum(room);
+                                event.setEventText(events[random.nextInt(events.length)]);
+                                event.setDatum(LocalDate.now().minusDays(random.nextInt(30)));
+
+                                rumEventRepository.save(event);
+                            }
+                        }
+                    }
+                }
 
 //                Role role1 = new Role("Admin");
 //                Role role2 = new Role("Receptionist");
@@ -78,9 +105,11 @@ public class PensionatApplication {
 //                User user2 = new User("receptionist", "password", List.of(role2));
 //                userRepository.save(user1);
 //                userRepository.save(user2);
-            }
+
         };
     }
+
+    /*
     @Bean
     public CommandLineRunner seedEvents(RumEventRepository rumEventRepository, RumRepo rumRepo) {
         return args -> {
@@ -110,4 +139,8 @@ public class PensionatApplication {
             }
         };
     }
+
+     */
+
+
 }
