@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class UserServiceTest {
+public class UserServiceTests {
     @Mock
     private UserRepository mockUserRepo;
     @Mock
