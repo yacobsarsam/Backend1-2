@@ -33,20 +33,20 @@
     <h2>Ändra bokningsbekräftele-mail</h2>
     <div id="rowContainer">
         <form class="checkbox-form2" action="#" th:action="@{/admin/updateMailTemplate}" method="post">
-            <input type="checkbox" id="roomNumber" value="ROOMNUMBER">
+            <input type="checkbox" id="roomNumber" name="ROOMNUMBER" th:checked="${showRoomNumber}">
             <label for="roomNumber">Rumsnummer</label><br>
-            <input type="checkbox" id="dates" value="DATES">
+            <input type="checkbox" id="dates" name="DATES" th:checked="${showDate}">
             <label for="dates">Datum</label><br>
-            <input type="checkbox" id="numOfBeds" value="NUMOFBEDS">
+            <input type="checkbox" id="numOfBeds" name="NUMOFBEDS" th:checked="${showNumOfBeds}">
             <label for="numOfBeds">Sängplatser</label><br>
-            <input type="checkbox" id="price" value="PRICE">
+            <input type="checkbox" id="price" name="PRICE" th:checked="${showTotalPrice}">
             <label for="price">Total kostnad</label>
             <hr>
-            <input type="checkbox" id="name" value="NAME">
+            <input type="checkbox" id="name" name="NAME" th:checked="${showName}">
             <label for="name">Namn</label><br>
-            <input type="checkbox" id="phoneNumber" value="PHONENUMBER">
+            <input type="checkbox" id="phoneNumber" name="PHONENUMBER" th:checked="${showPhoneNumber}">
             <label for="phoneNumber">Telefonnummer</label><br>
-            <input type="checkbox" id="email" value="EMAIL">
+            <input type="checkbox" id="email" name="EMAIL" th:checked="${showEmail}">
             <label for="email">Email</label><br>
             <br>
             <button class="bigButton" type="submit">Spara/Granska</button>

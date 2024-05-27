@@ -11,11 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +54,6 @@ public class CustomerMailServiceImp implements CustomerMailService {
 
     public String renderTemplate(String templateName, Bokning b) {
         Map<String, Object> variables = new HashMap<>();
-//        variables.put("title", "Bokningsbekräftelse");
         variables.put("name", b.getKund().getNamn());
         variables.put("email", b.getKund().getEmail());
         variables.put("phoneNumber", b.getKund().getTel());
@@ -74,6 +79,37 @@ public class CustomerMailServiceImp implements CustomerMailService {
         Context context = new Context();
         context.setVariables(variables);
         return templateEngine.process(templateName, context);
+    }
+
+    public void updateMailProperties(String ROOMNUMBER, String DATES, String NUMOFBEDS, String PRICE, String NAME, String PHONENUMBER, String EMAIL) {
+        Properties properties = new Properties();
+        String propertiesPath = "C:\\Users\\Eriic\\Javamapp\\Backend\\Pensionat\\src\\main\\java\\com\\example\\pensionat\\Properties\\ConfirmationMailProperties.java";
+
+        //---------------------------
+        //Do the below "on.equals(...)" on all of the inputs and it will probably work. Too tired now...
+        //---------------------------
+
+        boolean roomNumber = "on".equals(ROOMNUMBER);
+        System.out.println(roomNumber);
+
+        try (FileInputStream in = new FileInputStream(propertiesPath)) {
+            properties.load(in);
+            properties.setProperty("showRoomNumber", ROOMNUMBER);
+            properties.setProperty("showDates", DATES);
+            properties.setProperty("showNumOfBeds", NUMOFBEDS);
+            properties.setProperty("showTotalPrice", PRICE);
+            properties.setProperty("showName", NAME);
+            properties.setProperty("showPhoneNumber", PHONENUMBER);
+            properties.setProperty("showEmail", EMAIL);
+            System.out.println("Har uppdaterat alla properties");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (FileOutputStream out = new FileOutputStream(propertiesPath)) {
+            properties.store(out, null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
 

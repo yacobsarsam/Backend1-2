@@ -1,7 +1,9 @@
 package com.example.pensionat.Security.Admin;
 
+import com.example.pensionat.Properties.ConfirmationMailProperties;
 import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.Repositories.UserRepository;
+import com.example.pensionat.Security.Services.Imp.CustomerMailServiceImp;
 import com.example.pensionat.Security.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +27,10 @@ public class adminController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ConfirmationMailProperties confirmationMailProperties;
+    @Autowired
+    private CustomerMailServiceImp customerMailServiceImp;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
@@ -60,7 +66,7 @@ public class adminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users/edit/{id}")
-    public String editUser(@PathVariable ("id") UUID id, Model model){
+    public String editUser(@PathVariable("id") UUID id, Model model) {
         User u = userService.findUserById(id);
         model.addAttribute("user", u);
         model.addAttribute("roles", Arrays.asList("ADMIN", "RECEPTIONIST"));
@@ -76,9 +82,10 @@ public class adminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
-    public String updateUserInfo(Model model, User u){
+    public String updateUserInfo(Model model, User u) {
         return userService.updateUser(u, model);
     }
+
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") UUID id) {
@@ -95,23 +102,36 @@ public class adminController {
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/alterMailTemplate")
     public String alterMailTemplate(Model model) {
-        model.addAttribute("name","[NAMN]");
-        model.addAttribute("phoneNumber","[TEL]");
-        model.addAttribute("email","[EMAIL]");
-        model.addAttribute("roomNumber","[RUMSNUMMER]");
-        model.addAttribute("startDate","[STARTDATUM]");
-        model.addAttribute("endDate","[SLUTDATUM]");
-        model.addAttribute("numOfBeds","[ANTAL SÄNGAR]");
-        model.addAttribute("totalPrice","[TOTAL KOSTNAD]");
+        model.addAttribute("name", "[NAMN]");
+        model.addAttribute("phoneNumber", "[TEL]");
+        model.addAttribute("email", "[EMAIL]");
+        model.addAttribute("roomNumber", "[RUMSNUMMER]");
+        model.addAttribute("startDate", "[STARTDATUM]");
+        model.addAttribute("endDate", "[SLUTDATUM]");
+        model.addAttribute("numOfBeds", "[ANTAL SÄNGAR]");
+        model.addAttribute("totalPrice", "[TOTAL KOSTNAD]");
+        model.addAttribute("showName", confirmationMailProperties.getShowName());
+        model.addAttribute("showEmail", confirmationMailProperties.getShowEmail());
+        model.addAttribute("showPhoneNumber", confirmationMailProperties.getShowPhoneNumber());
+        model.addAttribute("showRoomNumber", confirmationMailProperties.getShowRoomNumber());
+        model.addAttribute("showDate", confirmationMailProperties.getShowDate());
+        model.addAttribute("showTotalPrice", confirmationMailProperties.getShowTotalPrice());
+        model.addAttribute("showNumOfBeds", confirmationMailProperties.getShowNumOfBeds());
         return "admin/editMailTemplate";
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/alterMailTemplate")
-    public String updateMailTemplate(Model model) {
+    @PostMapping("/updateMailTemplate")
+    public String updateAndReturn(@RequestParam(required = false) String ROOMNUMBER, @RequestParam(required = false) String DATES,
+                                  @RequestParam(required = false) String NUMOFBEDS, @RequestParam(required = false) String PRICE,
+                                     @RequestParam(required = false) String NAME, @RequestParam(required = false) String PHONENUMBER,
+                                  @RequestParam(required = false) String EMAIL, Model model) {
+        System.out.println("kommer till updateAndReturn-metod i adminController");
+        System.out.println("ROOMNUMBER = " + ROOMNUMBER);
+        System.out.println("DATES = " + DATES);
+        customerMailServiceImp.updateMailProperties(ROOMNUMBER, DATES, NUMOFBEDS, PRICE, NAME, PHONENUMBER, EMAIL);
 
-
-        return "admin/editMailTemplate";
+        return alterMailTemplate(model);
     }
 
     private UUID getUserID(Authentication authentication) {
