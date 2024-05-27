@@ -476,3 +476,8 @@ form button[type="submit"]:hover {
     -ms-user-select: none;
     user-select: none;
 }
+
+#rowContainer{
+    display:flex;
+    flex-direction:row;
+}
