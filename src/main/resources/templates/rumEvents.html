@@ -17,8 +17,8 @@
         <h1 th:text="${'Rum ' + room.rumsnr}">Rum</h1>
         <ul class="event-list">
             <li th:each="event : ${events}">
-                <span class="event-text" th:text="${event.eventText}">Event Text</span>
-                <span class="event-date" th:text="${event.datum}">Datum</span>
+                <span class="event-text" th:text="${event.eventType}">Event Text</span>
+                <span class="event-date" th:text="${event.eventTime}">Datum</span>
             </li>
         </ul>
     </div>
