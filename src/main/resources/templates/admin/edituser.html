@@ -29,7 +29,7 @@
             <input type="email" id="email" name="email" th:field="*{email}"><br>
 
             <label for="password">Lösenord: </label>
-            <input type="password" id="password" name="password" th:field="*{password}">
+            <input readonly type="password" id="password" name="password" th:field="*{password}">
             <input type="hidden" id="id" name="id" th:field="*{id}">
             <p class="error" th:name="felmeddelande" th:text="${felmeddelande}"></p>
 

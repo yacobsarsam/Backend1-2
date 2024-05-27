@@ -79,7 +79,6 @@ public class UserService {
             if (existingUser != null) {
                 existingUser.setUsername(u.getUsername());
                 existingUser.setEmail(u.getEmail());
-                existingUser.setPassword(u.getPassword());
                 existingUser.setRoles(new HashSet<>(new ArrayList<>(u.getRoles())));
                 userRepository.save(existingUser);
                 return "admin/updateUserDone";
