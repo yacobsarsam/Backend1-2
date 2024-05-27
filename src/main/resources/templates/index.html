@@ -55,6 +55,9 @@
         <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{/admin/users}">Ändra/skapa konton</a>
         </button>
+        <button class="button" sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/admin/alterMailTemplate}">Modifiera bekräftelsemail</a>
+        </button>
     </div>
 </div>
 </body>
