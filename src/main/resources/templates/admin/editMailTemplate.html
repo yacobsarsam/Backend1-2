@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking Details</title>
+    <link rel="stylesheet" type="text/css" href="/style2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
+    <style>
+        body {
+            font-size: 20px;
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .loggningInfo {
+            color: white;
+            font-size: 0.7em;
+            margin-left: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="bigContainer">
+    <nav class="navbar">
+        <button class="navButton2"><a th:href="@{/index}">Home</a></button>
+        <span class="loggningInfo"> Inloggad som: <span th:text="${#authentication.principal.username}"></span></span>
+    </nav>
+    <h2>Ändra bokningsbekräftele-mail</h2>
+    <div id="rowContainer">
+        <div class="checkbox-form2">
+            <input type="checkbox" id="roomNumber" value="ROOMNUMBER">
+            <label for="roomNumber">Rumsnummer</label><br>
+            <input type="checkbox" id="dates" value="DATES">
+            <label for="dates">Datum</label><br>
+            <input type="checkbox" id="numOfBeds" value="NUMOFBEDS">
+            <label for="numOfBeds">Sängplatser</label><br>
+            <input type="checkbox" id="price" value="PRICE">
+            <label for="price">Total kostnad</label>
+            <hr>
+            <input type="checkbox" id="name" value="NAME">
+            <label for="name">Namn</label><br>
+            <input type="checkbox" id="phoneNumber" value="PHONENUMBER">
+            <label for="phoneNumber">Telefonnummer</label><br>
+            <input type="checkbox" id="email" value="EMAIL">
+            <label for="email">Email</label><br>
+            <br>
+            <button class="bigButton" type="submit">Spara/Granska</button>
+
+
+        </div>
+
+        <div th:replace="admin/htmlConfirmationMailTemplate"
+             th:with="name=${name}, phoneNumber=${phoneNumber},
+     email=${email}, roomNumber=${roomNumber},
+     startDate=${startDate}, endDate=${endDate},
+     numOfBeds=${numOfBeds}, totalPrice=${totalPrice}"></div>
+
+
+    </div>
+</div>
+</body>
+</html>

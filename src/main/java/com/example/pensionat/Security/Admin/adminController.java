@@ -105,6 +105,21 @@ public class adminController {
         }
         return "redirect:/admin/users";
     }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/alterMailTemplate")
+    public String alterMailTemplate(Model model) {
+        model.addAttribute("name","[NAMN]");
+        model.addAttribute("phoneNumber","[TEL]");
+        model.addAttribute("email","[EMAIL]");
+        model.addAttribute("roomNumber","[RUMSNUMMER]");
+        model.addAttribute("startDate","[STARTDATUM]");
+        model.addAttribute("endDate","[SLUTDATUM]");
+        model.addAttribute("numOfBeds","[ANTAL SÄNGAR]");
+        model.addAttribute("totalPrice","[TOTAL KOSTNAD]");
+        return "admin/editMailTemplate";
+    }
+
     private UUID getUserID(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userRepository.findByUsername(userDetails.getUsername()).getId();
