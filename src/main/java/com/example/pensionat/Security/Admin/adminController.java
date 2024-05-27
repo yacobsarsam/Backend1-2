@@ -90,8 +90,6 @@ public class adminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
     public String updateUserInfo(Model model, @ModelAttribute User user, @RequestParam("roles") List<Role> roles){
-        System.out.println("i /update");
-        System.out.println(user.getId());
         user.setRoles(Set.copyOf(roles));
         return userService.updateUser(user, model);
     }

@@ -75,14 +75,15 @@ public class UserService {
 
     public String updateUser(User u, Model model) {
         if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())) {
-            System.out.println("i updateUser");
             User existingUser = userRepository.findById(u.getId()).orElse(null);
             if (existingUser != null) {
+                existingUser.setUsername(u.getUsername());
+                existingUser.setEmail(u.getEmail());
+                existingUser.setPassword(u.getPassword());
                 existingUser.setRoles(new HashSet<>(new ArrayList<>(u.getRoles())));
                 userRepository.save(existingUser);
                 return "admin/updateUserDone";
             } else {
-                System.out.println("user id was null");
                 model.addAttribute("felmeddelande", "Användaren kunde inte hittas.");
                 model.addAttribute("user", u);
                 return "admin/edituser";
