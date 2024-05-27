@@ -106,6 +106,14 @@ public class adminController {
         return "admin/editMailTemplate";
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/alterMailTemplate")
+    public String updateMailTemplate(Model model) {
+
+
+        return "admin/editMailTemplate";
+    }
+
     private UUID getUserID(Authentication authentication) {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return userRepository.findByUsername(userDetails.getUsername()).getId();

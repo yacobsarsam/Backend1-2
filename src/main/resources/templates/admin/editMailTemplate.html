@@ -32,7 +32,7 @@
     </nav>
     <h2>Ändra bokningsbekräftele-mail</h2>
     <div id="rowContainer">
-        <div class="checkbox-form2">
+        <form class="checkbox-form2" action="#" th:action="@{/admin/updateMailTemplate}" method="post">
             <input type="checkbox" id="roomNumber" value="ROOMNUMBER">
             <label for="roomNumber">Rumsnummer</label><br>
             <input type="checkbox" id="dates" value="DATES">
@@ -50,15 +50,13 @@
             <label for="email">Email</label><br>
             <br>
             <button class="bigButton" type="submit">Spara/Granska</button>
-
-
-        </div>
+        </form>
 
         <div th:replace="admin/htmlConfirmationMailTemplate"
              th:with="name=${name}, phoneNumber=${phoneNumber},
-     email=${email}, roomNumber=${roomNumber},
-     startDate=${startDate}, endDate=${endDate},
-     numOfBeds=${numOfBeds}, totalPrice=${totalPrice}"></div>
+             email=${email}, roomNumber=${roomNumber},
+             startDate=${startDate}, endDate=${endDate},
+             numOfBeds=${numOfBeds}, totalPrice=${totalPrice}"></div>
 
 
     </div>
