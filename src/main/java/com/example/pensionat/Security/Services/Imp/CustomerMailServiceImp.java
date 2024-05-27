@@ -41,7 +41,7 @@ public class CustomerMailServiceImp implements CustomerMailService {
         mailSender.send(mimeMessage);
     }
 
-    public String renderTemplate(String templateName, Bokning b) {
+    private String renderTemplate(String templateName, Bokning b) {
         Map<String, Object> variables = new HashMap<>();
         variables.put("title", "Bokningsbekräftelse");
         variables.put("name", b.getKund().getNamn());
@@ -58,7 +58,7 @@ public class CustomerMailServiceImp implements CustomerMailService {
         return renderTemplate(templateName, variables);
     }
 
-    public String renderTemplate(String templateName, Map<String, Object> variables) {
+    private String renderTemplate(String templateName, Map<String, Object> variables) {
         Context context = new Context();
         context.setVariables(variables);
         return templateEngine.process(templateName, context);
