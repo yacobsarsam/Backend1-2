@@ -4,11 +4,10 @@ import com.example.pensionat.Controllers.CompanyCustomerController;
 import com.example.pensionat.Models.customers;
 import com.example.pensionat.Repositories.CustomerRepo;
 import com.example.pensionat.Services.CompanyCustomerService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.*;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -24,12 +23,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(CompanyCustomerController.class)
 public class CompanyCustomerControllerTests {
 
-    @Autowired
-    private CompanyCustomerController companyCustomerController;
     @Autowired
     private MockMvc mockMvc;
 
@@ -37,10 +33,11 @@ public class CompanyCustomerControllerTests {
     private CompanyCustomerService mockCompanyCustomerService;
     @MockBean
     private CustomerRepo mockCustomerRepo;
+    @MockBean
+    private CommandLineRunner commandLineRunner;
 
     @Test
     void init(){
-        assertNotNull(companyCustomerController);
         assertNotNull(mockCompanyCustomerService);
         assertNotNull(mockCustomerRepo);
 

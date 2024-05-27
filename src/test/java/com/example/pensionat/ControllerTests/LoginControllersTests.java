@@ -7,8 +7,11 @@ import com.example.pensionat.Security.Repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,26 +21,24 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+@WebMvcTest(LoginControllers.class)
 @AutoConfigureMockMvc
 public class LoginControllersTests {
 
-    @Autowired
+    @MockBean
     private UserRepository userRepository;
-
-    @Autowired
+    @MockBean
     private UserService userService;
-
-
-    @Autowired
-    private LoginControllers loginControllers;
+    @MockBean
+    private CommandLineRunner commandLineRunner;
     @Autowired
     private MockMvc mockMvc;
 
 
     @BeforeEach
     void init(){
-        assertNotNull(loginControllers);
+        assertNotNull(userRepository);
+        assertNotNull(userService);
         assertNotNull(mockMvc);
     }
 
