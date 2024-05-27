@@ -88,9 +88,16 @@ public class UserService {
                 existingUser.setPassword(passwordEncoder.encode(u.getPassword()));
                 existingUser.setRoles(new HashSet<>(new ArrayList<>(u.getRoles())));
                 userRepository.save(existingUser);
-                Authentication authentication = authenticationManager.authenticate(
-                        new UsernamePasswordAuthenticationToken(u.getUsername(), u.getPassword()));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+
+                Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
+                String currentUsername = currentAuthentication.getName();
+                if (currentUsername.equalsIgnoreCase(u.getUsername())){
+                    Authentication authentication = authenticationManager.authenticate(
+                            new UsernamePasswordAuthenticationToken(u.getUsername(), u.getPassword()));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    return "login";
+                }
                 return "admin/updateUserDone";
             } else {
                 model.addAttribute("felmeddelande", "Användaren kunde inte hittas.");
