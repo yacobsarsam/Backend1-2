@@ -10,14 +10,16 @@ import com.example.pensionat.Security.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -36,6 +38,9 @@ public class UserService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public List<User> findAllUsers() {
         return userRepository.findAll();
@@ -79,8 +84,13 @@ public class UserService {
         if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())) {
             User existingUser = userRepository.findById(u.getId()).orElse(null);
             if (existingUser != null) {
-                u.setRoles(existingUser.getRoles());
-                userRepository.save(u);
+                existingUser.setUsername(u.getUsername());
+                existingUser.setPassword(passwordEncoder.encode(u.getPassword()));
+                existingUser.setRoles(new HashSet<>(new ArrayList<>(u.getRoles())));
+                userRepository.save(existingUser);
+                Authentication authentication = authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(u.getUsername(), u.getPassword()));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
                 return "admin/updateUserDone";
             } else {
                 model.addAttribute("felmeddelande", "Användaren kunde inte hittas.");

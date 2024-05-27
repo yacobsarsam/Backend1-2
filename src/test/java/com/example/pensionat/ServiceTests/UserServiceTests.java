@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 
@@ -40,6 +41,8 @@ public class UserServiceTests {
     private PasswordResetTokenRepository mockTokenRepository;
     @Mock
     private JavaMailSender mockMailSender;
+    @Mock
+    private AuthenticationManager authenticationManager;
     @InjectMocks
     private UserService mockUserService;
     private static final UUID id = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
@@ -123,7 +126,8 @@ public class UserServiceTests {
 
     @Test
     void updateUser() {
-        User u1 = new User(id, "Test", "Password", "test@test.se", null);
+        Role role = mock(Role.class);
+        User u1 = new User(id, "Test", "Password", "test@test.se", Set.of(role));
         when(mockUserRepo.findById(id)).thenReturn(Optional.of(u1));
         Model model = mock(Model.class);
         mockUserService.updateUser(u1, model);

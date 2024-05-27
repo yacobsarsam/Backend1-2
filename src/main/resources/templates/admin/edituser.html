@@ -26,23 +26,23 @@
             <input type="text" id="username" name="username" th:field="*{username}" ><br>
 
             <label for="email">E-post:</label>
-            <input type="email" id="email" name="email" th:field="*{email}"><br>
+            <input readonly type="email" id="email" name="email" th:field="*{email}"><br>
 
             <label for="password">Lösenord: </label>
-            <input type="text" id="password" name="password" th:field="*{password}">
+            <input type="password" id="password" name="password" th:field="*{password}">
             <input type="hidden" id="id" name="id" th:field="*{id}">
             <p class="error" th:name="felmeddelande" th:text="${felmeddelande}"></p>
 
-<!--                        <label for="roles">Roller:</label><br>-->
-<!--                        <div class="role-checkbox">-->
-<!--                            <input type="checkbox" id="adminRole" name="roles" value="ADMIN" th:checked="${#lists.contains(userRoles, 'ADMIN')}">-->
-<!--                            <label for="adminRole">Admin</label>-->
-<!--                        </div>-->
-<!--                        <div class="role-checkbox">-->
-<!--                            <input type="checkbox" id="receptionistRole" name="roles" value="RECEPTIONIST" th:checked="${#lists.contains(userRoles, 'RECEPTIONIST')}">-->
-<!--                            <label for="receptionistRole">Receptionist</label>-->
-<!--                        </div>-->
-<!--                        <br>-->
+            <label>Roller:</label><br>
+            <div class="role-checkbox">
+                <input type="checkbox" id="adminRole" name="roles" value="ADMIN" th:checked="${#lists.contains(userRoles, 'ADMIN')}">
+                <label for="adminRole">Admin</label>
+            </div>
+            <div class="role-checkbox">
+                <input type="checkbox" id="receptionistRole" name="roles" value="RECEPTIONIST" th:checked="${#lists.contains(userRoles, 'RECEPTIONIST')}">
+                <label for="receptionistRole">Receptionist</label>
+            </div>
+            <br>
 
             <br><br>
             <input type="submit" value="Uppdatera användare">
