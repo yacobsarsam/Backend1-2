@@ -1,4 +1,3 @@
-
 /* General body styling */
 body {
     font-family: "Poppins", sans-serif;
@@ -26,6 +25,12 @@ body {
     transition: background-color 0.3s ease;
 }
 
+.navButton2 {
+    margin-left: 4px;
+    font-family: "Poppins", sans-serif;
+    color: black;
+}
+
 .navButton a {
     text-decoration: none;
     color: white;
@@ -48,6 +53,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
 .indexContainer button {
     padding: 12px 25px;
     margin: 8px 0;
@@ -86,7 +92,6 @@ body {
 }
 
 
-
 .container, .table-container {
     margin: 20px auto;
     padding: 20px;
@@ -106,10 +111,12 @@ body {
     flex-direction: column;
     gap: 2px;
 }
-.containerKunder .all_customers{
+
+.containerKunder .all_customers {
     background-color: #28a745;
 }
-.detailContainer{
+
+.detailContainer {
     text-align: center;
     font-size: 18px;
 }
@@ -234,6 +241,7 @@ form button[type="submit"]:hover {
 .ml-10 {
     margin-left: 10px;
 }
+
 .num-input {
     margin-top: 10px;
     display: block;
@@ -254,7 +262,8 @@ form button[type="submit"]:hover {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     outline: none;
 }
-.containerBlackList form{
+
+.containerBlackList form {
     display: flex;
     flex-direction: column;
     gap: 2px;
@@ -279,12 +288,14 @@ form button[type="submit"]:hover {
 .roomButton:hover {
     background-color: #808080;
 }
+
 .top-text-container .fa-solid.fa-right-long {
     margin-left: 10px;
     margin-top: 20px;
     margin-right: 10px;
 }
-.book-button{
+
+.book-button {
     margin-left: 4px;
     background-color: #007BFF;
     color: white;
@@ -373,10 +384,10 @@ form button[type="submit"]:hover {
     transform: translateY(0);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
-.alla_bokningar{
+
+.alla_bokningar {
     text-align: center;
 }
-
 
 
 .date-container {
@@ -457,11 +468,11 @@ form button[type="submit"]:hover {
 
 .userform-container {
     display: block;
-    font-size:11px;
-    padding:4px 2px;
-    border:solid 1px #aacfe4;
-    width:70px;
-    margin:2px 0 20px 10px;
+    font-size: 11px;
+    padding: 4px 2px;
+    border: solid 1px #aacfe4;
+    width: 70px;
+    margin: 2px 0 20px 10px;
 }
 
 .checkbox-form {
@@ -491,12 +502,34 @@ form button[type="submit"]:hover {
 }
 
 .checkbox-form2 input {
-    /*display: inline-block;*/
     width: 80px;
     height: 40px;
 }
 
-#rowContainer{
-    display:flex;
-    flex-direction:row;
+.checkbox-form2 button {
+    margin-left: 4px;
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 20px;
+}
+
+#rowContainer {
+    display: flex;
+    flex-direction: row;
+}
+
+.bigContainer {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 1200px;
+
 }
