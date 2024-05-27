@@ -1,8 +1,12 @@
 package com.example.pensionat.Security.Admin;
 
+import com.example.pensionat.Security.Models.Role;
 import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.Repositories.UserRepository;
+import com.example.pensionat.Security.Services.Imp.RoleServiceImp;
+import com.example.pensionat.Security.Services.RoleService;
 import com.example.pensionat.Security.UserDTO;
+import com.example.pensionat.Utilities.RoleEditor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -10,10 +14,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -25,6 +31,13 @@ public class adminController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RoleService roleService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Role.class, new RoleEditor(roleService));
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/users")
@@ -76,8 +89,11 @@ public class adminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/update")
-    public String updateUserInfo(Model model, User u){
-        return userService.updateUser(u, model);
+    public String updateUserInfo(Model model, @ModelAttribute User user, @RequestParam("roles") List<Role> roles){
+        System.out.println("i /update");
+        System.out.println(user.getId());
+        user.setRoles(Set.copyOf(roles));
+        return userService.updateUser(user, model);
     }
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteUser/{id}")

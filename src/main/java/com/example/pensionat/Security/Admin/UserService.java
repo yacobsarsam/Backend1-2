@@ -14,10 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -77,12 +75,14 @@ public class UserService {
 
     public String updateUser(User u, Model model) {
         if (isUserFieldsFilledAndCorrect(u.getUsername(), u.getPassword(), u.getEmail())) {
+            System.out.println("i updateUser");
             User existingUser = userRepository.findById(u.getId()).orElse(null);
             if (existingUser != null) {
-                u.setRoles(existingUser.getRoles());
-                userRepository.save(u);
+                existingUser.setRoles(new HashSet<>(new ArrayList<>(u.getRoles())));
+                userRepository.save(existingUser);
                 return "admin/updateUserDone";
             } else {
+                System.out.println("user id was null");
                 model.addAttribute("felmeddelande", "Användaren kunde inte hittas.");
                 model.addAttribute("user", u);
                 return "admin/edituser";
