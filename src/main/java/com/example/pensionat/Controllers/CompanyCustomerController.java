@@ -25,8 +25,12 @@ public class CompanyCustomerController {
     @GetMapping("/customers/{id}")
     public String showIndividualCustomer(@PathVariable Long id, Model model) {
         customers customer = ccs.getCustomerDetailsById(id);
-        model.addAttribute("customer", customer);
-        return "visaCompanyCustomerIndividual.html";
+        if (customer == null){
+            return "error";
+        } else {
+            model.addAttribute("customer", customer);
+            return "visaCompanyCustomerIndividual";
+        }
     }
 
 
@@ -51,7 +55,7 @@ public class CompanyCustomerController {
         model.addAttribute("sortOrder", sortOrder);
         model.addAttribute("searchWord", searchWord);
 
-        return "visaAvtalsKunder.html";
+        return "visaAvtalsKunder";
     }
 
 
@@ -80,6 +84,6 @@ public class CompanyCustomerController {
         model.addAttribute("searchWord", searchWord);
         model.addAttribute("sortField", sortField);
         model.addAttribute("sortOrder", sortOrder);
-        return "visaSoktaKunder.html";
+        return "visaSoktaKunder";
     }
 }

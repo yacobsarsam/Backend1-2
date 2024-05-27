@@ -9,48 +9,47 @@ import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Models.Kund;
 import com.example.pensionat.Models.Rum;
 import com.example.pensionat.Security.Services.CustomerMailService;
-import com.example.pensionat.Security.Services.Imp.CustomerMailServiceImp;
 import com.example.pensionat.Services.BokningService;
+import com.example.pensionat.Services.RumService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(BokningController.class)
 public class BokningControllerTests {
 
     @Autowired
-    private BokningController mockBokningController;
-    @Autowired
-    private KundController mockKundController;
-    @Autowired
     private MockMvc mockMvc;
-
+    @MockBean
+    private KundController mockKundController;
     @MockBean
     private BokningService mockBokningService;
     @MockBean
     private CustomerMailService mockCustomerMailService;
+    @MockBean
+    private CommandLineRunner commandLineRunner;
+    @MockBean
+    private RumService rumService;
 
     @Test
     void init(){
-        assertNotNull(mockBokningController);
+        assertNotNull(mockCustomerMailService);
         assertNotNull(mockBokningService);
     }
 
@@ -101,6 +100,7 @@ public class BokningControllerTests {
         when(mockBokningService.updateBokning(anyLong(), any(LocalDate.class), any(LocalDate.class), anyInt(), anyLong())).thenReturn(bokning);
 
         mockMvc.perform(post("/bokningar/update")
+                .with(csrf())
                 .param("bokId", "1")
                 .param("rumId", "1")
                 .param("startDate", "2023-01-01")
@@ -160,6 +160,7 @@ public class BokningControllerTests {
         doNothing().when(mockCustomerMailService).sendConfirmationMail(any(Bokning.class));
 
         mockMvc.perform(post("/bokningar/add")
+                .with(csrf())
                 .param("namn", "Test")
                 .param("telNr", "Test")
                 .param("email", "Test@email.com")
@@ -186,8 +187,10 @@ public class BokningControllerTests {
     @WithMockUser(username = "receptionist", roles = {"RECEPTIONIST"})
     void deleteBokningTest() throws Exception {
         String expectedResponse = "visabokningperkund";
+        when(mockKundController.showBookingDetails(anyLong(), any(Model.class))).thenReturn("visabokningperkund");
 
-        mockMvc.perform(post("/bokningar/delete/{id}", 1))
+        mockMvc.perform(post("/bokningar/delete/{id}", 1)
+                .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(view().name(expectedResponse));
     }

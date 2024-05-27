@@ -10,7 +10,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -31,12 +33,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(BokningsViewController.class)
 public class BokningsViewControllerTests {
 
-    @Autowired
-    private BokningsViewController bokningsViewController;
     @Autowired
     private MockMvc mockMvc;
 
@@ -46,10 +45,14 @@ public class BokningsViewControllerTests {
     private KundService mockKundService;
     @MockBean
     private BlackListService mockBlackListService;
+    @MockBean
+    private CommandLineRunner commandLineRunner;
 
     @BeforeEach
     void init(){
-        assertNotNull(bokningsViewController);
+        assertNotNull(mockBokningService);
+        assertNotNull(mockKundService);
+        assertNotNull(mockBlackListService);
         assertNotNull(mockMvc);
     }
 

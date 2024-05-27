@@ -5,39 +5,45 @@ import com.example.pensionat.Dtos.BlackListPersonDto;
 import com.example.pensionat.Services.BlackListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(BlackListController.class)
 public class BlackListControllerTests {
 
-    @Autowired
-    private BlackListController mockBlackListController;
-    @Autowired
-    private MockMvc mockMvc;
+    @MockBean
+    private CommandLineRunner commandLineRunner;
 
     @MockBean
     private BlackListService mockBlackListService;
 
+    @Autowired
+    private MockMvc mockMvc;
+
     @BeforeEach
     void init(){
-        assertNotNull(mockBlackListController);
         assertNotNull(mockBlackListService);
     }
 
@@ -61,6 +67,7 @@ public class BlackListControllerTests {
         when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(false);
 
         mockMvc.perform(post("/blacklist/addtoblacklist")
+                .with(csrf())
                 .param("name", "test")
                 .param("email", "test")
                 .param("group", "test")
@@ -76,6 +83,7 @@ public class BlackListControllerTests {
         when(mockBlackListService.checkIfBLKundExistByEmailUtanAttSkapa(anyString())).thenReturn(true);
 
         mockMvc.perform(post("/blacklist/addtoblacklist")
+                .with(csrf())
                 .param("name", "test")
                 .param("email", "test")
                 .param("group", "test")
@@ -117,6 +125,7 @@ public class BlackListControllerTests {
         when(mockBlackListService.getAllBLKunder()).thenReturn(List.of(blackListPerson));
 
         mockMvc.perform(post("/blacklist/update")
+                .with(csrf())
                 .flashAttr("allakunder", List.of(blackListPerson)))
                 .andExpect(status().isOk())
                 .andExpect(view().name(expectedResponse))
