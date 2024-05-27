@@ -102,7 +102,7 @@ public class adminController {
         model.addAttribute("startDate","[STARTDATUM]");
         model.addAttribute("endDate","[SLUTDATUM]");
         model.addAttribute("numOfBeds","[ANTAL SÄNGAR]");
-        model.addAttribute("totalPrice","[ANTAL SÄNGAR]");
+        model.addAttribute("totalPrice","[TOTAL KOSTNAD]");
         return "admin/editMailTemplate";
     }
 

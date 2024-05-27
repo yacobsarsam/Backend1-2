@@ -477,6 +477,25 @@ form button[type="submit"]:hover {
     user-select: none;
 }
 
+.checkbox-form2 {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 30px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.checkbox-form2 input {
+    /*display: inline-block;*/
+    width: 80px;
+    height: 40px;
+}
+
 #rowContainer{
     display:flex;
     flex-direction:row;
