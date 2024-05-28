@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -16,13 +15,18 @@ import java.time.LocalDate;
 public class RumEvent {
 
     @Id
-    @GeneratedValue
-    protected long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "rum_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "rum_id")
     private Rum rum;
 
-    protected LocalDate datum;
-    protected String eventText;
+    @Column(nullable = false)
+    private int roomNumber;
+
+    private String eventType;
+    private LocalDateTime eventTime;
+    private String person;
+
 }

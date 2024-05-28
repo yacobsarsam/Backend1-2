@@ -17,6 +17,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 
@@ -40,6 +45,10 @@ public class UserServiceTests {
     private PasswordResetTokenRepository mockTokenRepository;
     @Mock
     private JavaMailSender mockMailSender;
+    @Mock
+    private AuthenticationManager authenticationManager;
+    @Mock
+    private Authentication authentication;
     @InjectMocks
     private UserService mockUserService;
     private static final UUID id = UUID.fromString("123e4567-e89b-12d3-a456-426614174000");
@@ -123,9 +132,17 @@ public class UserServiceTests {
 
     @Test
     void updateUser() {
-        User u1 = new User(id, "Test", "Password", "test@test.se", null);
-        when(mockUserRepo.findById(id)).thenReturn(Optional.of(u1));
+        Role role = mock(Role.class);
+        User u1 = new User(id, "Test", "Password", "test@test.se", Set.of(role));
         Model model = mock(Model.class);
+        SecurityContext securityContext = mock(SecurityContext.class);
+        SecurityContextHolder.setContext(securityContext);
+        Authentication authentication = mock(Authentication.class);
+
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        when(authentication.getName()).thenReturn(u1.getUsername());
+        when(mockUserRepo.findById(id)).thenReturn(Optional.of(u1));
+
         mockUserService.updateUser(u1, model);
         verify(mockUserRepo, times(1)).save(u1);
     }

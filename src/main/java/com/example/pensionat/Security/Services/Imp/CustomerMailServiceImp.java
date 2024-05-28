@@ -72,7 +72,7 @@ public class CustomerMailServiceImp implements CustomerMailService {
         return renderTemplate(templateName, variables);
     }
 
-    public String renderTemplate(String templateName, Map<String, Object> variables) {
+    private String renderTemplate(String templateName, Map<String, Object> variables) {
         Context context = new Context();
         context.setVariables(variables);
         return templateEngine.process(templateName, context);

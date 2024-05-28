@@ -1,6 +1,16 @@
-//package com.example.pensionat.Models;
-//
-////TODO ändra om koden om det behövs
-//public class RoomCleaningStarted extends EventBase {
-//    String cleaninigByUser;
-//}
+package com.example.pensionat.Models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RoomCleaningStarted extends RumEvent{
+    private int roomNumber;
+    private LocalDateTime eventTime;
+    private String eventType;
+    private String person;
+}

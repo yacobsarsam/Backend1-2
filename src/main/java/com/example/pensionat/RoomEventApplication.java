@@ -1,48 +1,88 @@
 package com.example.pensionat;
 
+import com.example.pensionat.Models.*;
+import com.example.pensionat.Properties.QueueProperties;
+import com.example.pensionat.Repositories.RumEventRepository;
+import com.example.pensionat.Repositories.RumRepo;
+import com.example.pensionat.Services.RumService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.rabbitmq.client.DeliverCallback;
-import lombok.NoArgsConstructor;
+import com.rabbitmq.client.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.amqp.CachingConnectionFactoryConfigurer;
 import org.springframework.stereotype.Component;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Channel;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Random;
+import java.util.concurrent.TimeoutException;
 
 @Component
 @RequiredArgsConstructor
 public class RoomEventApplication implements CommandLineRunner {
 
-
-    private String queueName = "3b009a69-8ab6-4437-a13a-cfc9c4069067";
+    @Autowired
+    private QueueProperties queueProperties;
+    private final ObjectMapper objectMapper;
+    private final RumEventRepository rumEventRepository;
+    private final RumRepo rumRepository;
+    private final RumService rumService;
     @Override
     public void run(String... args) throws Exception {
         final ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("128.140.81.47");
-        factory.setUsername("djk47589hjkew789489hjf894");
-        factory.setPassword("sfdjkl54278frhj7");
-        Connection connection = factory.newConnection();
-        Channel channel = connection.createChannel();
-
-
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.registerModule(new JavaTimeModule());
-        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-
-
-        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println(" [x] Received '" + message + "'");
-            // https://www.baeldung.com/jackson-annotations#bd-jackson-polymorphic-type-handling-annotations
-        };
-        channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
-
-
+        factory.setHost(queueProperties.getHost());
+        factory.setUsername(queueProperties.getUsername());
+        factory.setPassword(queueProperties.getPassword());
+        try (Connection connection = factory.newConnection();
+             Channel channel = connection.createChannel()) {
+            String queueName = queueProperties.getUsername();
+            channel.queueDeclare(queueName, false, false, false, null);
+            System.out.println(" [*] Waiting for messages.");
+            channel.basicConsume(queueName, true, createDeliverCallback(), consumerTag -> {});
+            Random random = new Random();
+            LocalDateTime now = LocalDateTime.now();
+            for (int roomNumber = 1; roomNumber <= 12; roomNumber++) {
+                LocalDateTime randomDate = now.minusDays(random.nextInt(365));
+                sendEventToQueue(new RoomOpened(roomNumber, randomDate, "Dörren öppnades", "Per Persson"));
+                sendEventToQueue(new RoomClosed(roomNumber, randomDate, "Dörren stängdes", "Per Persson"));
+                sendEventToQueue(new RoomCleaningStarted(roomNumber, randomDate, "Städning påbörjades", "Mattias Larson"));
+                sendEventToQueue(new RoomCleaningFinished(roomNumber, randomDate, "Städning avslutades", "Mattias Larson"));
+            }
+        }
     }
 
+    private DeliverCallback createDeliverCallback() {
+        return (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received '" + message + "'");
+            RumEvent rumEvent = convertToRumEvent(message);
+            int roomNumber = rumEvent.getRoomNumber();
+            Long rumId = Long.valueOf(roomNumber);
+            Rum rum = rumRepository.findById(rumId).orElse(null);
+            if (rum != null) {
+                rumEvent.setRum(rum);
+                rumEventRepository.save(rumEvent);
+            } else {
+                System.out.println("Rum not found.");
+            }
+        };
+    }
+
+    private RumEvent convertToRumEvent(String message) throws JsonProcessingException {
+        return objectMapper.readValue(message, RumEvent.class);
+    }
+
+    public void sendEventToQueue(RumEvent event) throws IOException, TimeoutException {
+        final ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost(queueProperties.getHost());
+        factory.setUsername(queueProperties.getUsername());
+        factory.setPassword(queueProperties.getPassword());
+        try (Connection connection = factory.newConnection(); Channel channel = connection.createChannel()) {
+            String queueName = queueProperties.getUsername();
+            channel.queueDeclare(queueName, false, false, false, null);
+            String message = objectMapper.writeValueAsString(event);
+            channel.basicPublish("", queueName, null, message.getBytes());
+            System.out.println(" [x] Sent '" + message + "'");
+        }
+    }
 }
