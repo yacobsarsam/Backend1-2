@@ -1,6 +1,5 @@
 package com.example.pensionat.Configurations;
 
-import com.example.pensionat.Properties.ConfirmationMailProperties;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,10 +27,5 @@ public class HtmlMailConfig {
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
-    }
-
-    @Bean
-    public ConfirmationMailProperties confirmationMailProperties() {
-        return new ConfirmationMailProperties();
     }
 }

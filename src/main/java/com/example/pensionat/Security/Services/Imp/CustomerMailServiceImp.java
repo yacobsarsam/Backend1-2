@@ -1,7 +1,6 @@
 package com.example.pensionat.Security.Services.Imp;
 
 import com.example.pensionat.Models.Bokning;
-import com.example.pensionat.Properties.ConfirmationMailProperties;
 import com.example.pensionat.Security.Services.CustomerMailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -14,8 +13,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -28,9 +25,6 @@ public class CustomerMailServiceImp implements CustomerMailService {
 
     @Autowired
     private SpringTemplateEngine templateEngine;
-
-    @Autowired
-    private ConfirmationMailProperties confirmationMailProperties;
 
 
     @Override

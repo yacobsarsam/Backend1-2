@@ -1,10 +1,8 @@
 package com.example.pensionat.Security.Admin;
 
 import com.example.pensionat.Security.Models.Role;
-import com.example.pensionat.Properties.ConfirmationMailProperties;
 import com.example.pensionat.Security.Models.User;
 import com.example.pensionat.Security.Repositories.UserRepository;
-import com.example.pensionat.Security.Services.Imp.RoleServiceImp;
 import com.example.pensionat.Security.Services.RoleService;
 import com.example.pensionat.Security.Services.Imp.CustomerMailServiceImp;
 import com.example.pensionat.Security.UserDTO;
@@ -34,8 +32,6 @@ public class adminController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private ConfirmationMailProperties confirmationMailProperties;
     @Autowired
     private CustomerMailServiceImp customerMailServiceImp;
     @Autowired
