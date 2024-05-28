@@ -33,26 +33,20 @@ public class RoomEventApplication implements CommandLineRunner {
         factory.setHost(queueProperties.getHost());
         factory.setUsername(queueProperties.getUsername());
         factory.setPassword(queueProperties.getPassword());
-
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
-
             String queueName = queueProperties.getUsername();
             channel.queueDeclare(queueName, false, false, false, null);
-
-            System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-
+            System.out.println(" [*] Waiting for messages.");
             channel.basicConsume(queueName, true, createDeliverCallback(), consumerTag -> {});
-
             Random random = new Random();
             LocalDateTime now = LocalDateTime.now();
-
             for (int roomNumber = 1; roomNumber <= 12; roomNumber++) {
                 LocalDateTime randomDate = now.minusDays(random.nextInt(365));
-                sendEvent(new RoomOpened(roomNumber, randomDate, "Door opened", "Per Persson"));
-                sendEvent(new RoomClosed(roomNumber, randomDate, "Door closed", "Per Persson"));
-                sendEvent(new RoomCleaningStarted(roomNumber, randomDate, "Cleaning started", "Mattias Larson"));
-                sendEvent(new RoomCleaningFinished(roomNumber, randomDate, "Cleaning finished", "Mattias Larson"));
+                sendEventToQueue(new RoomOpened(roomNumber, randomDate, "Dörren öppnades", "Per Persson"));
+                sendEventToQueue(new RoomClosed(roomNumber, randomDate, "Dörren stängdes", "Per Persson"));
+                sendEventToQueue(new RoomCleaningStarted(roomNumber, randomDate, "Städning påbörjades", "Mattias Larson"));
+                sendEventToQueue(new RoomCleaningFinished(roomNumber, randomDate, "Städning avslutades", "Mattias Larson"));
             }
         }
     }
@@ -61,14 +55,10 @@ public class RoomEventApplication implements CommandLineRunner {
         return (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received '" + message + "'");
-
             RumEvent rumEvent = convertToRumEvent(message);
-
             int roomNumber = rumEvent.getRoomNumber();
             Long rumId = Long.valueOf(roomNumber);
-
             Rum rum = rumRepository.findById(rumId).orElse(null);
-
             if (rum != null) {
                 rumEvent.setRum(rum);
                 rumEventRepository.save(rumEvent);
@@ -82,20 +72,11 @@ public class RoomEventApplication implements CommandLineRunner {
         return objectMapper.readValue(message, RumEvent.class);
     }
 
-    private void sendEvent(RumEvent event) {
-        try {
-            sendEventToQueue(event);
-        } catch (IOException | TimeoutException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void sendEventToQueue(RumEvent event) throws IOException, TimeoutException {
         final ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(queueProperties.getHost());
         factory.setUsername(queueProperties.getUsername());
         factory.setPassword(queueProperties.getPassword());
-
         try (Connection connection = factory.newConnection(); Channel channel = connection.createChannel()) {
             String queueName = queueProperties.getUsername();
             channel.queueDeclare(queueName, false, false, false, null);

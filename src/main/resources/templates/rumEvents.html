@@ -7,6 +7,25 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        .event-item {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        .event-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .event-time {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -18,7 +37,7 @@
         <ul class="event-list">
             <li th:each="event : ${events}">
                 <span class="event-text" th:text="${event.eventType}">Event Text</span>
-                <span class="event-date" th:text="${event.eventTime}">Datum</span>
+                <span class="event-time" th:text="${#temporals.format(event.eventTime, 'dd-MM-yyyy HH:mm:ss')}">Time</span>
             </li>
         </ul>
     </div>
