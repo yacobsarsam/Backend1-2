@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -101,7 +102,7 @@ public class adminController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/alterMailTemplate")
-    public String alterMailTemplate(Model model) {
+    public String alterMailTemplate(Model model) throws IOException {
         model.addAttribute("name", "[NAMN]");
         model.addAttribute("phoneNumber", "[TEL]");
         model.addAttribute("email", "[EMAIL]");
@@ -110,13 +111,13 @@ public class adminController {
         model.addAttribute("endDate", "[SLUTDATUM]");
         model.addAttribute("numOfBeds", "[ANTAL SÄNGAR]");
         model.addAttribute("totalPrice", "[TOTAL KOSTNAD]");
-        model.addAttribute("showName", confirmationMailProperties.getShowName());
-        model.addAttribute("showEmail", confirmationMailProperties.getShowEmail());
-        model.addAttribute("showPhoneNumber", confirmationMailProperties.getShowPhoneNumber());
-        model.addAttribute("showRoomNumber", confirmationMailProperties.getShowRoomNumber());
-        model.addAttribute("showDate", confirmationMailProperties.getShowDate());
-        model.addAttribute("showTotalPrice", confirmationMailProperties.getShowTotalPrice());
-        model.addAttribute("showNumOfBeds", confirmationMailProperties.getShowNumOfBeds());
+        model.addAttribute("showName", customerMailServiceImp.getMailProperties().getProperty("showName"));
+        model.addAttribute("showEmail", customerMailServiceImp.getMailProperties().getProperty("showEmail"));
+        model.addAttribute("showPhoneNumber", customerMailServiceImp.getMailProperties().getProperty("showPhoneNumber"));
+        model.addAttribute("showRoomNumber", customerMailServiceImp.getMailProperties().getProperty("showRoomNumber"));
+        model.addAttribute("showDate", customerMailServiceImp.getMailProperties().getProperty("showDate"));
+        model.addAttribute("showTotalPrice", customerMailServiceImp.getMailProperties().getProperty("showTotalPrice"));
+        model.addAttribute("showNumOfBeds", customerMailServiceImp.getMailProperties().getProperty("showNumOfBeds"));
         return "admin/editMailTemplate";
     }
 
@@ -125,11 +126,9 @@ public class adminController {
     public String updateAndReturn(@RequestParam(required = false) String ROOMNUMBER, @RequestParam(required = false) String DATES,
                                   @RequestParam(required = false) String NUMOFBEDS, @RequestParam(required = false) String PRICE,
                                      @RequestParam(required = false) String NAME, @RequestParam(required = false) String PHONENUMBER,
-                                  @RequestParam(required = false) String EMAIL, Model model) {
-        System.out.println("kommer till updateAndReturn-metod i adminController");
-        System.out.println("ROOMNUMBER = " + ROOMNUMBER);
-        System.out.println("DATES = " + DATES);
-        customerMailServiceImp.updateMailProperties(ROOMNUMBER, DATES, NUMOFBEDS, PRICE, NAME, PHONENUMBER, EMAIL);
+                                  @RequestParam(required = false) String EMAIL, Model model) throws IOException {
+
+        customerMailServiceImp.alterMailProperties(ROOMNUMBER, DATES, NUMOFBEDS, PRICE, NAME, PHONENUMBER, EMAIL);
 
         return alterMailTemplate(model);
     }

@@ -2,7 +2,6 @@ package com.example.pensionat.Security.Services.Imp;
 
 import com.example.pensionat.Models.Bokning;
 import com.example.pensionat.Properties.ConfirmationMailProperties;
-import com.example.pensionat.Properties.MailProperties;
 import com.example.pensionat.Security.Services.CustomerMailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -11,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -37,13 +34,13 @@ public class CustomerMailServiceImp implements CustomerMailService {
 
 
     @Override
-    public void sendConfirmationMail(Bokning b) throws MessagingException {
+    public void sendConfirmationMail(Bokning b) throws MessagingException, IOException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
 //        String htmlMsg = "<h3>'temporary HTML mail message'</h3>"; //ändra till html-fil?
 
-        String htmlMsg = renderTemplate("htmlConfirmationMailTemplate", b);
+        String htmlMsg = renderTemplate("admin/htmlConfirmationMailTemplate", b);
 
         helper.setText(htmlMsg, true);
         helper.setTo(b.getKund().getEmail());
@@ -52,7 +49,7 @@ public class CustomerMailServiceImp implements CustomerMailService {
         mailSender.send(mimeMessage);
     }
 
-    public String renderTemplate(String templateName, Bokning b) {
+    public String renderTemplate(String templateName, Bokning b) throws IOException {
         Map<String, Object> variables = new HashMap<>();
         variables.put("name", b.getKund().getNamn());
         variables.put("email", b.getKund().getEmail());
@@ -65,13 +62,13 @@ public class CustomerMailServiceImp implements CustomerMailService {
         variables.put("totalPrice", b.getTotalPrice());
         variables.put("numOfBeds", b.getNumOfBeds());
         variables.put("date", new java.util.Date());
-        variables.put("showName", confirmationMailProperties.getShowName());
-        variables.put("showEmail", confirmationMailProperties.getShowEmail());
-        variables.put("showPhoneNumber", confirmationMailProperties.getShowPhoneNumber());
-        variables.put("showRoomNumber", confirmationMailProperties.getShowRoomNumber());
-        variables.put("showDate", confirmationMailProperties.getShowDate());
-        variables.put("showTotalPrice", confirmationMailProperties.getShowTotalPrice());
-        variables.put("showNumOfBeds", confirmationMailProperties.getShowNumOfBeds());
+        variables.put("showName", getMailProperties().getProperty("showName"));
+        variables.put("showEmail", getMailProperties().getProperty("showEmail"));
+        variables.put("showPhoneNumber", getMailProperties().getProperty("showPhoneNumber"));
+        variables.put("showRoomNumber", getMailProperties().getProperty("showRoomNumber"));
+        variables.put("showDate", getMailProperties().getProperty("showDate"));
+        variables.put("showTotalPrice", getMailProperties().getProperty("showTotalPrice"));
+        variables.put("showNumOfBeds", getMailProperties().getProperty("showNumOfBeds"));
         return renderTemplate(templateName, variables);
     }
 
@@ -81,36 +78,55 @@ public class CustomerMailServiceImp implements CustomerMailService {
         return templateEngine.process(templateName, context);
     }
 
-    public void updateMailProperties(String ROOMNUMBER, String DATES, String NUMOFBEDS, String PRICE, String NAME, String PHONENUMBER, String EMAIL) {
-        Properties properties = new Properties();
-        String propertiesPath = "C:\\Users\\Eriic\\Javamapp\\Backend\\Pensionat\\src\\main\\java\\com\\example\\pensionat\\Properties\\ConfirmationMailProperties.java";
-
-        //---------------------------
-        //Do the below "on.equals(...)" on all of the inputs and it will probably work. Too tired now...
-        //---------------------------
+    public void alterMailProperties(String ROOMNUMBER, String DATES, String NUMOFBEDS, String PRICE, String NAME, String PHONENUMBER, String EMAIL) throws IOException {
+        String mailPropertiesPath = "src/main/java/com/example/pensionat/Properties/configure.mail.properties";
 
         boolean roomNumber = "on".equals(ROOMNUMBER);
-        System.out.println(roomNumber);
+        boolean dates = "on".equals(DATES);
+        boolean numOfBeds = "on".equals(NUMOFBEDS);
+        boolean price = "on".equals(PRICE);
+        boolean name = "on".equals(NAME);
+        boolean phoneNumber = "on".equals(PHONENUMBER);
+        boolean email = "on".equals(EMAIL);
 
-        try (FileInputStream in = new FileInputStream(propertiesPath)) {
-            properties.load(in);
-            properties.setProperty("showRoomNumber", ROOMNUMBER);
-            properties.setProperty("showDates", DATES);
-            properties.setProperty("showNumOfBeds", NUMOFBEDS);
-            properties.setProperty("showTotalPrice", PRICE);
-            properties.setProperty("showName", NAME);
-            properties.setProperty("showPhoneNumber", PHONENUMBER);
-            properties.setProperty("showEmail", EMAIL);
-            System.out.println("Har uppdaterat alla properties");
+        Properties mailProperties = getMailProperties();
+
+        updateMailProperties(mailProperties, roomNumber, dates, numOfBeds, price, name, phoneNumber, email);
+
+        saveMailProperties(mailProperties);
+
+        System.out.println("properties updated");
+    }
+
+    public Properties getMailProperties() throws IOException {
+        String mailPropertiesPath = "src/main/java/com/example/pensionat/Properties/configure.mail.properties";
+
+        Properties mailProperties = new Properties();
+        mailProperties.load(new FileInputStream(mailPropertiesPath));
+        return mailProperties;
+    }
+
+    public void updateMailProperties(Properties mailProperties, boolean roomNumber, boolean dates, boolean numOfBeds, boolean price, boolean name, boolean phoneNumber, boolean email) {
+        mailProperties.setProperty("showRoomNumber", String.valueOf(roomNumber));
+        mailProperties.setProperty("showDate", String.valueOf(dates));
+        mailProperties.setProperty("showNumOfBeds", String.valueOf(numOfBeds));
+        mailProperties.setProperty("showTotalPrice", String.valueOf(price));
+        mailProperties.setProperty("showName", String.valueOf(name));
+        mailProperties.setProperty("showPhoneNumber", String.valueOf(phoneNumber));
+        mailProperties.setProperty("showEmail", String.valueOf(email));
+    }
+
+    public void saveMailProperties(Properties mailProperties) {
+        String mailPropertiesPath = "src/main/java/com/example/pensionat/Properties/configure.mail.properties";
+        try (FileOutputStream out = new FileOutputStream(mailPropertiesPath)) {
+            mailProperties.store(out, null);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (FileOutputStream out = new FileOutputStream(propertiesPath)) {
-            properties.store(out, null);
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
+
 }
 
 

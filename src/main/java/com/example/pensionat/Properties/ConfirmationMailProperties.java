@@ -7,19 +7,17 @@ import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
-@ConfigurationProperties(prefix = "confirmation.mail")
 @Getter
 @Setter
 public class ConfirmationMailProperties {
 
-
-        private Boolean showRoomNumber;
-        private Boolean showDate;
-        private Boolean showNumOfBeds;
-        private Boolean showTotalPrice;
-        private Boolean showName;
-        private Boolean showPhoneNumber;
-        private Boolean showEmail;
-
+        private Boolean showRoomNumber = true;
+        private Boolean showDate = true;
+        private Boolean showNumOfBeds = true;
+        private Boolean showTotalPrice = true;
+        private Boolean showName = false;
+        private Boolean showPhoneNumber = true;
+        private Boolean showEmail = true;
 }
+
+//Might delete file
