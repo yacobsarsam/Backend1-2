@@ -82,7 +82,7 @@ public class RoomEventApplication implements CommandLineRunner {
         return objectMapper.readValue(message, RumEvent.class);
     }
 
-    private void sendEvent(Object event) {
+    private void sendEvent(RumEvent event) {
         try {
             sendEventToQueue(event);
         } catch (IOException | TimeoutException e) {
@@ -90,7 +90,7 @@ public class RoomEventApplication implements CommandLineRunner {
         }
     }
 
-    public void sendEventToQueue(Object event) throws IOException, TimeoutException {
+    public void sendEventToQueue(RumEvent event) throws IOException, TimeoutException {
         final ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(queueProperties.getHost());
         factory.setUsername(queueProperties.getUsername());
