@@ -25,17 +25,17 @@
     <h2>Bokningsinformation</h2>
     <hr class="divider">
     <h4 th:text="${bookingDetailText}" ></h4>
-    <p>Rum <span th:text="${roomNumber}"></span></p>
-    <p>Från: <span th:text="${startDate}"></span></p>
-    <p>Till: <span th:text="${endDate}"></span></p>
-    <p>Sängplatser: <span th:text="${numOfBeds}"></span></p>
-    <p>Pris: <span th:text="${totalPrice}"></span> kr</p>
+    <p th:if="${showRoomNumber}">Rum <span th:text="${roomNumber}"></span></p>
+    <p th:if="${showDate}">Från: <span th:text="${startDate}"></span></p>
+    <p th:if="${showDate}">Till: <span th:text="${endDate}"></span></p>
+    <p th:if="${showNumOfBeds}">Sängplatser: <span th:text="${numOfBeds}"></span></p>
+    <p th:if="${showTotalPrice}">Pris: <span th:text="${totalPrice}"></span> kr</p>
     <hr class="divider">
     <h2>Gäst information</h2>
     <hr class="divider">
-    <p th:text="${name}"></p>
-    <p th:text="${phoneNumber}"></p>
-    <p th:text="${email}"></p>
+    <p th:if="${showName}" th:text="${name}"></p>
+    <p th:if="${showPhoneNumber}" th:text="${phoneNumber}"></p>
+    <p th:if="${showEmail}" th:text="${email}"></p>
 </div>
 </body>
 </html>
